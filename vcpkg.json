@@ -3,6 +3,7 @@
   "dependencies": [
     "threepp",
     "bullet3",
+    "assimp",
     {
       "name": "imgui",
       "features": ["glfw-binding", "opengl3-binding"]
