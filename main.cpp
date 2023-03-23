@@ -10,24 +10,19 @@ int main() {
 
     auto scene = Scene::create();
     auto camera = PerspectiveCamera::create(75, canvas.getAspect(), 0.1f, 1000);
-    camera->position.z = 8;
-
-    OrbitControls controls{camera, canvas};
+    camera->position.z = 0.2;
 
     TextureLoader loader;
     auto material = SpriteMaterial::create();
-    material->map = loader.load("bin/data/textures/brick_bump.jpg");
+    material->map = loader.load("bin/data/textures/andenes.PNG");
     material->map->offset.set(0.5, 0.5);
 
     auto sprites = Group::create();
-    for (int x = -4; x <= 4; x++) {
-        for (int y = -4; y <= 4; y++) {
-            auto sprite = Sprite::create(material);
-            sprite->position.x = static_cast<float>(x);
-            sprite->position.y = static_cast<float>(y);
-            sprites->add(sprite);
-        }
-    }
+    auto sprite = Sprite::create(material);
+    sprite->position.x = static_cast<float>(0);
+    sprite->position.y = static_cast<float>(0);
+    sprites->add(sprite);
+
     scene->add(sprites);
 
     auto helper = Mesh::create(SphereGeometry::create(0.1));
@@ -50,7 +45,6 @@ int main() {
     Raycaster raycaster;
     canvas.animate([&](float dt) {
         helper->visible = false;
-        material->rotation += 1 * dt;
 
         raycaster.setFromCamera(mouse, camera.get());
         auto intersects = raycaster.intersectObject(sprites.get(), true);
