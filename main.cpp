@@ -4,29 +4,25 @@ using namespace threepp;
 
 int main() {
 
-    Canvas canvas{Canvas::Parameters().antialiasing(8)};
+    Canvas canvas{Canvas::Parameters()};
     GLRenderer renderer(canvas);
-    renderer.setClearColor(Color::aliceblue);
 
     auto scene = Scene::create();
-    auto camera = PerspectiveCamera::create(75, canvas.getAspect(), 0.1f, 1000);
-    camera->position.z = 0.2;
+    auto camera = PerspectiveCamera::create(50, canvas.getAspect(), 0.1f, 1000);
+    camera->position.z = 0.3;
+
+    auto light = HemisphereLight::create();
+    scene->add(light);
 
     TextureLoader loader;
-    auto material = SpriteMaterial::create();
-    material->map = loader.load("bin/data/textures/andenes.PNG");
-    material->map->offset.set(0.5, 0.5);
 
-    auto sprites = Group::create();
-    auto sprite = Sprite::create(material);
-    sprite->position.x = static_cast<float>(0);
-    sprite->position.y = static_cast<float>(0);
-    sprites->add(sprite);
-
-    scene->add(sprites);
-
-    auto helper = Mesh::create(SphereGeometry::create(0.1));
-    scene->add(helper);
+    auto planeGeometry = PlaneGeometry::create();
+    auto planeMaterial = SpriteMaterial::create();
+    planeMaterial->map = loader.load("bin/data/textures/andenes.PNG");
+    planeMaterial->side = DoubleSide;
+    auto plane = Mesh::create(planeGeometry,planeMaterial);
+    plane->rotateX(math::degToRad(90));
+    scene->add(plane);
 
     canvas.onWindowResize([&](WindowSize size) {
         camera->aspect = size.getAspect();
@@ -35,7 +31,6 @@ int main() {
     });
 
     canvas.animate([&](float dt) {
-        helper->visible = false;
 
         renderer.render(scene, camera);
     });
