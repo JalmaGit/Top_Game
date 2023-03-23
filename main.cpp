@@ -35,9 +35,10 @@ int main() {
     GLRenderer renderer{canvas};
 
     auto scene = Scene::create();
-    auto camera = PerspectiveCamera::create(90, canvas.getAspect(), 0.1f, 400);
-    camera->position.z = 100;
+    auto camera = PerspectiveCamera::create(75, canvas.getAspect(), 0.1f, 400);
+    camera->position.z = 50;
 
+    //OrbitControls controls{camera, canvas};
 
     MyListener keyW;
     keyW.keyType = 87;
@@ -55,10 +56,7 @@ int main() {
     keyD.keyType = 68;
     canvas.addKeyListener(&keyD);
 
-    STLLoader stlLoader;
-    auto stlGeometry = stlLoader.load("bin/data/models/stl/Amog_US");
-
-    auto light = HemisphereLight::create();
+    auto light = HemisphereLight::create(Color::aliceblue, Color::grey);
     scene->add(light);
 
     TextureLoader loader;
@@ -72,6 +70,17 @@ int main() {
     auto plane = Mesh::create(planeGeometry, planeMaterial);
     plane->position.y = 0;
     scene->add(plane);
+
+    STLLoader stlLoader;
+    auto stlGeometry = stlLoader.load("bin/data/models/stl/Amog_US.stl");
+    auto stlMaterial = MeshPhongMaterial::create();
+    stlMaterial->flatShading = true;
+    stlMaterial->color = Color::grey;
+    auto mesh = Mesh::create(stlGeometry,stlMaterial);
+    mesh->scale *= 0.3;
+    mesh->rotateX(math::PI / 2);
+    mesh->position.x=10;
+    scene->add(mesh);
 
     canvas.onWindowResize([&](WindowSize size) {
         camera->aspect = size.getAspect();
