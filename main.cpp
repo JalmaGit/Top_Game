@@ -34,48 +34,9 @@ int main() {
         renderer.setSize(size);
     });
 
-    Vector2 mouse{-Infinity<float>, -Infinity<float>};
-    MouseMoveListener l([&](auto &pos) {
-        auto size = canvas.getSize();
-        mouse.x = (pos.x / static_cast<float>(size.width)) * 2 - 1;
-        mouse.y = -(pos.y / static_cast<float>(size.height)) * 2 + 1;
-    });
-    canvas.addMouseListener(&l);
-
-    Raycaster raycaster;
     canvas.animate([&](float dt) {
         helper->visible = false;
-
-        raycaster.setFromCamera(mouse, camera.get());
-        auto intersects = raycaster.intersectObject(sprites.get(), true);
-        if (!intersects.empty()) {
-            auto &i = intersects.front();
-            helper->position.copy(i.point);
-            helper->visible = true;
-        }
 
         renderer.render(scene, camera);
     });
 }
-
-/* using namespace threepp;
-
-int main() {
-
-    Canvas canvas(Canvas::Parameters().antialiasing(4).vsync(false));
-    GLRenderer renderer(canvas);
-    renderer.setClearColor(Color::aqua);
-
-    auto scene = Scene::create();
-    auto camera = PerspectiveCamera::create();
-
-    auto planeGeo = PlaneGeometry::create();
-    auto planeMesh = MeshBasicMaterial::create();
-    planeMesh->side = DoubleSide;
-
-    canvas.animate([&](float dt){
-
-        renderer.render(scene, camera);
-
-    });
-} */
