@@ -4,8 +4,9 @@
 
 using namespace threepp;
 
-namespace {
+int main(){
+    Canvas canvas(Canvas::Parameters().size(640,640));
+    GLRenderer renderer(canvas);
 
-    Canvas canvas;
 
 }
