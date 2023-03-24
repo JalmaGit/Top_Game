@@ -3,8 +3,6 @@
 
 using namespace threepp;
 
-void planeInitializer();
-
 struct GameBackground{
     float width{};
     float height{};
@@ -30,7 +28,21 @@ struct MyListener: KeyListener {
         return button;
     }
 };
+namespace {
 
+    std::shared_ptr<Mesh> createPlane(const PlaneGeometry::Params& params) {
+        TextureLoader loader;
+
+        auto planeGeometry = PlaneGeometry::create(params);
+        auto planeMaterial = MeshBasicMaterial::create();
+        planeMaterial->map = loader.load("bin/data/textures/andenes.PNG");
+        planeMaterial->side = DoubleSide;
+        auto plane = Mesh::create(planeGeometry, planeMaterial);
+
+        return plane;
+    }
+
+}
 int main() {
 
     Canvas canvas{Canvas::Parameters().antialiasing(4)};
@@ -63,6 +75,14 @@ int main() {
     auto light = HemisphereLight::create(Color::aliceblue, Color::grey);
     scene->add(light);
 
+    GameBackground pictureSize{1739,1195};
+    PlaneGeometry::Params params{pictureSize.width,pictureSize.height};
+    auto plane = createPlane(params);
+    scene->add(plane);
+
+
+
+/*
     TextureLoader loader;
 
     GameBackground pictureSize{1739,1195};
@@ -74,7 +94,7 @@ int main() {
     auto plane = Mesh::create(planeGeometry, planeMaterial);
     plane->position.y = 0;
     scene->add(plane);
-
+*/
     STLLoader stlLoader;
     auto stlGeometry = stlLoader.load("bin/data/models/stl/mogus.stl");
     auto stlMaterial = MeshPhongMaterial::create();
@@ -115,8 +135,4 @@ int main() {
 
         renderer.render(scene, camera);
     });
-}
-
-void planeInitializer(){
-
 }
