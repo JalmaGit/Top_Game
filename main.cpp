@@ -3,6 +3,8 @@
 
 using namespace threepp;
 
+void planeInitializer();
+
 struct GameBackground{
     float width{};
     float height{};
@@ -113,4 +115,8 @@ int main() {
 
         renderer.render(scene, camera);
     });
+}
+
+void planeInitializer(){
+
 }
