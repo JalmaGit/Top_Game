@@ -37,6 +37,8 @@ int main() {
     auto scene = Scene::create();
     auto camera = PerspectiveCamera::create(75, canvas.getAspect(), 0.1f, 400);
     camera->position.z = 50;
+    camera->position.y = -10;
+    camera->rotation.x = math::PI/6;
 
     //OrbitControls controls{camera, canvas};
 
@@ -72,14 +74,13 @@ int main() {
     scene->add(plane);
 
     STLLoader stlLoader;
-    auto stlGeometry = stlLoader.load("bin/data/models/stl/Amog_US.stl");
+    auto stlGeometry = stlLoader.load("bin/data/models/stl/mogus.stl");
     auto stlMaterial = MeshPhongMaterial::create();
     stlMaterial->flatShading = true;
     stlMaterial->color = Color::grey;
     auto mesh = Mesh::create(stlGeometry,stlMaterial);
-    mesh->scale *= 0.3;
+    mesh->scale *= 0.2;
     mesh->rotateX(math::PI / 2);
-    mesh->position.x=10;
     scene->add(mesh);
 
     canvas.onWindowResize([&](WindowSize size) {
@@ -91,15 +92,23 @@ int main() {
     canvas.animate([&](float dt) {
         if (keyW.buttonPressed()){
             camera->position.y++;
+            mesh->position.y++;
+            mesh->rotation.y=0;
         }
         if (keyS.buttonPressed()){
             camera->position.y--;
+            mesh->position.y--;
+            mesh->rotation.y=math::PI;
         }
         if (keyD.buttonPressed()){
             camera->position.x++;
+            mesh->position.x++;
+            mesh->rotation.y=3*math::PI/2;
         }
         if (keyA.buttonPressed()){
             camera->position.x--;
+            mesh->position.x--;
+            mesh->rotation.y=math::PI/2;
         }
 
         renderer.render(scene, camera);
