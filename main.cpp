@@ -3,7 +3,7 @@
 
 using namespace threepp;
 
-struct GameBackground{
+struct GameBackgroundSize{
     float width{};
     float height{};
 };
@@ -28,21 +28,42 @@ struct MyListener: KeyListener {
         return button;
     }
 };
-namespace {
 
-    std::shared_ptr<Mesh> createPlane(const PlaneGeometry::Params& params) {
-        TextureLoader loader;
+std::shared_ptr<Mesh> createPlane(const PlaneGeometry::Params& params) {
+    TextureLoader loader;
 
-        auto planeGeometry = PlaneGeometry::create(params);
-        auto planeMaterial = MeshBasicMaterial::create();
-        planeMaterial->map = loader.load("bin/data/textures/andenes.PNG");
-        planeMaterial->side = DoubleSide;
-        auto plane = Mesh::create(planeGeometry, planeMaterial);
+    auto planeGeometry = PlaneGeometry::create(params);
+    auto planeMaterial = MeshBasicMaterial::create();
+    planeMaterial->map = loader.load("bin/data/textures/andenes.PNG");
+    planeMaterial->side = DoubleSide;
+    auto plane = Mesh::create(planeGeometry, planeMaterial);
 
-        return plane;
-    }
-
+    return plane;
 }
+
+std::shared_ptr<Mesh> createStlModel() {
+    STLLoader stlLoader;
+
+    auto stlGeometry = stlLoader.load("bin/data/models/stl/mogus.stl");
+    auto stlMaterial = MeshPhongMaterial::create();
+    stlMaterial->flatShading = true;
+    stlMaterial->color = Color::grey;
+    auto mesh = Mesh::create(stlGeometry, stlMaterial);
+    mesh->scale *= 0.2;
+    mesh->rotateX(math::PI / 2);
+
+    return mesh;
+}
+
+std::shared_ptr<Mesh> createBox(BoxGeometry::Params params){
+    auto boxGemoetry = BoxGeometry::create(params);
+    auto boxMaterial = MeshBasicMaterial::create();
+    boxMaterial->color = Color::skyblue;
+    auto mesh = Mesh::create(boxGemoetry,boxMaterial);
+
+    return mesh;
+}
+
 int main() {
 
     Canvas canvas{Canvas::Parameters().antialiasing(4)};
@@ -75,35 +96,19 @@ int main() {
     auto light = HemisphereLight::create(Color::aliceblue, Color::grey);
     scene->add(light);
 
-    GameBackground pictureSize{1739,1195};
+    GameBackgroundSize pictureSize{1739,1195};
     PlaneGeometry::Params params{pictureSize.width,pictureSize.height};
     auto plane = createPlane(params);
     scene->add(plane);
 
+    auto stl = createStlModel();
+    scene->add(stl);
 
-
-/*
-    TextureLoader loader;
-
-    GameBackground pictureSize{1739,1195};
-
-    auto planeGeometry = PlaneGeometry::create(pictureSize.width, pictureSize.height);
-    auto planeMaterial = MeshBasicMaterial::create();
-    planeMaterial->map = loader.load("bin/data/textures/andenes.PNG");
-    planeMaterial->side = DoubleSide;
-    auto plane = Mesh::create(planeGeometry, planeMaterial);
-    plane->position.y = 0;
-    scene->add(plane);
-*/
-    STLLoader stlLoader;
-    auto stlGeometry = stlLoader.load("bin/data/models/stl/mogus.stl");
-    auto stlMaterial = MeshPhongMaterial::create();
-    stlMaterial->flatShading = true;
-    stlMaterial->color = Color::grey;
-    auto mesh = Mesh::create(stlGeometry,stlMaterial);
-    mesh->scale *= 0.2;
-    mesh->rotateX(math::PI / 2);
-    scene->add(mesh);
+    BoxGeometry::Params params1{50,50,50};
+    auto box = createBox(params1);
+    box->rotateX(math::PI/2);
+    box->position.x=50;
+    scene->add(box);
 
     canvas.onWindowResize([&](WindowSize size) {
         camera->aspect = size.getAspect();
@@ -114,23 +119,23 @@ int main() {
     canvas.animate([&](float dt) {
         if (keyW.buttonPressed()){
             camera->position.y++;
-            mesh->position.y++;
-            mesh->rotation.y=0;
+            stl->position.y++;
+            stl->rotation.y=0;
         }
         if (keyS.buttonPressed()){
             camera->position.y--;
-            mesh->position.y--;
-            mesh->rotation.y=math::PI;
+            stl->position.y--;
+            stl->rotation.y=math::PI;
         }
         if (keyD.buttonPressed()){
             camera->position.x++;
-            mesh->position.x++;
-            mesh->rotation.y=3*math::PI/2;
+            stl->position.x++;
+            stl->rotation.y=3*math::PI/2;
         }
         if (keyA.buttonPressed()){
             camera->position.x--;
-            mesh->position.x--;
-            mesh->rotation.y=math::PI/2;
+            stl->position.x--;
+            stl->rotation.y=math::PI/2;
         }
 
         renderer.render(scene, camera);
