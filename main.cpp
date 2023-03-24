@@ -3,11 +3,6 @@
 
 using namespace threepp;
 
-struct GameBackgroundSize{
-    float width{};
-    float height{};
-};
-
 struct MyListener: KeyListener {
 
     int keyType{};
@@ -60,6 +55,8 @@ std::shared_ptr<Mesh> createBox(BoxGeometry::Params params){
     auto boxMaterial = MeshBasicMaterial::create();
     boxMaterial->color = Color::skyblue;
     auto mesh = Mesh::create(boxGemoetry,boxMaterial);
+    mesh->rotateX(math::PI/2);
+    mesh->position.z=params.height/2;
 
     return mesh;
 }
@@ -75,7 +72,7 @@ int main() {
     camera->position.y = -10;
     camera->rotation.x = math::PI/6;
 
-    //OrbitControls controls{camera, canvas};
+    OrbitControls controls{camera, canvas};
 
     MyListener keyW;
     keyW.keyType = 87;
@@ -96,19 +93,18 @@ int main() {
     auto light = HemisphereLight::create(Color::aliceblue, Color::grey);
     scene->add(light);
 
-    GameBackgroundSize pictureSize{1739,1195};
-    PlaneGeometry::Params params{pictureSize.width,pictureSize.height};
-    auto plane = createPlane(params);
+    PlaneGeometry::Params pictureSize{1739,1195};
+    auto plane = createPlane(pictureSize);
     scene->add(plane);
 
     auto stl = createStlModel();
     scene->add(stl);
 
-    BoxGeometry::Params params1{50,50,50};
+    BoxGeometry::Params params1{25,25,25};
     auto box = createBox(params1);
-    box->rotateX(math::PI/2);
     box->position.x=50;
     scene->add(box);
+
 
     canvas.onWindowResize([&](WindowSize size) {
         camera->aspect = size.getAspect();
