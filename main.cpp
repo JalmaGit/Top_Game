@@ -51,12 +51,17 @@ std::shared_ptr<Mesh> createStlModel() {
 }
 
 std::shared_ptr<Mesh> createBox(BoxGeometry::Params params){
-    auto boxGemoetry = BoxGeometry::create(params);
+    auto boxGeometry = BoxGeometry::create(params);
     auto boxMaterial = MeshBasicMaterial::create();
     boxMaterial->color = Color::skyblue;
-    auto mesh = Mesh::create(boxGemoetry,boxMaterial);
+    auto mesh = Mesh::create(boxGeometry,boxMaterial);
     mesh->rotateX(math::PI/2);
     mesh->position.z=params.height/2;
+
+  //  Vector3 vector31;
+  //  Vector3 vector32;
+
+   // Box3 box{vector31,vector32};
 
     return mesh;
 }
@@ -72,7 +77,7 @@ int main() {
     camera->position.y = -10;
     camera->rotation.x = math::PI/6;
 
-    OrbitControls controls{camera, canvas};
+    //OrbitControls controls{camera, canvas};
 
     MyListener keyW;
     keyW.keyType = 87;
@@ -133,6 +138,7 @@ int main() {
             stl->position.x--;
             stl->rotation.y=math::PI/2;
         }
+
 
         renderer.render(scene, camera);
     });
