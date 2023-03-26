@@ -63,14 +63,7 @@ std::shared_ptr<Mesh> createBox(BoxGeometry::Params params){
     return mesh;
 }
 
-<<<<<<< Updated upstream
-=======
-void checkIntersect(){
 
-}
-
-
->>>>>>> Stashed changes
 int main() {
 
     Canvas canvas{Canvas::Parameters().antialiasing(4)};
@@ -108,25 +101,17 @@ int main() {
     auto plane = createPlane(params);
     scene->add(plane);
 
-    auto stl = createStlModel();
-    scene->add(stl);
+    auto stlPlayerModel = createStlModel();
+    scene->add(stlPlayerModel);
 
-<<<<<<< Updated upstream
+    auto shadowBox = createStlModel();
+    shadowBox->material()->transparent=true;
+    shadowBox->material()->opacity=0;
+    scene->add(shadowBox);
+
     BoxGeometry::Params params1{50,50,50};
     auto box = createBox(params1);
     box->rotateX(math::PI/2);
-    box->position.x=50;
-    scene->add(box);
-
-=======
-    auto shadowBox = createStlModel();
-    shadowBox->material()->transparent=true;
-    shadowBox->material()->opacity=0.3;
-    scene->add(shadowBox);
-
-
-    BoxGeometry::Params boxParams{25,25,25};
-    auto box = createBox(boxParams);
     box->position.x=50;
     scene->add(box);
 
@@ -140,96 +125,47 @@ int main() {
 
     std::cout << box3Shadow << "\n";
 
->>>>>>> Stashed changes
     canvas.onWindowResize([&](WindowSize size) {
         camera->aspect = size.getAspect();
         camera->updateProjectionMatrix();
         renderer.setSize(size);
     });
 
-<<<<<<< Updated upstream
-    canvas.animate([&](float dt) {
-        if (keyW.buttonPressed()){
-            camera->position.y++;
-            stl->position.y++;
-            stl->rotation.y=0;
-        }
-        if (keyS.buttonPressed()){
-            camera->position.y--;
-            stl->position.y--;
-            stl->rotation.y=math::PI;
-        }
-        if (keyD.buttonPressed()){
-            camera->position.x++;
-            stl->position.x++;
-            stl->rotation.y=3*math::PI/2;
-        }
-        if (keyA.buttonPressed()){
-            camera->position.x--;
-            stl->position.x--;
-            stl->rotation.y=math::PI/2;
-        }
-
-=======
-    auto lastPlayerPosition = stlPlayerModel->position;
     auto lastPlayerShadowPos = shadowBox->position;
-    auto lastCameraPos = camera->position;
-    bool crash{true};
+    int crash{};
 
     canvas.animate([&](float dt) {
 
         shadowBox->geometry()->computeBoundingBox();
         box3Shadow.copy(*shadowBox->geometry()->boundingBox).applyMatrix4(*shadowBox->matrixWorld);
 
-        std::cout << box3.intersectsBox(box3Shadow) << std::endl;
-
         if (!box3.intersectsBox(box3Shadow)) {
             lastPlayerShadowPos = shadowBox->position;
             if (keyW.buttonPressed()) {
                 shadowBox->position.y++;
+                stlPlayerModel->rotation.y = 0;
             }
             if (keyS.buttonPressed()) {
                 shadowBox->position.y--;
+                stlPlayerModel->rotation.y = math::PI;
             }
             if (keyD.buttonPressed()) {
                 shadowBox->position.x++;
+                stlPlayerModel->rotation.y = 3 * math::PI / 2;
             }
             if (keyA.buttonPressed()) {
                 shadowBox->position.x--;
+                stlPlayerModel->rotation.y = math::PI / 2;
             }
         }
         if (box3.intersectsBox(box3Shadow)){
             shadowBox->position.copy(lastPlayerShadowPos);
+            crash = 0;
         }
-        stlPlayerModel->position.copy(shadowBox->position);
+        stlPlayerModel->position.copy(lastPlayerShadowPos);
+        camera->position.x = lastPlayerShadowPos.x;
+        camera->position.y = lastPlayerShadowPos.y-10;
 
-
-/*
-        if (shadowBox->position != lastPlayerShadowPos) {
-            if (keyW.buttonPressed()) {
-                camera->position.y++;
-                stlPlayerModel->position.y++;
-                stlPlayerModel->rotation.y = 0;
-            }
-
-            if (keyS.buttonPressed()) {
-                camera->position.y--;
-                stlPlayerModel->position.y--;
-                stlPlayerModel->rotation.y = math::PI;
-            }
-            if (keyD.buttonPressed()) {
-                camera->position.x++;
-                stlPlayerModel->position.x++;
-                stlPlayerModel->rotation.y = 3 * math::PI / 2;
-            }
-            if (keyA.buttonPressed()) {
-                camera->position.x--;
-                stlPlayerModel->position.x--;
-                stlPlayerModel->rotation.y = math::PI / 2;
-            }
-        }
-*/
->>>>>>> Stashed changes
         renderer.render(scene, camera);
     });
 }
