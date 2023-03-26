@@ -11,18 +11,19 @@ struct MyListener: KeyListener {
 
     void onKeyPressed(KeyEvent evt) override {
         if(evt.key==keyType){button=true;}
-        std::cout << evt.key << std::endl;
+     //   std::cout << evt.key << std::endl;
     }
 
     void onKeyReleased(KeyEvent evt) override {
         if(evt.key==keyType){button=false;}
-        std::cout << evt.key << std::endl;
+     //   std::cout << evt.key << std::endl;
     }
 
     bool buttonPressed(){
         return button;
     }
 };
+
 
 std::shared_ptr<Mesh> createPlane(const PlaneGeometry::Params& params) {
     TextureLoader loader;
@@ -51,6 +52,8 @@ std::shared_ptr<Mesh> createStlModel() {
 }
 
 std::shared_ptr<Mesh> createBox(BoxGeometry::Params params){
+    //Vector3 vector31{params.height,params.width,params.depth};
+    //auto boxGeometry = BoxGeometry::create(vector31.x,vector31.y,vector31.z);
     auto boxGeometry = BoxGeometry::create(params);
     auto boxMaterial = MeshBasicMaterial::create();
     boxMaterial->color = Color::skyblue;
@@ -58,13 +61,9 @@ std::shared_ptr<Mesh> createBox(BoxGeometry::Params params){
     mesh->rotateX(math::PI/2);
     mesh->position.z=params.height/2;
 
-  //  Vector3 vector31;
-  //  Vector3 vector32;
-
-   // Box3 box{vector31,vector32};
-
     return mesh;
 }
+
 
 int main() {
 
@@ -102,14 +101,26 @@ int main() {
     auto plane = createPlane(pictureSize);
     scene->add(plane);
 
-    auto stl = createStlModel();
-    scene->add(stl);
+    auto stlPlayerModel = createStlModel();
+    scene->add(stlPlayerModel);
 
-    BoxGeometry::Params params1{25,25,25};
-    auto box = createBox(params1);
+   // auto shadowBox = createStlModel();
+   // scene->add(shadowBox);
+
+    BoxGeometry::Params boxParams{25,25,25};
+    auto box = createBox(boxParams);
     box->position.x=50;
     scene->add(box);
 
+    Box3 box3;
+    box3.setFromObject(*box);
+
+    std::cout << box3 << "\n";
+
+    Box3 box4;
+    box4.setFromObject(*stlPlayerModel);
+
+    std::cout << box4 << "\n";
 
     canvas.onWindowResize([&](WindowSize size) {
         camera->aspect = size.getAspect();
@@ -117,29 +128,110 @@ int main() {
         renderer.setSize(size);
     });
 
+    auto lastPlayerPosition = stlPlayerModel->position;
+  //  auto lastPlayerShadowPos = stlPlayerModel->position;
+    auto lastCameraPos = camera->position;
+
     canvas.animate([&](float dt) {
-        if (keyW.buttonPressed()){
-            camera->position.y++;
-            stl->position.y++;
-            stl->rotation.y=0;
+
+        stlPlayerModel->geometry()->computeBoundingBox();
+        box4.copy(*stlPlayerModel->geometry()->boundingBox).applyMatrix4(*stlPlayerModel->matrixWorld);
+
+        std::cout << box3.intersectsBox(box4) << std::endl;
+
+        if (!box3.intersectsBox(box4)) {
+            lastPlayerPosition = stlPlayerModel->position;
+            lastCameraPos = camera->position;
+            if (keyW.buttonPressed()) {
+            //    shadowBox->position.y++;
+                camera->position.y++;
+                stlPlayerModel->position.y++;
+                stlPlayerModel->rotation.y = 0;
+            }
+
+            if (keyS.buttonPressed()) {
+            //    shadowBox->position.y--;
+                camera->position.y--;
+                stlPlayerModel->position.y--;
+                stlPlayerModel->rotation.y = math::PI;
+            }
+            if (keyD.buttonPressed()) {
+            //    shadowBox->position.x++;
+                camera->position.x++;
+                stlPlayerModel->position.x++;
+                stlPlayerModel->rotation.y = 3 * math::PI / 2;
+            }
+            if (keyA.buttonPressed()) {
+            //    shadowBox->position.x--;
+                camera->position.x--;
+                stlPlayerModel->position.x--;
+                stlPlayerModel->rotation.y = math::PI / 2;
+            }
         }
-        if (keyS.buttonPressed()){
-            camera->position.y--;
-            stl->position.y--;
-            stl->rotation.y=math::PI;
-        }
-        if (keyD.buttonPressed()){
-            camera->position.x++;
-            stl->position.x++;
-            stl->rotation.y=3*math::PI/2;
-        }
-        if (keyA.buttonPressed()){
-            camera->position.x--;
-            stl->position.x--;
-            stl->rotation.y=math::PI/2;
+        if (box3.intersectsBox(box4)){
+            stlPlayerModel->position.copy(lastPlayerPosition);
+            camera->position.copy(lastCameraPos);
         }
 
+    /*    if (!box3.intersectsBox(box4)) {
+            lastPlayerShadowPos = stlPlayerModel->position;
+            if (keyW.buttonPressed()) {
+                stlPlayerModel->position.y++;
+            }
+            if (keyS.buttonPressed()) {
+                stlPlayerModel->position.y--;
+            }
+            if (keyD.buttonPressed()) {
+                stlPlayerModel->position.x++;
+            }
+            if (keyA.buttonPressed()) {
+                stlPlayerModel->position.x--;
+            }
 
+        }
+        if (box3.intersectsBox(box4)){
+            stlPlayerModel->position.copy(lastPlayerShadowPos);
+        }
+        //stlPlayerModel->position.copy(shadowBox->position);
+        camera->position.copy(stlPlayerModel->position);
+*/
         renderer.render(scene, camera);
     });
 }
+
+/*
+        if (!box3.intersectsBox(box4)) {
+            lastPlayerPosition = stlPlayerModel->position;
+            lastCameraPos = camera->position;
+            if (keyW.buttonPressed()) {
+                shadowBox->position.y++;
+                camera->position.y++;
+                stlPlayerModel->position.y++;
+                stlPlayerModel->rotation.y = 0;
+            }
+
+            if (keyS.buttonPressed()) {
+                shadowBox->position.y--;
+                camera->position.y--;
+                stlPlayerModel->position.y--;
+                stlPlayerModel->rotation.y = math::PI;
+            }
+            if (keyD.buttonPressed()) {
+                shadowBox->position.x++;
+                camera->position.x++;
+                stlPlayerModel->position.x++;
+                stlPlayerModel->rotation.y = 3 * math::PI / 2;
+            }
+            if (keyA.buttonPressed()) {
+                shadowBox->position.x--;
+                camera->position.x--;
+                stlPlayerModel->position.x--;
+                stlPlayerModel->rotation.y = math::PI / 2;
+                }
+        }
+        if (box3.intersectsBox(box4)){
+            stlPlayerModel->position.copy(lastPlayerPosition);
+            camera->position.copy(lastCameraPos);
+        }
+    */
+
