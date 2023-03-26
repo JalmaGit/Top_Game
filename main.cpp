@@ -168,6 +168,8 @@ int main() {
     });
 }
 
+//In the future when the player object moves, make movement based on velocity.
+
 /*
         if (!box3.intersectsBox(box4)) {
             lastPlayerPosition = stlPlayerModel->position;
