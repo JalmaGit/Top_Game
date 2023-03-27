@@ -6,7 +6,7 @@
 
 using namespace threepp;
 
-std::shared_ptr<Mesh> createBox(BoxGeometry::Params params) {
+std::shared_ptr<Mesh> createBox(const BoxGeometry::Params params) {
     //Vector3 vector31{params.height,params.width,params.depth};
     //auto boxGeometry = BoxGeometry::create(vector31.x,vector31.y,vector31.z);
     auto boxGeometry = BoxGeometry::create(params);

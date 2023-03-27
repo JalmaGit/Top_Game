@@ -25,6 +25,38 @@ struct MyListener: KeyListener {
     }
 };
 
+auto createWorldEdge(const BoxGeometry::Params params){
+    auto group = Group::create();
+    {
+        BoxGeometry::Params topBoxParams{params.width,params.height,100};
+        auto topBox = createBox(topBoxParams);
+        topBox->position.y = params.depth/2+topBoxParams.depth/2;
+        group->add(topBox);
+    }
+
+    {
+        BoxGeometry::Params downBoxParams{params.width,params.height,100};
+        auto downBox = createBox(downBoxParams);
+        downBox->position.y = -params.depth/2-downBoxParams.depth/2;
+        group->add(downBox);
+    }
+
+    {
+        BoxGeometry::Params rightBoxParams{100,params.height,params.depth};
+        auto rightBox = createBox(rightBoxParams);
+        rightBox->position.x = params.width/2+100+rightBoxParams.width/2;
+        group->add(rightBox);
+    }
+
+    {
+        BoxGeometry::Params leftBoxParams{100,params.height,params.depth};
+        auto leftBox = createBox(leftBoxParams);
+        leftBox->position.x = -params.width/2-leftBoxParams.width/2;
+        group->add(leftBox);
+    }
+    return group;
+}
+
 int main() {
 
     Canvas canvas{Canvas::Parameters().antialiasing(4)};
@@ -36,7 +68,7 @@ int main() {
     camera->position.y = -10;
     camera->rotation.x = math::PI/6;
 
-    //OrbitControls controls{camera, canvas};
+    OrbitControls controls{camera, canvas};
 
     MyListener keyW;
     keyW.keyType = 87;
@@ -66,7 +98,7 @@ int main() {
 
     auto shadowBox = createStlModel();
     shadowBox->material()->transparent=true;
-    shadowBox->material()->opacity=0;
+    shadowBox->material()->opacity=0.5;
     scene->add(shadowBox);
 
     BoxGeometry::Params boxParams{25,25,25};
@@ -74,8 +106,14 @@ int main() {
     box->position.x=50;
     scene->add(box);
 
+    BoxGeometry::Params edgeBox{pictureSize.width,30, pictureSize.height};
+    auto worldEdge = createWorldEdge(edgeBox);
+    scene->add(worldEdge);
+
     Box3 box3;
     box3.setFromObject(*box);
+    //Box3 box4;
+    //box4.setFromObject();
 
     std::cout << box3 << "\n";
 
