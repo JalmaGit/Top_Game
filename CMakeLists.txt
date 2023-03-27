@@ -8,7 +8,12 @@ find_package(imgui CONFIG REQUIRED)
 find_package(Bullet CONFIG REQUIRED)
 find_package(assimp CONFIG REQUIRED)
 
-add_executable(test main.cpp)
-target_link_libraries(test PRIVATE threepp::threepp imgui::imgui assimp::assimp)
-target_link_libraries(test PRIVATE ${BULLET_LIBRARIES})
+add_executable(Top_Game main.cpp
+        cppfiles/geometryCreation.cpp
+        )
+
+target_link_libraries(Top_Game PRIVATE threepp::threepp imgui::imgui assimp::assimp)
+target_link_libraries(Top_Game PRIVATE ${BULLET_LIBRARIES})
+target_include_directories(Top_Game PUBLIC "${CMAKE_SOURCE_DIR}/include")
+
 file(COPY "${CMAKE_SOURCE_DIR}/data" DESTINATION "${CMAKE_BINARY_DIR}/bin")
