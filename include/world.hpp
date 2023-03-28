@@ -7,26 +7,30 @@
 
 #include "threepp/threepp.hpp"
 #include "geometryCreation.hpp"
+#include "iostream"
 
-class worldGen {
+class WorldGen {
+private:
+    Box3 createUpperWorldEdge(BoxGeometry::Params params);
+    Box3 createLowerWorldEdge(BoxGeometry::Params params);
+    Box3 createRightWorldEdge(BoxGeometry::Params params);
+    Box3 createLeftWorldEdge(BoxGeometry::Params params);
+
 public:
     float mapSizeX{};
     float mapSizeY{};
-    std::string path {""};
 
-  //  PlaneGeometry::Params pictureSize{mapSizeX,mapSizeY};
-    auto getWorldFlor(){
-        return createPlane(mapSize);
+    void getWorldEdge(Box3 worldHitBox[4]){
+        BoxGeometry::Params edgeBox{mapSizeX, 30, mapSizeY};
+        worldHitBox[0] = createUpperWorldEdge(edgeBox);
+        worldHitBox[1] = createLowerWorldEdge(edgeBox);
+        worldHitBox[2] = createRightWorldEdge(edgeBox),
+        worldHitBox[3] = createLeftWorldEdge(edgeBox);
     }
-
-    auto getWorldEdge();
 
 private:
     PlaneGeometry::Params mapSize{mapSizeX,mapSizeY};
-
-    auto setWorldEdge(){
-
-    }
+    //Not in use yet, more development needed
 
 };
 

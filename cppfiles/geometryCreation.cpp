@@ -2,12 +2,12 @@
 // Created by Jalma on 27.03.2023.
 //
 #include "geometryCreation.hpp"
+#include <iostream>
 
 using namespace threepp;
 
 std::shared_ptr<Mesh> createBox(const BoxGeometry::Params params) {
-    //Vector3 vector31{params.height,params.width,params.depth};
-    //auto boxGeometry = BoxGeometry::create(vector31.x,vector31.y,vector31.z);
+
     auto boxGeometry = BoxGeometry::create(params);
     auto boxMaterial = MeshBasicMaterial::create();
     boxMaterial->color = Color::skyblue;

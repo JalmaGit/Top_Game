@@ -1,6 +1,7 @@
 #include <iostream>
 #include "threepp/threepp.hpp"
 #include "geometryCreation.hpp"
+#include "world.hpp"
 
 using namespace threepp;
 
@@ -12,52 +13,16 @@ struct MyListener : KeyListener {
 
     void onKeyPressed(KeyEvent evt) override {
         if (evt.key == keyType) { button = true; }
-        //   std::cout << evt.key << std::endl;
     }
 
     void onKeyReleased(KeyEvent evt) override {
         if (evt.key == keyType) { button = false; }
-        //   std::cout << evt.key << std::endl;
     }
 
-    bool buttonPressed() {
+    [[nodiscard]] bool buttonPressed() const {
         return button;
     }
 };
-
-
-auto createUpperWorldEdge(const BoxGeometry::Params params) {
-    BoxGeometry::Params topBoxParams{params.width, params.height, 100};
-    auto upperBox = createBox(topBoxParams);
-    upperBox->position.y = params.depth / 2 + topBoxParams.depth / 2;
-    Box3 upperHitBox;
-    return upperHitBox.setFromObject(*upperBox);
-}
-
-auto createLowerWorldEdge(const BoxGeometry::Params params) {
-    BoxGeometry::Params downBoxParams{params.width, params.height, 100};
-    auto lowerBox = createBox(downBoxParams);
-    lowerBox->position.y = -params.depth / 2 - downBoxParams.depth / 2;
-    Box3 lowerHitBox;
-    return lowerHitBox.setFromObject(*lowerBox);
-}
-
-auto createRightWorldEdge(const BoxGeometry::Params params) {
-    BoxGeometry::Params rightBoxParams{100, params.height, params.depth};
-    auto rightBox = createBox(rightBoxParams);
-    rightBox->position.x = params.width / 2 + rightBoxParams.width / 2;
-    Box3 rightHitBox;
-    return rightHitBox.setFromObject(*rightBox);
-}
-
-auto createLeftWorldEdge(const BoxGeometry::Params params) {
-    BoxGeometry::Params leftBoxParams{100, params.height, params.depth};
-    auto leftBox = createBox(leftBoxParams);
-    leftBox->position.x = -params.width / 2 - leftBoxParams.width / 2;
-    Box3 leftHitBox;
-    return leftHitBox.setFromObject(*leftBox);
-}
-
 
 int main() {
 
@@ -65,7 +30,7 @@ int main() {
     GLRenderer renderer{canvas};
 
     auto scene = Scene::create();
-    auto camera = PerspectiveCamera::create(75, canvas.getAspect(), 0.1f, 400);
+    auto camera = PerspectiveCamera::create(75, canvas.getAspect(), 0.1f, 2000);
     camera->position.z = 50;
     camera->position.y = -10;
     camera->rotation.x = math::PI / 6;
@@ -106,21 +71,21 @@ int main() {
     BoxGeometry::Params boxParams{25, 25, 25};
     auto box = createBox(boxParams);
     box->position.x = 50;
-    scene->add(box);
 
-    BoxGeometry::Params edgeBox{pictureSize.width, 30, pictureSize.height};
+    scene->add(box);
 
     Box3 box3;
     box3.setFromObject(*box);
 
-    Box3 worldHitBox[4]{createUpperWorldEdge(edgeBox), createLowerWorldEdge(edgeBox), createRightWorldEdge(edgeBox), createLeftWorldEdge(edgeBox)};
+    WorldGen worldGen;
+    worldGen.mapSizeY = 1195;
+    worldGen.mapSizeX = 1739;
 
-    std::cout << box3 << "\n";
+    Box3 worldHitBox[4]{};
+    worldGen.getWorldEdge(worldHitBox);
 
     Box3 box3Shadow;
     box3Shadow.setFromObject(*shadowBox);
-
-    std::cout << box3Shadow << "\n";
 
     canvas.onWindowResize([&](WindowSize size) {
         camera->aspect = size.getAspect();
@@ -137,15 +102,16 @@ int main() {
         shadowBox->geometry()->computeBoundingBox();
         box3Shadow.copy(*shadowBox->geometry()->boundingBox).applyMatrix4(*shadowBox->matrixWorld);
 
-        for (int i{}; i < std::size(worldHitBox); i++){
-            if(worldHitBox[i].intersectsBox(box3Shadow)){
+        for (int i{}; i < std::size(worldHitBox); i++) {
+            if (worldHitBox[i].intersectsBox(box3Shadow)) {
                 crash = true;
                 break;
             } else {
                 crash = false;
             }
         }
-        if(!crash) {
+
+        if (!crash) {
             if (box3.intersectsBox(box3Shadow)) {
                 crash = true;
             } else {
