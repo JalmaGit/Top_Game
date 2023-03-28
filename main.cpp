@@ -65,7 +65,7 @@ int main() {
 
     auto shadowBox = createStlModel();
     shadowBox->material()->transparent = true;
-    shadowBox->material()->opacity = 0.5;
+    shadowBox->material()->opacity = 0;
     scene->add(shadowBox);
 
     BoxGeometry::Params boxParams{25, 25, 25};
