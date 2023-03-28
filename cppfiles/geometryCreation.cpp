@@ -1,7 +1,6 @@
 //
 // Created by Jalma on 27.03.2023.
 //
-#include "threepp/threepp.hpp"
 #include "geometryCreation.hpp"
 
 using namespace threepp;

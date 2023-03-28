@@ -16,13 +16,17 @@ public:
 
   //  PlaneGeometry::Params pictureSize{mapSizeX,mapSizeY};
     auto getWorldFlor(){
-        return createPlane(pictureSize);
-    };
+        return createPlane(mapSize);
+    }
 
-    auto worldEdge();
+    auto getWorldEdge();
 
 private:
-    PlaneGeometry::Params pictureSize{mapSizeX,mapSizeY};
+    PlaneGeometry::Params mapSize{mapSizeX,mapSizeY};
+
+    auto setWorldEdge(){
+
+    }
 
 };
 
