@@ -23,7 +23,7 @@ std::shared_ptr<Mesh> createPlane(const PlaneGeometry::Params& params) {
 
     auto planeGeometry = PlaneGeometry::create(params);
     auto planeMaterial = MeshBasicMaterial::create();
-    planeMaterial->map = loader.load("bin/data/textures/andenes.PNG");
+    planeMaterial->map = loader.load("bin/data/textures/flor.png");
     planeMaterial->side = DoubleSide;
     auto plane = Mesh::create(planeGeometry, planeMaterial);
 
