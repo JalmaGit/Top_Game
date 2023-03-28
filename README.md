@@ -1,6 +1,6 @@
 # Top_Game
- This project is named Top_Game and it's a top-down view type of game where the camera looks at the player from above. The player can move around to explore the map. if the player hits the map edge, the player will stopp
- The project utilises the [Threepp library](https://github.com/markaren/threepp). Currently it's just in a demo stage with no actuall content with focus on getting the game to just work.
+ - This project is named Top_Game and it's a top-down view type of game where the camera looks at the player from above. The player can move around to explore the map. if the player hits the map edge, the player will stopp
+ - The project utilises the [Threepp library](https://github.com/markaren/threepp). Currently it's just in a demo stage with no actuall content with focus on getting the game to just work.
  
 ## There is two elements to the game
  - The Player
