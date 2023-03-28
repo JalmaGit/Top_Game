@@ -5,13 +5,14 @@ set(CMAKE_CXX_STANDARD 17)
 
 find_package(threepp CONFIG REQUIRED)
 find_package(imgui CONFIG REQUIRED)
+find_package(Bullet CONFIG REQUIRED)
+find_package(assimp CONFIG REQUIRED)
 
 add_executable(Top_Game main.cpp
         cppfiles/geometryCreation.cpp
-        cppfiles/world.cpp
-        cppfiles/keyChecker.cpp)
+        cppfiles/world.cpp)
 
-target_link_libraries(Top_Game PRIVATE threepp::threepp imgui::imgui)
+target_link_libraries(Top_Game PRIVATE threepp::threepp imgui::imgui assimp::assimp)
 target_link_libraries(Top_Game PRIVATE ${BULLET_LIBRARIES})
 target_include_directories(Top_Game PUBLIC "${CMAKE_SOURCE_DIR}/include")
 
