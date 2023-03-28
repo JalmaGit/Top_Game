@@ -1,5 +1,5 @@
 # Top_Game
- This project is named Top_Game and it's a top-down view type of game where the camera looks at the player from above. 
+ This project is named Top_Game and it's a top-down view type of game where the camera looks at the player from above. The player can move around to explore the map. if the player hits the map edge, the player will stopp
  The project utilises the [Threepp library](https://github.com/markaren/threepp). Currently it's just in a demo stage with no actuall content with focus on getting the game to just work.
  
 ## There is two elements to the game
@@ -9,7 +9,7 @@
 ### The Player
  - The Player has some stuff attached to it
  *A camera*
- *An stl-file*
+ *A stl-file*
  *A shadowBox*
  *Keylistner*
  
@@ -19,10 +19,11 @@
  This means that the program uppdates the position of the camera, stl-file and shadowBox when asked to do so.
  The keybindings that has been set up with the Keylistner is:
  
- *W - Move Uppwards*
- *S - Move Downwards*
- *A - Move Left*
- *D - Move Right*
+ #### Move Keybinding
+-  *W - Move Uppwards*
+-  *S - Move Downwards*
+-  *A - Move Left*
+-  *D - Move Right*
  
  
  ### WorldGen
@@ -31,7 +32,7 @@
  *worldBorder*
  *box/Boxes*
 
-The **plane** is used as the floor of the map and has static picture from Andenes, Picture taken from [norgeibilde.no.](https://www.norgeibilder.no/)
+The **plane** is used as the floor of the map and has static picture that gives the player visual clues as to where on the map it is.
 The size of the plane is the size of the picture which is 1195x1739 pixels.
 The **worldBorder** is set right outside of the planes dimensions.
 There is also placed a box close to the centre of the map.
@@ -48,5 +49,7 @@ Currently most of the code has just been done through the main.cpp file. It was 
 
 ### The future:
 - Continue to make the worldGen object so it can be used for the creation of the world, and maybe make it possible to add more box objects with a mouseListner.
-- Make a player Class that takes care of the player.
+- Make a player Class that takes care of the player and its movement.
 - Move the logic off the main.cpp file.
+- Unit Tests
+- Making sure continues integration works properly
