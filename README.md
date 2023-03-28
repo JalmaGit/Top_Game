@@ -1,5 +1,6 @@
 # Top_Game
- This project is a game called Top_Game
+ This project is named Top_Game and it's a top-down view type of game where the camera looks at the player from above. 
+ The project utilises the [Threepp library](https://github.com/markaren/threepp). Currently it's just in a demo stage with no actuall content with focus on getting the game to just work.
  
 ## There is two elements to the game
  - The Player
@@ -30,7 +31,7 @@
  *worldBorder*
  *box/Boxes*
 
-The **plane** is used as the floor of the map and has static picture from Andenes, Picture taken from norgeibilde.no.
+The **plane** is used as the floor of the map and has static picture from Andenes, Picture taken from [norgeibilde.no.](https://www.norgeibilder.no/)
 The size of the plane is the size of the picture which is 1195x1739 pixels.
 The **worldBorder** is set right outside of the planes dimensions.
 There is also placed a box close to the centre of the map.
