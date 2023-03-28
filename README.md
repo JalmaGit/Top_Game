@@ -15,7 +15,7 @@
  
  The player is shown with the help of an stl-modell that has been importeted with the help of the STL-loader example found in threepp.
  From the STL-loader there has been loaded a shadowBox that acts as a collision modell and is used to check for if the player thouches an object on the map.
- The player is set up so that it can move in the **X**- and **Y** axis. 
+ The player is set up so that it can move in the **X**- and **Y**-axis. 
  This means that the program uppdates the position of the camera, stl-file and shadowBox when asked to do so.
  The keybindings that has been set up with the Keylistner is:
  
