@@ -1,26 +1,25 @@
 #include <iostream>
 #include "threepp/threepp.hpp"
 #include "geometryCreation.hpp"
+#include "world.hpp"
 
 using namespace threepp;
 
-struct MyListener: KeyListener {
+struct MyListener : KeyListener {
 
     int keyType{};
 
     bool button = false;
 
     void onKeyPressed(KeyEvent evt) override {
-        if(evt.key==keyType){button=true;}
-     //   std::cout << evt.key << std::endl;
+        if (evt.key == keyType) { button = true; }
     }
 
     void onKeyReleased(KeyEvent evt) override {
-        if(evt.key==keyType){button=false;}
-     //   std::cout << evt.key << std::endl;
+        if (evt.key == keyType) { button = false; }
     }
 
-    bool buttonPressed(){
+    [[nodiscard]] bool buttonPressed() const {
         return button;
     }
 };
@@ -31,12 +30,12 @@ int main() {
     GLRenderer renderer{canvas};
 
     auto scene = Scene::create();
-    auto camera = PerspectiveCamera::create(75, canvas.getAspect(), 0.1f, 400);
+    auto camera = PerspectiveCamera::create(75, canvas.getAspect(), 0.1f, 2000);
     camera->position.z = 50;
     camera->position.y = -10;
-    camera->rotation.x = math::PI/6;
+    camera->rotation.x = math::PI / 6;
 
-    //OrbitControls controls{camera, canvas};
+    OrbitControls controls{camera, canvas};
 
     MyListener keyW;
     keyW.keyType = 87;
@@ -57,7 +56,7 @@ int main() {
     auto light = HemisphereLight::create(Color::aliceblue, Color::grey);
     scene->add(light);
 
-    PlaneGeometry::Params pictureSize{1739,1195};
+    PlaneGeometry::Params pictureSize{1739, 1195};
     auto plane = createPlane(pictureSize);
     scene->add(plane);
 
@@ -65,24 +64,28 @@ int main() {
     scene->add(stlPlayerModel);
 
     auto shadowBox = createStlModel();
-    shadowBox->material()->transparent=true;
-    shadowBox->material()->opacity=0;
+    shadowBox->material()->transparent = true;
+    shadowBox->material()->opacity = 0.5;
     scene->add(shadowBox);
 
-    BoxGeometry::Params boxParams{25,25,25};
+    BoxGeometry::Params boxParams{25, 25, 25};
     auto box = createBox(boxParams);
-    box->position.x=50;
+    box->position.x = 50;
+
     scene->add(box);
 
     Box3 box3;
     box3.setFromObject(*box);
 
-    std::cout << box3 << "\n";
+    WorldGen worldGen;
+    worldGen.mapSizeY = 1195;
+    worldGen.mapSizeX = 1739;
+
+    Box3 worldHitBox[4]{};
+    worldGen.getWorldEdge(worldHitBox);
 
     Box3 box3Shadow;
     box3Shadow.setFromObject(*shadowBox);
-
-    std::cout << box3Shadow << "\n";
 
     canvas.onWindowResize([&](WindowSize size) {
         camera->aspect = size.getAspect();
@@ -91,14 +94,32 @@ int main() {
     });
 
     auto lastPlayerShadowPos = shadowBox->position;
-    int crash{};
+    bool crash{false};
 
     canvas.animate([&](float dt) {
+
 
         shadowBox->geometry()->computeBoundingBox();
         box3Shadow.copy(*shadowBox->geometry()->boundingBox).applyMatrix4(*shadowBox->matrixWorld);
 
-        if (!box3.intersectsBox(box3Shadow)) {
+        for (int i{}; i < std::size(worldHitBox); i++) {
+            if (worldHitBox[i].intersectsBox(box3Shadow)) {
+                crash = true;
+                break;
+            } else {
+                crash = false;
+            }
+        }
+
+        if (!crash) {
+            if (box3.intersectsBox(box3Shadow)) {
+                crash = true;
+            } else {
+                crash = false;
+            }
+        }
+
+        if (!crash) {
             lastPlayerShadowPos = shadowBox->position;
             if (keyW.buttonPressed()) {
                 shadowBox->position.y++;
@@ -117,14 +138,13 @@ int main() {
                 stlPlayerModel->rotation.y = math::PI / 2;
             }
         }
-        if (box3.intersectsBox(box3Shadow)){
+        if (crash) {
             shadowBox->position.copy(lastPlayerShadowPos);
-            crash = 0;
         }
         stlPlayerModel->position.copy(lastPlayerShadowPos);
         camera->position.x = lastPlayerShadowPos.x;
-        camera->position.y = lastPlayerShadowPos.y-10;
-        
+        camera->position.y = lastPlayerShadowPos.y - 10;
+
         renderer.render(scene, camera);
     });
 }

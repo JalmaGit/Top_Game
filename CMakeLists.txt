@@ -10,7 +10,7 @@ find_package(assimp CONFIG REQUIRED)
 
 add_executable(Top_Game main.cpp
         cppfiles/geometryCreation.cpp
-        )
+        cppfiles/world.cpp)
 
 target_link_libraries(Top_Game PRIVATE threepp::threepp imgui::imgui assimp::assimp)
 target_link_libraries(Top_Game PRIVATE ${BULLET_LIBRARIES})
