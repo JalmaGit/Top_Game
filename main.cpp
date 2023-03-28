@@ -56,7 +56,7 @@ int main() {
     auto light = HemisphereLight::create(Color::aliceblue, Color::grey);
     scene->add(light);
 
-    PlaneGeometry::Params pictureSize{1739, 1195};
+    PlaneGeometry::Params pictureSize{1000, 500};
     auto plane = createPlane(pictureSize);
     scene->add(plane);
 
@@ -78,8 +78,8 @@ int main() {
     box3.setFromObject(*box);
 
     WorldGen worldGen;
-    worldGen.mapSizeY = 1195;
-    worldGen.mapSizeX = 1739;
+    worldGen.mapSizeY = 500;
+    worldGen.mapSizeX = 1000;
 
     Box3 worldHitBox[4]{};
     worldGen.getWorldEdge(worldHitBox);
