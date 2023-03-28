@@ -18,7 +18,7 @@ std::shared_ptr<Mesh> createBox(const BoxGeometry::Params params) {
     return mesh;
 }
 
-std::shared_ptr<Mesh> createPlane(const PlaneGeometry::Params& params) {
+std::shared_ptr<Mesh> createPlane(const PlaneGeometry::Params &params) {
     TextureLoader loader;
 
     auto planeGeometry = PlaneGeometry::create(params);

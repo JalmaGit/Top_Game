@@ -35,7 +35,8 @@ int main() {
     camera->position.y = -10;
     camera->rotation.x = math::PI / 6;
 
-    OrbitControls controls{camera, canvas};
+    //Used to help with visualization
+    //OrbitControls controls{camera, canvas};
 
     MyListener keyW;
     keyW.keyType = 87;
@@ -57,8 +58,8 @@ int main() {
     scene->add(light);
 
     PlaneGeometry::Params pictureSize{1000, 500};
-    auto plane = createPlane(pictureSize);
-    scene->add(plane);
+    auto florPlane = createPlane(pictureSize);
+    scene->add(florPlane);
 
     auto stlPlayerModel = createStlModel();
     scene->add(stlPlayerModel);
@@ -94,7 +95,7 @@ int main() {
     });
 
     auto lastPlayerShadowPos = shadowBox->position;
-    bool crash{false};
+    bool hitBoxDetected{false};
 
     canvas.animate([&](float dt) {
 
@@ -104,22 +105,22 @@ int main() {
 
         for (int i{}; i < std::size(worldHitBox); i++) {
             if (worldHitBox[i].intersectsBox(box3Shadow)) {
-                crash = true;
+                hitBoxDetected = true;
                 break;
             } else {
-                crash = false;
+                hitBoxDetected = false;
             }
         }
 
-        if (!crash) {
+        if (!hitBoxDetected) {
             if (box3.intersectsBox(box3Shadow)) {
-                crash = true;
+                hitBoxDetected = true;
             } else {
-                crash = false;
+                hitBoxDetected = false;
             }
         }
 
-        if (!crash) {
+        if (!hitBoxDetected) {
             lastPlayerShadowPos = shadowBox->position;
             if (keyW.buttonPressed()) {
                 shadowBox->position.y++;
@@ -138,7 +139,7 @@ int main() {
                 stlPlayerModel->rotation.y = math::PI / 2;
             }
         }
-        if (crash) {
+        if (hitBoxDetected) {
             shadowBox->position.copy(lastPlayerShadowPos);
         }
         stlPlayerModel->position.copy(lastPlayerShadowPos);
