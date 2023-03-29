@@ -10,18 +10,13 @@
 #include "iostream"
 
 class WorldGen {
-private:
-    Box3 createUpperWorldEdge(BoxGeometry::Params params);
-
-    Box3 createLowerWorldEdge(BoxGeometry::Params params);
-
-    Box3 createRightWorldEdge(BoxGeometry::Params params);
-
-    Box3 createLeftWorldEdge(BoxGeometry::Params params);
-
 public:
     float mapSizeX{};
     float mapSizeY{};
+
+    auto getWorldFlor(Group* group){
+         group->add(createPlane(mapSize));
+    }
 
     void getWorldEdge(Box3 worldHitBox[4]) {
         BoxGeometry::Params edgeBox{mapSizeX, 30, mapSizeY};
@@ -32,6 +27,14 @@ public:
     }
 
 private:
+    Box3 createUpperWorldEdge(BoxGeometry::Params params);
+
+    Box3 createLowerWorldEdge(BoxGeometry::Params params);
+
+    Box3 createRightWorldEdge(BoxGeometry::Params params);
+
+    Box3 createLeftWorldEdge(BoxGeometry::Params params);
+
     PlaneGeometry::Params mapSize{mapSizeX, mapSizeY};
     //Not in use yet, more development needed
 

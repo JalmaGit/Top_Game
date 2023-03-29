@@ -57,9 +57,9 @@ int main() {
     auto light = HemisphereLight::create(Color::aliceblue, Color::grey);
     scene->add(light);
 
-    PlaneGeometry::Params pictureSize{1000, 500};
-    auto florPlane = createPlane(pictureSize);
-    scene->add(florPlane);
+    //PlaneGeometry::Params pictureSize{1000, 500};
+    //auto florPlane = createPlane(pictureSize);
+    //scene->add(florPlane);
 
     auto stlPlayerModel = createStlModel();
     scene->add(stlPlayerModel);
@@ -81,6 +81,14 @@ int main() {
     WorldGen worldGen;
     worldGen.mapSizeY = 500;
     worldGen.mapSizeX = 1000;
+
+    auto group = Group::create();
+    worldGen.getWorldFlor(group.get());
+    scene->add(group);
+
+    PlaneGeometry::Params pictureSize{1000, 500};
+    auto florPlane = createPlane(pictureSize);
+    scene->add(florPlane);
 
     Box3 worldHitBox[4]{};
     worldGen.getWorldEdge(worldHitBox);
