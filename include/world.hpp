@@ -13,10 +13,13 @@ class WorldGen {
 public:
     float mapSizeX{};
     float mapSizeY{};
+    std::shared_ptr<Mesh> worldFlor;
 
-    auto getWorldFlor(Group* group){
-         group->add(createPlane(mapSize));
+    WorldGen(float x, float y):mapSizeX(x),mapSizeY(y){
+        worldFlor = createPlane(x,y);
     }
+
+
 
     void getWorldEdge(Box3 worldHitBox[4]) {
         BoxGeometry::Params edgeBox{mapSizeX, 30, mapSizeY};

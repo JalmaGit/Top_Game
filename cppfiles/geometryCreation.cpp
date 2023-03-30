@@ -18,10 +18,10 @@ std::shared_ptr<Mesh> createBox(const BoxGeometry::Params params) {
     return mesh;
 }
 
-std::shared_ptr<Mesh> createPlane(const PlaneGeometry::Params &params) {
+std::shared_ptr<Mesh> createPlane(float x, float y) {
     TextureLoader loader;
 
-    auto planeGeometry = PlaneGeometry::create(params);
+    auto planeGeometry = PlaneGeometry::create(x,y);
     auto planeMaterial = MeshBasicMaterial::create();
     planeMaterial->map = loader.load("bin/data/textures/flor.png");
     planeMaterial->side = DoubleSide;

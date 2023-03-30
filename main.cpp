@@ -65,8 +65,9 @@ int main() {
     scene->add(stlPlayerModel);
 
     auto shadowBox = createStlModel();
-    shadowBox->material()->transparent = true;
-    shadowBox->material()->opacity = 0;
+    //shadowBox->material()->transparent = true;
+    //shadowBox->material()->opacity = 0;
+    shadowBox->visible= false;
     scene->add(shadowBox);
 
     BoxGeometry::Params boxParams{25, 25, 25};
@@ -78,17 +79,14 @@ int main() {
     Box3 box3;
     box3.setFromObject(*box);
 
-    WorldGen worldGen;
-    worldGen.mapSizeY = 500;
-    worldGen.mapSizeX = 1000;
+    WorldGen worldGen{500,1000};
 
-    auto group = Group::create();
-    worldGen.getWorldFlor(group.get());
-    scene->add(group);
+    scene->add(worldGen.worldFlor);
 
-    PlaneGeometry::Params pictureSize{1000, 500};
-    auto florPlane = createPlane(pictureSize);
-    scene->add(florPlane);
+
+    //PlaneGeometry::Params pictureSize{1000, 500};
+    //auto florPlane = createPlane(pictureSize);
+    //scene->add(florPlane);
 
     Box3 worldHitBox[4]{};
     worldGen.getWorldEdge(worldHitBox);

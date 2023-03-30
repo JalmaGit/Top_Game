@@ -11,7 +11,7 @@ using namespace threepp;
 
 std::shared_ptr<Mesh> createBox(BoxGeometry::Params params);
 
-std::shared_ptr<Mesh> createPlane(const PlaneGeometry::Params &params);
+std::shared_ptr<Mesh> createPlane(float x, float y);
 
 std::shared_ptr<Mesh> createStlModel();
 
