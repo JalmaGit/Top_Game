@@ -11,11 +11,11 @@ std::shared_ptr<Mesh> createBox(const BoxGeometry::Params params) {
     auto boxGeometry = BoxGeometry::create(params);
     auto boxMaterial = MeshBasicMaterial::create();
     boxMaterial->color = Color::skyblue;
-    auto mesh = Mesh::create(boxGeometry, boxMaterial);
-    mesh->rotateX(math::PI / 2);
-    mesh->position.z = params.height / 2;
+    auto box = Mesh::create(boxGeometry, boxMaterial);
+    box->rotateX(math::PI / 2);
+    box->position.z = params.height / 2;
 
-    return mesh;
+    return box;
 }
 
 std::shared_ptr<Mesh> createPlane(float x, float y) {
@@ -36,9 +36,9 @@ std::shared_ptr<Mesh> createStlModel() {
     auto stlGeometry = stlLoader.load("bin/data/models/stl/mogus.stl");
     auto stlMaterial = MeshPhongMaterial::create();
     stlMaterial->color = Color::grey;
-    auto mesh = Mesh::create(stlGeometry, stlMaterial);
-    mesh->scale *= 0.2;
-    mesh->rotateX(math::PI / 2);
+    auto stlModel = Mesh::create(stlGeometry, stlMaterial);
+    stlModel->scale *= 0.2;
+    stlModel->rotateX(math::PI / 2);
 
-    return mesh;
+    return stlModel;
 }
