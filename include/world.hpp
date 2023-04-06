@@ -14,22 +14,23 @@ public:
     float mapSizeX{};
     float mapSizeY{};
     std::shared_ptr<Mesh> worldFlor;
+    std::shared_ptr<Mesh> boxInWorld;
+    std::array<Box3,4> worldWallHitBox;
 
     WorldGen(float x, float y):mapSizeX(x),mapSizeY(y){
         worldFlor = createPlane(x,y);
-    }
-
-
-
-    void getWorldEdge(Box3 worldHitBox[4]) {
-        BoxGeometry::Params edgeBox{mapSizeX, 30, mapSizeY};
-        worldHitBox[0] = createUpperWorldEdge(edgeBox);
-        worldHitBox[1] = createLowerWorldEdge(edgeBox);
-        worldHitBox[2] = createRightWorldEdge(edgeBox),
-                worldHitBox[3] = createLeftWorldEdge(edgeBox);
+        getWorldEdge(worldWallHitBox);
     }
 
 private:
+    void getWorldEdge(std::array<Box3,4>& edgeHitBox) {
+        BoxGeometry::Params edgeBox{mapSizeX, 30, mapSizeY};
+        edgeHitBox[0] = createUpperWorldEdge(edgeBox);
+        edgeHitBox[1] = createLowerWorldEdge(edgeBox);
+        edgeHitBox[2] = createRightWorldEdge(edgeBox);
+        edgeHitBox[3] = createLeftWorldEdge(edgeBox);
+    }
+
     Box3 createUpperWorldEdge(BoxGeometry::Params params);
 
     Box3 createLowerWorldEdge(BoxGeometry::Params params);

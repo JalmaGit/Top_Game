@@ -6,7 +6,7 @@
 
 using namespace threepp;
 
-std::shared_ptr<Mesh> createBox(const BoxGeometry::Params params) {
+std::shared_ptr<Mesh> createBox(const BoxGeometry::Params params, float position) {
 
     auto boxGeometry = BoxGeometry::create(params);
     auto boxMaterial = MeshBasicMaterial::create();
@@ -14,6 +14,7 @@ std::shared_ptr<Mesh> createBox(const BoxGeometry::Params params) {
     auto box = Mesh::create(boxGeometry, boxMaterial);
     box->rotateX(math::PI / 2);
     box->position.z = params.height / 2;
+    box->position.x = position;
 
     return box;
 }
@@ -30,10 +31,9 @@ std::shared_ptr<Mesh> createPlane(float x, float y) {
     return plane;
 }
 
-std::shared_ptr<Mesh> createStlModel() {
+std::shared_ptr<Mesh> createStlModel(const std::string& path) {
     STLLoader stlLoader;
-
-    auto stlGeometry = stlLoader.load("bin/data/models/stl/mogus.stl");
+    auto stlGeometry = stlLoader.load(path);
     auto stlMaterial = MeshPhongMaterial::create();
     stlMaterial->color = Color::grey;
     auto stlModel = Mesh::create(stlGeometry, stlMaterial);
