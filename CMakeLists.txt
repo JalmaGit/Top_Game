@@ -7,9 +7,9 @@ find_package(threepp CONFIG REQUIRED)
 find_package(imgui CONFIG REQUIRED)
 
 add_executable(Top_Game main.cpp
-        cppfiles/geometryCreation.cpp
-        cppfiles/world.cpp
-        cppfiles/player.cpp)
+        src/geometryCreation.cpp
+        src/world.cpp
+        src/player.cpp)
 
 target_link_libraries(Top_Game PRIVATE threepp::threepp imgui::imgui)
 target_include_directories(Top_Game PUBLIC "${CMAKE_SOURCE_DIR}/include")
