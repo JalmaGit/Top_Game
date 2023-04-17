@@ -22,7 +22,16 @@ public:
         getWorldEdge(worldWallHitBox);
     }
 
+    [[nodiscard]] auto getBox() const{
+        BoxGeometry::Params boxParams{boxSize, boxSize, boxSize};
+        auto box = createBox(boxParams,boxPos);
+        return box;
+    }
+
 private:
+    float boxSize{25};
+    float boxPos{50};
+
     void getWorldEdge(std::array<Box3,4>& edgeHitBox) {
         BoxGeometry::Params edgeBox{mapSizeX, 30, mapSizeY};
         edgeHitBox[0] = createUpperWorldEdge(edgeBox);

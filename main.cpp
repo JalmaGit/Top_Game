@@ -3,27 +3,9 @@
 #include "geometryCreation.hpp"
 #include "world.hpp"
 #include "player.hpp"
+#include "keyInput.hpp"
 
 using namespace threepp;
-
-struct MyListener : KeyListener {
-
-    int keyType{};
-
-    bool button = false;
-
-    void onKeyPressed(KeyEvent evt) override {
-        if (evt.key == keyType) { button = true; }
-    }
-
-    void onKeyReleased(KeyEvent evt) override {
-        if (evt.key == keyType) { button = false; }
-    }
-
-    [[nodiscard]] bool buttonPressed() const {
-        return button;
-    }
-};
 
 int main() {
 
@@ -34,47 +16,28 @@ int main() {
     //Used to help with visualization
     //OrbitControls controls{camera, canvas};
 
-    MyListener keyW;
-    keyW.keyType = 87;
-    canvas.addKeyListener(&keyW);
-
-    MyListener keyA;
-    keyA.keyType = 65;
-    canvas.addKeyListener(&keyA);
-
-    MyListener keyS;
-    keyS.keyType = 83;
-    canvas.addKeyListener(&keyS);
-
-    MyListener keyD;
-    keyD.keyType = 68;
-    canvas.addKeyListener(&keyD);
-
+    KeyChecker keyChecker;
+    keyChecker.setKeyInput(canvas);
 
     auto light = HemisphereLight::create(Color::aliceblue, Color::grey);
     scene->add(light);
 
-    Player player;
-    std::shared_ptr<PerspectiveCamera> camera = player.getCameraCreation(canvas);
-    scene->add(camera);
+    Player player{canvas};
+    scene->add(player.playerCamera);
     scene->add(player.playerModel);
     scene->add(player.shadowBox);
 
-    BoxGeometry::Params boxParams{25, 25, 25};
-    auto box = createBox(boxParams,50);
-    scene->add(box);
-    Box3 box3;
-    box3.setFromObject(*box);
-
     WorldGen worldGen{1000,500};
     scene->add(worldGen.worldFlor);
+    scene->add(worldGen.getBox());
 
-    Box3 box3Shadow;
-    box3Shadow.setFromObject(*player.shadowBox);
+    Box3 box3;
+    box3.setFromObject(*worldGen.getBox());
+
 
     canvas.onWindowResize([&](WindowSize size) {
-        camera->aspect = size.getAspect();
-        camera->updateProjectionMatrix();
+        player.playerCamera->aspect = size.getAspect();
+        player.playerCamera->updateProjectionMatrix();
         renderer.setSize(size);
     });
 
@@ -83,12 +46,15 @@ int main() {
 
     canvas.animate([&](float dt) {
 
+        std::cout << dt << std::endl;
+
+        std::array<int,2> direction{0,0};
 
         player.shadowBox->geometry()->computeBoundingBox();
-        box3Shadow.copy(*player.shadowBox->geometry()->boundingBox).applyMatrix4(*player.shadowBox->matrixWorld);
+        player.box3Shadow.copy(*player.shadowBox->geometry()->boundingBox).applyMatrix4(*player.shadowBox->matrixWorld);
 
         for (int i{}; i < worldGen.worldWallHitBox.size(); i++) {
-            if (worldGen.worldWallHitBox[i].intersectsBox(box3Shadow)) {
+            if (worldGen.worldWallHitBox[i].intersectsBox(player.box3Shadow)) {
                 hitBoxDetected = true;
                 break;
 
@@ -98,39 +64,26 @@ int main() {
         }
 
         if (!hitBoxDetected) {
-            if (box3.intersectsBox(box3Shadow)) {
+            if (box3.intersectsBox(player.box3Shadow)) {
                 hitBoxDetected= true;
             } else {
                 hitBoxDetected = false;
             }
         }
 
+        keyChecker.getKeyInput(direction);
+
         if (!hitBoxDetected) {
             lastPlayerShadowPos = player.shadowBox->position;
-            if (keyW.buttonPressed()) {
-                player.shadowBox->position.y++;
-                player.playerModel->rotation.y = 0;
-            }
-            if (keyS.buttonPressed()) {
-                player.shadowBox->position.y--;
-                player.playerModel->rotation.y = math::PI;
-            }
-            if (keyD.buttonPressed()) {
-                player.shadowBox->position.x++;
-                player.playerModel->rotation.y = 3 * math::PI / 2;
-            }
-            if (keyA.buttonPressed()) {
-                player.shadowBox->position.x--;
-                player.playerModel->rotation.y = math::PI / 2;
-            }
+            player.moveShadow(direction, dt);
         }
         if (hitBoxDetected) {
             player.shadowBox->position.copy(lastPlayerShadowPos);
         }
         player.playerModel->position.copy(lastPlayerShadowPos);
-        camera->position.x = lastPlayerShadowPos.x;
-        camera->position.y = lastPlayerShadowPos.y - 10;
+        player.playerCamera->position.x = lastPlayerShadowPos.x;
+        player.playerCamera->position.y = lastPlayerShadowPos.y - 10;
 
-        renderer.render(scene, camera);
+        renderer.render(scene, player.playerCamera);
     });
 }
