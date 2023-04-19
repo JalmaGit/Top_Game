@@ -1,9 +1,10 @@
 #include <iostream>
+#include <vector>
 #include "threepp/threepp.hpp"
-#include "geometryCreation.hpp"
 #include "world.hpp"
 #include "player.hpp"
 #include "keyInput.hpp"
+#include "gameLogic.hpp"
 
 using namespace threepp;
 
@@ -12,9 +13,6 @@ int main() {
     Canvas canvas{Canvas::Parameters().antialiasing(4)};
     GLRenderer renderer{canvas};
     auto scene = Scene::create();
-
-    //Used to help with visualization
-    //OrbitControls controls{camera, canvas};
 
     KeyChecker keyChecker;
     keyChecker.setKeyInput(canvas);
@@ -29,11 +27,7 @@ int main() {
 
     WorldGen worldGen{1000,500};
     scene->add(worldGen.worldFlor);
-    scene->add(worldGen.getBox());
-
-    Box3 box3;
-    box3.setFromObject(*worldGen.getBox());
-
+    scene->add(worldGen.boxInWorld);
 
     canvas.onWindowResize([&](WindowSize size) {
         player.playerCamera->aspect = size.getAspect();
@@ -44,45 +38,16 @@ int main() {
     auto lastPlayerShadowPos = player.shadowBox->position;
     bool hitBoxDetected{false};
 
+    std::vector<int> hello;
+    hello.emplace_back(4);
+    hello.emplace_back(5);
+
+    std::cout << hello.size() << std::endl;
+    std::cout << hello[0] << std::endl;
+
     canvas.animate([&](float dt) {
 
-        std::cout << dt << std::endl;
-
-        std::array<int,2> direction{0,0};
-
-        player.shadowBox->geometry()->computeBoundingBox();
-        player.box3Shadow.copy(*player.shadowBox->geometry()->boundingBox).applyMatrix4(*player.shadowBox->matrixWorld);
-
-        for (int i{}; i < worldGen.worldWallHitBox.size(); i++) {
-            if (worldGen.worldWallHitBox[i].intersectsBox(player.box3Shadow)) {
-                hitBoxDetected = true;
-                break;
-
-            } else {
-                hitBoxDetected = false;
-            }
-        }
-
-        if (!hitBoxDetected) {
-            if (box3.intersectsBox(player.box3Shadow)) {
-                hitBoxDetected= true;
-            } else {
-                hitBoxDetected = false;
-            }
-        }
-
-        keyChecker.getKeyInput(direction);
-
-        if (!hitBoxDetected) {
-            lastPlayerShadowPos = player.shadowBox->position;
-            player.moveShadow(direction, dt);
-        }
-        if (hitBoxDetected) {
-            player.shadowBox->position.copy(lastPlayerShadowPos);
-        }
-        player.playerModel->position.copy(lastPlayerShadowPos);
-        player.playerCamera->position.x = lastPlayerShadowPos.x;
-        player.playerCamera->position.y = lastPlayerShadowPos.y - 10;
+        runGameLogic(player,worldGen,hitBoxDetected,lastPlayerShadowPos,keyChecker, dt);
 
         renderer.render(scene, player.playerCamera);
     });

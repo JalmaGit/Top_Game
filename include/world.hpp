@@ -15,29 +15,37 @@ public:
     float mapSizeY{};
     std::shared_ptr<Mesh> worldFlor;
     std::shared_ptr<Mesh> boxInWorld;
-    std::array<Box3,4> worldWallHitBox;
+    std::vector<Box3> worldHitBoxes;
+    Box3 box3;
 
     WorldGen(float x, float y):mapSizeX(x),mapSizeY(y){
         worldFlor = createPlane(x,y);
-        getWorldEdge(worldWallHitBox);
+        boxInWorld = createBox(boxParams, boxPos);
+        getHitboxes(worldHitBoxes);
     }
 
-    [[nodiscard]] auto getBox() const{
-        BoxGeometry::Params boxParams{boxSize, boxSize, boxSize};
-        auto box = createBox(boxParams,boxPos);
-        return box;
-    }
 
 private:
     float boxSize{25};
     float boxPos{50};
 
-    void getWorldEdge(std::array<Box3,4>& edgeHitBox) {
+    BoxGeometry::Params boxParams{boxSize, boxSize, boxSize};
+
+    void getHitboxes(std::vector<Box3>& hitBoxes){
+        getWorldEdge(hitBoxes);
+        addHitBox(hitBoxes);
+    }
+
+    void getWorldEdge(std::vector<Box3>& edgeHitBox) {
         BoxGeometry::Params edgeBox{mapSizeX, 30, mapSizeY};
-        edgeHitBox[0] = createUpperWorldEdge(edgeBox);
-        edgeHitBox[1] = createLowerWorldEdge(edgeBox);
-        edgeHitBox[2] = createRightWorldEdge(edgeBox);
-        edgeHitBox[3] = createLeftWorldEdge(edgeBox);
+        edgeHitBox.emplace_back(createUpperWorldEdge(edgeBox));
+        edgeHitBox.emplace_back(createLowerWorldEdge(edgeBox));
+        edgeHitBox.emplace_back(createRightWorldEdge(edgeBox));
+        edgeHitBox.emplace_back(createLeftWorldEdge(edgeBox));
+    }
+
+    void addHitBox(std::vector<Box3>& hitbox){
+        hitbox.emplace_back(box3.setFromObject(*boxInWorld));
     }
 
     Box3 createUpperWorldEdge(BoxGeometry::Params params);
