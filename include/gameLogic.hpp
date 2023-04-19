@@ -12,6 +12,8 @@
 
 void runGameLogic(Player& player, WorldGen& worldGen, bool& hitBoxDetected, Vector3& lastPlayerShadowPos, KeyChecker& keyChecker, float& dt){
 
+    //ask if arv is good thing here for Player.
+
     std::array<int,2> direction{0,0};
 
     player.shadowBox->geometry()->computeBoundingBox();
