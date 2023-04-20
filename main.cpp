@@ -35,12 +35,11 @@ int main() {
         renderer.setSize(size);
     });
 
-    auto lastPlayerShadowPos = player.shadowBox->position;
     bool hitBoxDetected{false};
 
     canvas.animate([&](float dt) {
 
-        runGameLogic(player,worldGen,hitBoxDetected,lastPlayerShadowPos,keyChecker, dt);
+        runGameLogic(player,worldGen,hitBoxDetected,keyChecker, dt);
 
         renderer.render(scene, player.playerCamera);
     });

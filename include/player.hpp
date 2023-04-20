@@ -13,11 +13,13 @@ public:
     std::shared_ptr<Mesh> playerModel;
     std::shared_ptr<Mesh> shadowBox;
     std::shared_ptr<PerspectiveCamera> playerCamera;
+    Vector3 lastPlayerShadowPos;
     Box3 box3Shadow;
 
     explicit Player(const Canvas& canvas1){
         playerModel = playerModelCreation();
         shadowBox = shadowBoxCreation();
+        lastPlayerShadowPos = shadowBox->position;
         box3Shadow.setFromObject(*shadowBox);
         playerCamera = getCameraCreation(canvas1);
     }

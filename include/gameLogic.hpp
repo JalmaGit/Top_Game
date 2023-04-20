@@ -22,7 +22,7 @@ public:
 private:
 };
 
-void runGameLogic(Player& player, WorldGen& worldGen, bool& hitBoxDetected, Vector3& lastPlayerShadowPos, KeyChecker& keyChecker, float& dt){
+void runGameLogic(Player& player, WorldGen& worldGen, bool& hitBoxDetected, KeyChecker& keyChecker, float& dt){
 
     std::array<int,2> direction{0,0};
 
@@ -43,15 +43,15 @@ void runGameLogic(Player& player, WorldGen& worldGen, bool& hitBoxDetected, Vect
     keyChecker.getKeyInput(direction);
 
     if (!hitBoxDetected) {
-        lastPlayerShadowPos = player.shadowBox->position;
+        player.lastPlayerShadowPos = player.shadowBox->position;
         player.moveShadow(direction, dt);
     }
     if (hitBoxDetected) {
-        player.shadowBox->position.copy(lastPlayerShadowPos);
+        player.shadowBox->position.copy(player.lastPlayerShadowPos);
     }
-    player.playerModel->position.copy(lastPlayerShadowPos);
-    player.playerCamera->position.x = lastPlayerShadowPos.x;
-    player.playerCamera->position.y = lastPlayerShadowPos.y - 10;
+    player.playerModel->position.copy(player.lastPlayerShadowPos);
+    player.playerCamera->position.x = player.lastPlayerShadowPos.x;
+    player.playerCamera->position.y = player.lastPlayerShadowPos.y - 10;
 }
 
 
