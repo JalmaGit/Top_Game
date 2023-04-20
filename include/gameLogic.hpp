@@ -10,11 +10,11 @@
 #include "world.hpp"
 #include "keyInput.hpp"
 
-class GameLogic {
+class GameLogic{
 public:
         Vector3 lastPlayerShadowPos;
         bool hitBoxDetected;
-    explicit GameLogic(Player& player){
+    explicit GameLogic(Player& player, WorldGen& worldGen, KeyChecker& keyChecker){
         lastPlayerShadowPos = player.shadowBox->position;
         hitBoxDetected = false;
     }
@@ -23,6 +23,8 @@ private:
 };
 
 void runGameLogic(Player& player, WorldGen& worldGen, bool& hitBoxDetected, KeyChecker& keyChecker, float& dt){
+
+    //Spøre lærer om det det er verdt det å lage en game logic klasse.
 
     std::array<int,2> direction{0,0};
 
