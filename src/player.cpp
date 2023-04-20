@@ -3,6 +3,7 @@
 //
 
 #include "player.hpp"
+#include <iostream>
 
 std::shared_ptr<Mesh> Player::shadowBoxCreation() {
     std::string path = "bin/data/models/stl/mogus.stl";
@@ -26,22 +27,16 @@ std::shared_ptr<PerspectiveCamera> Player::getCameraCreation(const Canvas &canva
 }
 
 void Player::moveShadow(std::array<int, 2> &direction, float dt) const {
+
     float baseSpeed{50};
-    if (direction[0] == 1) {
-        shadowBox->position.y += static_cast<float>(direction[0]) * dt * baseSpeed;
-        playerModel->rotation.y = 0;
+    shadowBox->position.y += static_cast<float>(direction[0]) * dt * baseSpeed;
+    shadowBox->position.x += static_cast<float>(direction[1]) * dt * baseSpeed;
+
+    if (direction[0] == 1 || direction[0] == -1) {
+        playerModel->rotation.y = static_cast<float>(direction[0])*math::PI/2 + 3*math::PI/2;
     }
-    if (direction[0] == -1) {
-        shadowBox->position.y += static_cast<float>(direction[0]) * dt * baseSpeed;
-        playerModel->rotation.y = math::PI;
-    }
-    if (direction[1] == 1) {
-        shadowBox->position.x += static_cast<float>(direction[1]) * dt * baseSpeed;
-        playerModel->rotation.y = 3 * math::PI / 2;
-    }
-    if (direction[1] == -1) {
-        shadowBox->position.x += static_cast<float>(direction[1]) * dt * baseSpeed;;
-        playerModel->rotation.y = math::PI / 2;
+    if (direction[1] == 1 || direction[1] == -1) {
+        playerModel->rotation.y = -static_cast<float>(direction[1])*math::PI / 2;
     }
 }
 

@@ -38,13 +38,6 @@ int main() {
     auto lastPlayerShadowPos = player.shadowBox->position;
     bool hitBoxDetected{false};
 
-    std::vector<int> hello;
-    hello.emplace_back(4);
-    hello.emplace_back(5);
-
-    std::cout << hello.size() << std::endl;
-    std::cout << hello[0] << std::endl;
-
     canvas.animate([&](float dt) {
 
         runGameLogic(player,worldGen,hitBoxDetected,lastPlayerShadowPos,keyChecker, dt);

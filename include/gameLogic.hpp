@@ -10,9 +10,19 @@
 #include "world.hpp"
 #include "keyInput.hpp"
 
-void runGameLogic(Player& player, WorldGen& worldGen, bool& hitBoxDetected, Vector3& lastPlayerShadowPos, KeyChecker& keyChecker, float& dt){
+class GameLogic {
+public:
+        Vector3 lastPlayerShadowPos;
+        bool hitBoxDetected;
+    explicit GameLogic(Player& player){
+        lastPlayerShadowPos = player.shadowBox->position;
+        hitBoxDetected = false;
+    }
+    
+private:
+};
 
-    //ask if arv is good thing here for Player.
+void runGameLogic(Player& player, WorldGen& worldGen, bool& hitBoxDetected, Vector3& lastPlayerShadowPos, KeyChecker& keyChecker, float& dt){
 
     std::array<int,2> direction{0,0};
 
