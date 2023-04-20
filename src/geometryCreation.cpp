@@ -6,22 +6,23 @@
 
 using namespace threepp;
 
-std::shared_ptr<Mesh> createBox(const BoxGeometry::Params params) {
+std::shared_ptr<Mesh> createBox(const BoxGeometry::Params params, float position) {
 
     auto boxGeometry = BoxGeometry::create(params);
     auto boxMaterial = MeshBasicMaterial::create();
     boxMaterial->color = Color::skyblue;
-    auto mesh = Mesh::create(boxGeometry, boxMaterial);
-    mesh->rotateX(math::PI / 2);
-    mesh->position.z = params.height / 2;
+    auto box = Mesh::create(boxGeometry, boxMaterial);
+    box->rotateX(math::PI / 2);
+    box->position.z = params.height / 2;
+    box->position.x = position;
 
-    return mesh;
+    return box;
 }
 
-std::shared_ptr<Mesh> createPlane(const PlaneGeometry::Params &params) {
+std::shared_ptr<Mesh> createPlane(float x, float y) {
     TextureLoader loader;
 
-    auto planeGeometry = PlaneGeometry::create(params);
+    auto planeGeometry = PlaneGeometry::create(x,y);
     auto planeMaterial = MeshBasicMaterial::create();
     planeMaterial->map = loader.load("bin/data/textures/flor.png");
     planeMaterial->side = DoubleSide;
@@ -30,15 +31,14 @@ std::shared_ptr<Mesh> createPlane(const PlaneGeometry::Params &params) {
     return plane;
 }
 
-std::shared_ptr<Mesh> createStlModel() {
+std::shared_ptr<Mesh> createStlModel(const std::string& path) {
     STLLoader stlLoader;
-
-    auto stlGeometry = stlLoader.load("bin/data/models/stl/mogus.stl");
+    auto stlGeometry = stlLoader.load(path);
     auto stlMaterial = MeshPhongMaterial::create();
     stlMaterial->color = Color::grey;
-    auto mesh = Mesh::create(stlGeometry, stlMaterial);
-    mesh->scale *= 0.2;
-    mesh->rotateX(math::PI / 2);
+    auto stlModel = Mesh::create(stlGeometry, stlMaterial);
+    stlModel->scale *= 0.2;
+    stlModel->rotateX(math::PI / 2);
 
-    return mesh;
+    return stlModel;
 }
