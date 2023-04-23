@@ -28,8 +28,8 @@ struct MyListener : KeyListener {
     }
 };
 
-class KeyChecker{
-public:
+struct KeyChecker{
+
     auto setKeyInput(Canvas& canvas){
         keyW.keyType = W;
         canvas.addKeyListener(&keyW);
@@ -60,16 +60,17 @@ public:
     }
 
 private:
+
     int W{87};
     int A{65};
     int S{83};
     int D{68};
+
     MyListener keyW;
     MyListener keyA;
     MyListener keyS;
     MyListener keyD;
 
 };
-
 
 #endif //TOP_GAME_KEYINPUT_HPP

@@ -31,7 +31,6 @@ void runGameLogic(Player& player, WorldGen& worldGen, bool& hitBoxDetected, KeyC
     player.shadowBox->geometry()->computeBoundingBox();
     player.box3Shadow.copy(*player.shadowBox->geometry()->boundingBox).applyMatrix4(*player.shadowBox->matrixWorld);
 
-
     for (int i{}; i < worldGen.worldHitBoxes.size(); i++) {
         if (worldGen.worldHitBoxes[i].intersectsBox(player.box3Shadow)) {
             hitBoxDetected = true;
