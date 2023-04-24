@@ -10,17 +10,20 @@
 #include "world.hpp"
 #include "keyInput.hpp"
 
-class GameLogic{
+/*class GameLogic{
 public:
-        Vector3 lastPlayerShadowPos;
         bool hitBoxDetected;
-    explicit GameLogic(Player& player, WorldGen& worldGen, KeyChecker& keyChecker){
-        lastPlayerShadowPos = player.shadowBox->position;
-        hitBoxDetected = false;
-    }
-    
+        WorldGen worldGen;
+        KeyChecker keyChecker;
+        std::shared_ptr<Scene> scene;
+        std::shared_ptr<HemisphereLight> light;
+        explicit GameLogic(Canvas &canvas){
+            hitBoxDetected = false;
+        }
+
 private:
-};
+
+};*/
 
 void runGameLogic(Player& player, WorldGen& worldGen, bool& hitBoxDetected, KeyChecker& keyChecker, float& dt){
 
