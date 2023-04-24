@@ -9,10 +9,14 @@
 
 using namespace threepp;
 
-std::shared_ptr<Mesh> createBox(BoxGeometry::Params params, float position);
+struct GeometryCreation{
+    std::shared_ptr<Mesh> createBox(BoxGeometry::Params params, float position);
 
-std::shared_ptr<Mesh> createPlane(float x, float y);
+    std::shared_ptr<Mesh> createPlane(float x, float y);
 
-std::shared_ptr<Mesh> createStlModel(const std::string& path);
+    std::shared_ptr<Mesh> createStlModel(const std::string& path);
+};
+
+
 
 #endif //THREEPP_VCPKG_TEST_GEOMETRY_CREATION_HPP

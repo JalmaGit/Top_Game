@@ -9,7 +9,7 @@
 #include "geometryCreation.hpp"
 #include "iostream"
 
-class WorldGen {
+class WorldGen : GeometryCreation{ //Spør Lærer om dette er en lur ide
 public:
     float mapSizeX{};
     float mapSizeY{};

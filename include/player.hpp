@@ -8,7 +8,7 @@
 #include "threepp/threepp.hpp"
 #include "geometryCreation.hpp"
 
-class Player{
+class Player : GeometryCreation {
 public:
     std::shared_ptr<Mesh> playerModel;
     std::shared_ptr<Mesh> shadowBox;

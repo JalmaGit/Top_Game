@@ -1,9 +1,6 @@
 #include <iostream>
-#include <vector>
 #include "threepp/threepp.hpp"
-#include "world.hpp"
 #include "player.hpp"
-#include "keyInput.hpp"
 #include "gameLogic.hpp"
 
 using namespace threepp;
@@ -12,22 +9,10 @@ int main() {
 
     Canvas canvas{Canvas::Parameters().antialiasing(4)};
     GLRenderer renderer{canvas};
-    auto scene = Scene::create();
-
-    KeyChecker keyChecker;
-    keyChecker.setKeyInput(canvas);
-
-    auto light = HemisphereLight::create(Color::aliceblue, Color::grey);
-    scene->add(light);
 
     Player player{canvas};
-    scene->add(player.playerCamera);
-    scene->add(player.playerModel);
-    scene->add(player.shadowBox);
 
-    WorldGen worldGen{1000,500};
-    scene->add(worldGen.worldFlor);
-    scene->add(worldGen.boxInWorld);
+    GameLogic gameLogic{canvas, player};
 
     canvas.onWindowResize([&](WindowSize size) {
         player.playerCamera->aspect = size.getAspect();
@@ -35,12 +20,10 @@ int main() {
         renderer.setSize(size);
     });
 
-    bool hitBoxDetected{false};
-
     canvas.animate([&](float dt) {
 
-        runGameLogic(player,worldGen,hitBoxDetected,keyChecker, dt);
+        gameLogic.gameTic(player,dt);
 
-        renderer.render(scene, player.playerCamera);
+        renderer.render(gameLogic.scene, player.playerCamera);
     });
 }
