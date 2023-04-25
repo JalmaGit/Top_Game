@@ -9,7 +9,7 @@
 #include "geometryCreation.hpp"
 #include "iostream"
 
-class WorldGen : GeometryCreation{ //Spør Lærer om dette er en lur ide
+class WorldGen { //Spør Lærer om dette er en lur ide
 public:
     float mapSizeX{};
     float mapSizeY{};
@@ -30,6 +30,8 @@ private:
     float boxPos{50};
 
     BoxGeometry::Params boxParams{boxSize, boxSize, boxSize};
+
+    //Make worldHitBoxes better
 
     void getHitboxes(std::vector<Box3>& hitBoxes){
         getWorldEdge(hitBoxes);

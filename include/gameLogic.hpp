@@ -34,22 +34,20 @@ public:
 
     void gameTic(Player &player, float &dt) {
 
-        std::array<int, 2> direction{0, 0};
+        std::array<int, 2> direction{0, 0}; //Ikke bruk array, Classes gjør litt det samme, kanskje med enums
 
         player.shadowBox->geometry()->computeBoundingBox();
         player.box3Shadow.copy(*player.shadowBox->geometry()->boundingBox).applyMatrix4(*player.shadowBox->matrixWorld);
 
-        for (int i{}; i < worldGen.worldHitBoxes.size(); i++) {
-            if (worldGen.worldHitBoxes[i].intersectsBox(player.box3Shadow)) {
+        for (const auto & worldHitBoxe : worldGen.worldHitBoxes) {
+            hitBoxDetected = false;
+            if (worldHitBoxe.intersectsBox(player.box3Shadow)) {
                 hitBoxDetected = true;
                 break;
-
-            } else {
-                hitBoxDetected = false;
             }
         }
 
-        keyChecker.getKeyInput(direction);
+        keyChecker.getKeyInput(direction); //Direction via key listener / eller test slik at det er testbart
 
         if (!hitBoxDetected) {
             player.lastPlayerShadowPos = player.shadowBox->position;

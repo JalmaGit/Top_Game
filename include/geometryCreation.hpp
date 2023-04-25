@@ -7,15 +7,18 @@
 
 #include "threepp/threepp.hpp"
 
+//Be more spefici when you only need specific things
+
 using namespace threepp;
 
-struct GeometryCreation{
-    std::shared_ptr<Mesh> createBox(BoxGeometry::Params params, float position);
+//make namespace utils
 
-    std::shared_ptr<Mesh> createPlane(float x, float y);
+std::shared_ptr<Mesh> createBox(BoxGeometry::Params params, float position);
 
-    std::shared_ptr<Mesh> createStlModel(const std::string& path);
-};
+std::shared_ptr<Mesh> createPlane(float x, float y);
+
+std::shared_ptr<Mesh> createStlModel(const std::string& path);
+
 
 
 

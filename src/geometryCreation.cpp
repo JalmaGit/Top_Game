@@ -6,7 +6,7 @@
 
 using namespace threepp;
 
-std::shared_ptr<Mesh> GeometryCreation::createBox(const BoxGeometry::Params params, float position) {
+std::shared_ptr<Mesh> createBox(const BoxGeometry::Params params, float position) {
 
     auto boxGeometry = BoxGeometry::create(params);
     auto boxMaterial = MeshBasicMaterial::create();
@@ -19,7 +19,7 @@ std::shared_ptr<Mesh> GeometryCreation::createBox(const BoxGeometry::Params para
     return box;
 }
 
-std::shared_ptr<Mesh> GeometryCreation::createPlane(float x, float y) {
+std::shared_ptr<Mesh> createPlane(float x, float y) {
     TextureLoader loader;
 
     auto planeGeometry = PlaneGeometry::create(x,y);
@@ -31,7 +31,7 @@ std::shared_ptr<Mesh> GeometryCreation::createPlane(float x, float y) {
     return plane;
 }
 
-std::shared_ptr<Mesh> GeometryCreation::createStlModel(const std::string& path) {
+std::shared_ptr<Mesh> createStlModel(const std::string& path) {
     STLLoader stlLoader;
     auto stlGeometry = stlLoader.load(path);
     auto stlMaterial = MeshPhongMaterial::create();

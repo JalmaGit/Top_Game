@@ -8,7 +8,7 @@
 #include "threepp/threepp.hpp"
 #include "geometryCreation.hpp"
 
-class Player : GeometryCreation {
+class Player {
 public:
     std::shared_ptr<Mesh> playerModel;
     std::shared_ptr<Mesh> shadowBox;
@@ -23,6 +23,7 @@ public:
         box3Shadow.setFromObject(*shadowBox);
         playerCamera = getCameraCreation(canvas1);
     }
+
 
     void moveShadow(std::array<int,2>& direction, float dt) const;
 

@@ -28,7 +28,8 @@ std::shared_ptr<PerspectiveCamera> Player::getCameraCreation(const Canvas &canva
 
 void Player::moveShadow(std::array<int, 2> &direction, float dt) const {
 
-    float baseSpeed{50};
+    float baseSpeed{50}; //Burde være en tilstand
+
     shadowBox->position.y += static_cast<float>(direction[0]) * dt * baseSpeed;
     shadowBox->position.x += static_cast<float>(direction[1]) * dt * baseSpeed;
 
