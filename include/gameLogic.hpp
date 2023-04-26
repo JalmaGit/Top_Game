@@ -92,11 +92,14 @@ private:
             angle = 2*math::PI;
         }
 
+        //Bruke rent enum class eller bruke rent vector2 (vil si enten bruke valg eller matte)
+        //bruke direction som vector3 og bare la z være null. prøv med bare en
+
         if (direction.y == utils::UP){
             shadowBox->position.y += dt*baseSpeed*std::cos(angle);
             shadowBox->position.x += dt*baseSpeed*std::sin(angle);
         }
-        if (direction.y == utils::DOWN){
+        if (direction.y == utils::DOWN){ //Re think direction
             shadowBox->position.y -= dt*baseSpeed*std::cos(angle);
             shadowBox->position.x -= dt*baseSpeed*std::sin(angle);
         }
