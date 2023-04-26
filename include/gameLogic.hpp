@@ -41,7 +41,11 @@ public:
     auto gameTic(Player &player, float &dt, Vector2& direction) {
 
         shadowBox->geometry()->computeBoundingBox();
+        Matrix4 matrix4;
+        matrix4.makeRotationFromEuler(shadowBox->rotation);
+        box3Shadow.applyMatrix4(matrix4);
         box3Shadow.copy(*shadowBox->geometry()->boundingBox).applyMatrix4(*shadowBox->matrixWorld);
+
 
         for (const auto & worldHitBoxes : worldGen.worldHitBoxes) {
             hitBoxDetected = false;
