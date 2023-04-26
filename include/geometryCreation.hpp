@@ -11,15 +11,23 @@
 
 using namespace threepp;
 
-//make namespace utils
+namespace utils {
 
-std::shared_ptr<Mesh> createBox(BoxGeometry::Params params, float position);
+    enum Direction{ //Is this good?
+        NONE,
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT
+    };
 
-std::shared_ptr<Mesh> createPlane(float x, float y);
+    std::shared_ptr<Mesh> createBox(BoxGeometry::Params params, float position);
 
-std::shared_ptr<Mesh> createStlModel(const std::string& path);
+    std::shared_ptr<Mesh> createPlane(float x, float y);
+
+    std::shared_ptr<Mesh> createStlModel(const std::string& path);
+
+}
 
 
-
-
-#endif //THREEPP_VCPKG_TEST_GEOMETRY_CREATION_HPP
+#endif //Top_Game_GEOMETRY_CREATION_HPP

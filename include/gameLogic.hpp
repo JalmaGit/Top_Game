@@ -8,7 +8,7 @@
 #include "threepp/threepp.hpp"
 #include "player.hpp"
 #include "world.hpp"
-#include "keyInput.hpp"
+#include <cmath>
 
 class GameLogic {
 public:
@@ -19,53 +19,100 @@ public:
 
         scene = Scene::create();
 
+        shadowBox = shadowBoxCreation();
+        lastPlayerShadowPos = shadowBox->position;
+        lastPlayerRotation = shadowBox->rotation;
+
+        box3Shadow.setFromObject(*shadowBox);
+        scene->add(shadowBox);
+
         scene->add(player.playerCamera);
         scene->add(player.playerModel);
-        scene->add(player.shadowBox);
+
 
         scene->add(worldGen.boxInWorld);
         scene->add(worldGen.worldFlor);
 
-        keyChecker.setKeyInput(canvas);
-
         light = HemisphereLight::create(Color::aliceblue, Color::grey);
         scene->add(light);
+
     }
+    //Ikke bruk array, Classes gjør litt det samme, kanskje med enums
+    auto gameTic(Player &player, float &dt, Vector2& direction) {
 
-    void gameTic(Player &player, float &dt) {
+        shadowBox->geometry()->computeBoundingBox();
+        box3Shadow.copy(*shadowBox->geometry()->boundingBox).applyMatrix4(*shadowBox->matrixWorld);
 
-        std::array<int, 2> direction{0, 0}; //Ikke bruk array, Classes gjør litt det samme, kanskje med enums
-
-        player.shadowBox->geometry()->computeBoundingBox();
-        player.box3Shadow.copy(*player.shadowBox->geometry()->boundingBox).applyMatrix4(*player.shadowBox->matrixWorld);
-
-        for (const auto & worldHitBoxe : worldGen.worldHitBoxes) {
+        for (const auto & worldHitBoxes : worldGen.worldHitBoxes) {
             hitBoxDetected = false;
-            if (worldHitBoxe.intersectsBox(player.box3Shadow)) {
+            if (worldHitBoxes.intersectsBox(box3Shadow)) {
                 hitBoxDetected = true;
                 break;
             }
         }
 
-        keyChecker.getKeyInput(direction); //Direction via key listener / eller test slik at det er testbart
-
         if (!hitBoxDetected) {
-            player.lastPlayerShadowPos = player.shadowBox->position;
-            player.moveShadow(direction, dt);
+            lastPlayerShadowPos = shadowBox->position;
+            lastPlayerRotation = shadowBox->rotation;
+            moveShadow(direction, dt);
         }
         if (hitBoxDetected) {
-            player.shadowBox->position.copy(player.lastPlayerShadowPos);
+            shadowBox->position.copy(lastPlayerShadowPos);
+            shadowBox->rotation.copy(lastPlayerRotation);
         }
-        player.playerModel->position.copy(player.lastPlayerShadowPos);
-        player.playerCamera->position.x = player.lastPlayerShadowPos.x;
-        player.playerCamera->position.y = player.lastPlayerShadowPos.y - 10;
+        std::cout << hitBoxDetected << std::endl;
+
+        player.setPlayerPosition(lastPlayerShadowPos, lastPlayerRotation);
     }
 
 private:
-    WorldGen worldGen{1000, 500};
-    KeyChecker keyChecker;
-    bool hitBoxDetected;
+    static std::shared_ptr<Mesh> shadowBoxCreation() {
+        std::string path = "bin/data/models/stl/mogus.stl";
+        std::shared_ptr<Mesh> shadow = utils::createStlModel(path);
+        shadow->visible = false;
+        return shadow;
+    }
+
+    void moveShadow(Vector2& direction, float dt) {
+
+        float baseSpeed{50}; //Burde være en tilstand
+
+        if (angle > 2*math::PI){
+            angle = 0;
+        }
+        if (angle < 0){
+            angle = 2*math::PI;
+        }
+
+        if (direction.y == utils::UP){
+            shadowBox->position.y += dt*baseSpeed*std::cos(angle);
+            shadowBox->position.x += dt*baseSpeed*std::sin(angle);
+        }
+        if (direction.y == utils::DOWN){
+            shadowBox->position.y -= dt*baseSpeed*std::cos(angle);
+            shadowBox->position.x -= dt*baseSpeed*std::sin(angle);
+        }
+        if(direction.x == utils::LEFT){
+            angle -= dt;
+        }
+        if(direction.x == utils::RIGHT){
+            angle += dt;
+        }
+        shadowBox->rotation.y = -angle;
+    }
+
+    float angle{};
     std::shared_ptr<HemisphereLight> light;
+
+    Vector3 lastPlayerShadowPos;
+    Euler lastPlayerRotation;
+    Box3 box3Shadow;
+    std::shared_ptr<Mesh> shadowBox;
+
+    WorldGen worldGen{1000, 500};
+
+    bool hitBoxDetected;
+
 };
 
 

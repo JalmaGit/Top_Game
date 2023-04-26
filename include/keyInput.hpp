@@ -6,6 +6,7 @@
 #define TOP_GAME_KEYINPUT_HPP
 
 #include "threepp/threepp.hpp"
+#include "iostream"
 
 using namespace threepp;
 
@@ -44,22 +45,26 @@ struct KeyChecker{
         canvas.addKeyListener(&keyD);
     }
 
-    auto getKeyInput(std::array<int,2>& direction){
+    Vector2 getKeyInput(){
+        Vector2 nextMove;
         if (keyW.buttonPressed()) {
-            direction[0] = 1;
+            nextMove.y = utils::UP;
         }
         if (keyS.buttonPressed()) {
-            direction[0] = -1;
-        }
-        if (keyD.buttonPressed()) {
-            direction[1] = 1;
+            nextMove.y = utils::DOWN;
         }
         if (keyA.buttonPressed()) {
-            direction[1] = -1;
+            nextMove.x = utils::LEFT;
         }
+        if (keyD.buttonPressed()) {
+            nextMove.x = utils::RIGHT;
+        }
+
+        return nextMove;
     }
 
 private:
+
 
     int W{87};
     int A{65};

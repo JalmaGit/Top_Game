@@ -7,30 +7,41 @@
 
 #include "threepp/threepp.hpp"
 #include "geometryCreation.hpp"
+#include <iostream>
 
 class Player {
 public:
     std::shared_ptr<Mesh> playerModel;
-    std::shared_ptr<Mesh> shadowBox;
+
     std::shared_ptr<PerspectiveCamera> playerCamera;
-    Vector3 lastPlayerShadowPos;
-    Box3 box3Shadow;
 
     explicit Player(const Canvas& canvas1){
         playerModel = playerModelCreation();
-        shadowBox = shadowBoxCreation();
-        lastPlayerShadowPos = shadowBox->position;
-        box3Shadow.setFromObject(*shadowBox);
         playerCamera = getCameraCreation(canvas1);
     }
 
-
-    void moveShadow(std::array<int,2>& direction, float dt) const;
+    auto setPlayerPosition(Vector3& position, Euler& rotation) const{
+        playerModel->position.copy(position);
+        playerModel->rotation.copy(rotation);
+        playerCamera->position.x = position.x;
+        playerCamera->position.y = position.y - 10;
+/*
+        if (direction.x == utils::UP) {
+            playerModel->rotation.y = 3*math::PI/2;
+        }
+        if (direction.y == utils::DOWN) {
+            playerModel->rotation.y = math::PI / 2;
+        }
+        if (direction.x == utils::LEFT){
+            playerModel->rotation.y = math::PI;
+        }
+        if (direction.x == utils::RIGHT){
+            playerModel->rotation.y = 0;
+        }*/
+    }
 
 private:
     std::shared_ptr<PerspectiveCamera> getCameraCreation(const Canvas& canvas);
-
-    std::shared_ptr<Mesh> shadowBoxCreation();
 
     std::shared_ptr<Mesh> playerModelCreation();
 

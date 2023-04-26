@@ -9,57 +9,47 @@
 #include "geometryCreation.hpp"
 #include "iostream"
 
-class WorldGen { //Spør Lærer om dette er en lur ide
+class WorldGen {
 public:
-    float mapSizeX{};
-    float mapSizeY{};
     std::shared_ptr<Mesh> worldFlor;
     std::shared_ptr<Mesh> boxInWorld;
     std::vector<Box3> worldHitBoxes;
-    Box3 box3;
 
     WorldGen(float x, float y):mapSizeX(x),mapSizeY(y){
-        worldFlor = createPlane(x,y);
-        boxInWorld = createBox(boxParams, boxPos);
-        getHitboxes(worldHitBoxes);
+        worldFlor = utils::createPlane(x,y);
+        boxInWorld = utils::createBox(boxParams, boxPos);
+
+        worldHitBoxes.emplace_back(createUpperWorldEdge(edgeBox));
+        worldHitBoxes.emplace_back(createLowerWorldEdge(edgeBox));
+        worldHitBoxes.emplace_back(createRightWorldEdge(edgeBox));
+        worldHitBoxes.emplace_back(createLeftWorldEdge(edgeBox));
+        addHitBox();
     }
 
 
 private:
     float boxSize{25};
     float boxPos{50};
+    float mapSizeX{};
+    float mapSizeY{};
 
+    Box3 box3;
+    BoxGeometry::Params edgeBox{mapSizeX, 30, mapSizeY};
     BoxGeometry::Params boxParams{boxSize, boxSize, boxSize};
 
-    //Make worldHitBoxes better
+    //Made worldHitBoxes better / ask if it is better
 
-    void getHitboxes(std::vector<Box3>& hitBoxes){
-        getWorldEdge(hitBoxes);
-        addHitBox(hitBoxes);
+    void addHitBox(){
+        worldHitBoxes.emplace_back(box3.setFromObject(*boxInWorld));
     }
 
-    void getWorldEdge(std::vector<Box3>& edgeHitBox) {
-        BoxGeometry::Params edgeBox{mapSizeX, 30, mapSizeY};
-        edgeHitBox.emplace_back(createUpperWorldEdge(edgeBox));
-        edgeHitBox.emplace_back(createLowerWorldEdge(edgeBox));
-        edgeHitBox.emplace_back(createRightWorldEdge(edgeBox));
-        edgeHitBox.emplace_back(createLeftWorldEdge(edgeBox));
-    }
+    static Box3 createUpperWorldEdge(BoxGeometry::Params params);
 
-    void addHitBox(std::vector<Box3>& hitbox){
-        hitbox.emplace_back(box3.setFromObject(*boxInWorld));
-    }
+    static Box3 createLowerWorldEdge(BoxGeometry::Params params);
 
-    Box3 createUpperWorldEdge(BoxGeometry::Params params);
+    static Box3 createRightWorldEdge(BoxGeometry::Params params);
 
-    Box3 createLowerWorldEdge(BoxGeometry::Params params);
-
-    Box3 createRightWorldEdge(BoxGeometry::Params params);
-
-    Box3 createLeftWorldEdge(BoxGeometry::Params params);
-
-    PlaneGeometry::Params mapSize{mapSizeX, mapSizeY};
-    //Not in use yet, more development needed
+    static Box3 createLeftWorldEdge(BoxGeometry::Params params);
 
 };
 

@@ -2,6 +2,7 @@
 #include "threepp/threepp.hpp"
 #include "player.hpp"
 #include "gameLogic.hpp"
+#include "keyInput.hpp"
 
 using namespace threepp;
 
@@ -9,6 +10,12 @@ int main() {
 
     Canvas canvas{Canvas::Parameters().antialiasing(4)};
     GLRenderer renderer{canvas};
+
+    auto scene = Scene::create();
+
+    KeyChecker keyChecker;
+
+    keyChecker.setKeyInput(canvas);
 
     Player player{canvas};
 
@@ -22,7 +29,9 @@ int main() {
 
     canvas.animate([&](float dt) {
 
-        gameLogic.gameTic(player,dt);
+        Vector2 vector2 = keyChecker.getKeyInput();
+
+        gameLogic.gameTic(player,dt, vector2);
 
         renderer.render(gameLogic.scene, player.playerCamera);
     });
