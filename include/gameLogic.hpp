@@ -17,6 +17,8 @@ public:
     GameLogic(Canvas &canvas, Player &player) {
         hitBoxDetected = false;
 
+        baseSpeed = 50;
+
         scene = Scene::create();
 
         shadowBox = shadowBoxCreation();
@@ -25,6 +27,10 @@ public:
 
         box3Shadow.setFromObject(*shadowBox);
         scene->add(shadowBox);
+
+        const auto box3Helper = Box3Helper::create(box3Shadow);
+        box3Helper->position.setY(1);
+        scene->add(box3Helper);
 
         scene->add(player.playerCamera);
         scene->add(player.playerModel);
@@ -37,7 +43,7 @@ public:
         scene->add(light);
 
     }
-    //Ikke bruk array, Classes gjør litt det samme, kanskje med enums
+
     auto gameTic(Player &player, float &dt, Vector2& direction) {
 
         shadowBox->geometry()->computeBoundingBox();
@@ -79,8 +85,6 @@ private:
 
     void moveShadow(Vector2& direction, float dt) {
 
-        float baseSpeed{50}; //Burde være en tilstand
-
         if (angle > 2*math::PI){
             angle = 0;
         }
@@ -106,6 +110,7 @@ private:
     }
 
     float angle{};
+    float baseSpeed; //Burde være en tilstand
     std::shared_ptr<HemisphereLight> light;
 
     Vector3 lastPlayerShadowPos;

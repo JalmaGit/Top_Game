@@ -25,19 +25,6 @@ public:
         playerModel->rotation.copy(rotation);
         playerCamera->position.x = position.x;
         playerCamera->position.y = position.y - 10;
-/*
-        if (direction.x == utils::UP) {
-            playerModel->rotation.y = 3*math::PI/2;
-        }
-        if (direction.y == utils::DOWN) {
-            playerModel->rotation.y = math::PI / 2;
-        }
-        if (direction.x == utils::LEFT){
-            playerModel->rotation.y = math::PI;
-        }
-        if (direction.x == utils::RIGHT){
-            playerModel->rotation.y = 0;
-        }*/
     }
 
 private:
