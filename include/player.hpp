@@ -40,5 +40,4 @@ private:
 
 };
 
-
 #endif //TOP_GAME_PLAYER_HPP
