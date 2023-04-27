@@ -39,8 +39,9 @@ public:
     }
 
     void move(Vector3& vector3){
-        position.y += vector3.x*std::sin(rotation_);
-        position.x += vector3.x*std::cos(rotation_);
+        position.y += vector3.x*std::sinf(rotation_);
+        position.x += vector3.x*std::cosf(rotation_);
+        std::sin
     }
 
 private:
