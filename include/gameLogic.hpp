@@ -103,12 +103,12 @@ private:
             shadowBox->position.y -= dt*baseSpeed*std::cos(angle);
             shadowBox->position.x -= dt*baseSpeed*std::sin(angle);
         }
-        if(direction.x == utils::LEFT){
-            angle -= dt;
+        if(direction.x == utils::LEFT || direction.x == utils::RIGHT){
+            angle = dt;
         }
-        if(direction.x == utils::RIGHT){
-            angle += dt;
-        }
+        //if(){
+        //    angle += dt;
+        //}
         shadowBox->rotation.y = -angle;
     }
 

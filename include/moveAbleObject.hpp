@@ -18,37 +18,47 @@ public:
     Quaternion rotation;
     const Vector3 upDirection{0, 0, 1};
 
-    explicit MoveAbleObject(float x = 0, float y = 0, float z = 0, float r = 0)
-            : posX_(x), posY_(y), posZ_(z), rotation_(r) {
+    explicit MoveAbleObject(float posX = 0, float posY = 0, float posZ = 0, float r = 0)
+            : rotation_(r) {
 
-        position.set(x, y, z);
+        position.set(posX, posY, posZ);
         setRotation(r);
     }
 
     void setRotation(float angle) {
-        rotation_=angle;
+        rotation_= angle;
         rotation.setFromAxisAngle(upDirection, angle);
     }
 
     void setPosition(Vector3 &pos) {
-        move(pos);
+        position = pos;
     }
 
-    Vector3 getPosition() const {
+    [[nodiscard]] float getRotation() const{
+        return rotation_;
+    }
+
+    [[nodiscard]] Vector3 getPosition() const {
         return position;
     }
 
-    void move(Vector3& vector3){
-        position.y += vector3.x*std::sinf(rotation_);
-        position.x += vector3.x*std::cosf(rotation_);
-        std::sin
+    void move(float velocity, float turnSpeed){
+        rotateBy(turnSpeed);
+        moveFor(velocity);
     }
 
+
 private:
-    float posX_;
-    float posY_;
-    float posZ_;
     float rotation_;
+
+    void rotateBy(float turnSpeed){
+        rotation_ += turnSpeed;
+        rotation.setFromAxisAngle(upDirection, rotation_);
+    }
+
+    void moveFor(float velocity){
+        position += {velocity * std::cos(rotation_), velocity * std::sin(rotation_), 0};
+    }
 
 };
 

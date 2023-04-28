@@ -48,16 +48,16 @@ struct KeyChecker{
     Vector2 getKeyInput(){
         Vector2 nextMove;
         if (keyW.buttonPressed()) {
-            nextMove.y = utils::UP;
+            nextMove.y = 1;
         }
         if (keyS.buttonPressed()) {
-            nextMove.y = utils::DOWN;
+            nextMove.y = -1;
         }
         if (keyA.buttonPressed()) {
-            nextMove.x = utils::LEFT;
+            nextMove.x = 1;
         }
         if (keyD.buttonPressed()) {
-            nextMove.x = utils::RIGHT;
+            nextMove.x = -1;
         }
 
         return nextMove;

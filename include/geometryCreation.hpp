@@ -13,7 +13,7 @@ using namespace threepp;
 
 namespace utils {
 
-    enum Direction{ //Is this good?
+    enum Direction{ //Is this good? //DOG SHIT
         NONE,
         UP,
         DOWN,
