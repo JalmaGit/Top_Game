@@ -12,10 +12,11 @@ public:
 
     explicit Player(int h = 100, float b = 50 , float t = 1) : health_(h), baseSpeed_(b), turnSpeed_(t) {
         setHealth(h);
-        score_ = 0; //Ask about this on monday
+        //Ask about this on monday
         setBaseSpeed(b);
         setTurnSpeed(t);
         playerSize_ = {10,10,100};
+        score_ = 0;
     }
 
     void setHealth(int newHealth){
@@ -34,6 +35,10 @@ public:
         turnSpeed_ = newTurnSpeed;
     }
 
+    void setPlayerSize(Vector3& newPlayerSize){
+        playerSize_ = newPlayerSize;
+    }
+
     [[nodiscard]] int getHealth() const {
         return health_;
     }
@@ -48,6 +53,10 @@ public:
 
     [[nodiscard]] float getTurnSpeed() const {
         return turnSpeed_;
+    }
+
+    [[nodiscard]] Vector3 getPlayerSize(){
+        return  playerSize_;
     }
 
     void addScore(int newAddScore) {
