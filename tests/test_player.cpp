@@ -19,31 +19,35 @@ TEST_CASE("Zero Position") {
 }
 
 TEST_CASE("Forward, Backwards and Turning") {
-
     Player player;
     Vector3 expectedPosition{0, 0, 0};
 
-    float velocity = 1;
     float turnSpeed = math::PI / 8;
+    float baseSpeed = 1;
+
+    float velocity = 1;
+    float turnDirection = 1;
     float currentAngle = 0;
+
+    player.setTurnSpeed(math::PI / 8);
+    player.setBaseSpeed(1);
 
     for (int i = 0; currentAngle < 2 * math::PI; i++) {
 
-        currentAngle += turnSpeed;
-        expectedPosition += {velocity * cos(currentAngle), velocity * sin(currentAngle), 0};
-        player.move(velocity, turnSpeed);
+        currentAngle += turnSpeed * turnDirection;
+        expectedPosition += {baseSpeed * velocity * cos(currentAngle), baseSpeed * velocity * sin(currentAngle), 0};
+        player.move(velocity, turnDirection);
 
         CHECK(player.getPosition() == expectedPosition);
 
         player.move(-velocity, 0);
-        expectedPosition -= {velocity * cos(currentAngle), velocity * sin(currentAngle), 0};
+        expectedPosition -= {baseSpeed * velocity * cos(currentAngle), baseSpeed * velocity * sin(currentAngle), 0};
 
         CHECK(player.getPosition() == expectedPosition);
     }
-
 }
 
-TEST_CASE("Checking Default Constructor"){
+TEST_CASE("Checking Default Constructor") {
     Player player;
     Vector3 expectedPosition{0, 0, 0};
     Vector3 expectedPlayerSize{10, 10, 100};
@@ -56,11 +60,11 @@ TEST_CASE("Checking Default Constructor"){
     CHECK(player.getPlayerSize() == expectedPlayerSize);
 }
 
-TEST_CASE("Functions"){
+TEST_CASE("Functions") {
     Player player;
 
     Vector3 expectedPlayerSize{25, 25, 50};
-    Vector3 newPlayerSize{25,25,50};
+    Vector3 newPlayerSize{25, 25, 50};
 
     player.setTurnSpeed(100);
     player.setBaseSpeed(5000);

@@ -6,15 +6,12 @@
 #define TOP_GAME_PLAYERHANDLER_HPP
 
 #include "moveAbleObject.hpp"
-
+//Ask about this on monday
 class Player : public MoveAbleObject {
 public:
 
-    explicit Player(int h = 100, float b = 50 , float t = 1) : health_(h), baseSpeed_(b), turnSpeed_(t) {
+    explicit Player(int h = 100) : health_(h){
         setHealth(h);
-        //Ask about this on monday
-        setBaseSpeed(b);
-        setTurnSpeed(t);
         playerSize_ = {10,10,100};
         score_ = 0;
     }
@@ -27,14 +24,6 @@ public:
         score_ = newScore;
     }
 
-    void setBaseSpeed(float newBaseSpeed){
-        baseSpeed_ = newBaseSpeed;
-    }
-
-    void setTurnSpeed(float newTurnSpeed){
-        turnSpeed_ = newTurnSpeed;
-    }
-
     void setPlayerSize(Vector3& newPlayerSize){
         playerSize_ = newPlayerSize;
     }
@@ -45,14 +34,6 @@ public:
 
     [[nodiscard]] int getScore() const {
         return score_;
-    }
-
-    [[nodiscard]] float getBaseSpeed() const{
-        return baseSpeed_;
-    }
-
-    [[nodiscard]] float getTurnSpeed() const {
-        return turnSpeed_;
     }
 
     [[nodiscard]] Vector3 getPlayerSize(){
@@ -72,8 +53,6 @@ public:
 private:
     int health_;
     int score_;
-    float baseSpeed_;
-    float turnSpeed_;
     Vector3 playerSize_;
 };
 

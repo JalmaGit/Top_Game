@@ -14,15 +14,18 @@ using namespace threepp;
 
 class MoveAbleObject {
 public:
+
     Vector3 position;
     Quaternion rotation;
     const Vector3 upDirection{0, 0, 1};
 
-    explicit MoveAbleObject(float posX = 0, float posY = 0, float posZ = 0, float r = 0)
+    explicit MoveAbleObject(Vector3 startPos = {0,0,0}, float r = 0)
             : rotation_(r) {
 
-        position.set(posX, posY, posZ);
+        position.copy(startPos);
         setRotation(r);
+        setBaseSpeed(50);
+        setTurnSpeed(1);
     }
 
     void setRotation(float angle) {
@@ -34,30 +37,50 @@ public:
         position = pos;
     }
 
-    [[nodiscard]] float getRotation() const{
-        return rotation_;
+    void setBaseSpeed(float newBaseSpeed){
+        baseSpeed_ = newBaseSpeed;
+    }
+
+    void setTurnSpeed(float newTurnSpeed){
+        turnSpeed_ = newTurnSpeed;
     }
 
     [[nodiscard]] Vector3 getPosition() const {
         return position;
     }
 
-    void move(float velocity, float turnSpeed){
-        rotateBy(turnSpeed);
+    [[nodiscard]] float getRotation() const{
+        return rotation_;
+    }
+
+    [[nodiscard]] float getBaseSpeed() const{
+        return baseSpeed_;
+    }
+
+    [[nodiscard]] float getTurnSpeed() const {
+        return turnSpeed_;
+    }
+
+    void move(float velocity, float turnDirection){
+        rotateBy(turnDirection);
         moveFor(velocity);
     }
 
 
 private:
     float rotation_;
+    float baseSpeed_{};
+    float turnSpeed_{};
 
-    void rotateBy(float turnSpeed){
-        rotation_ += turnSpeed;
+
+
+    void rotateBy(float turnDirection){
+        rotation_ += turnSpeed_ * turnDirection;
         rotation.setFromAxisAngle(upDirection, rotation_);
     }
 
     void moveFor(float velocity){
-        position += {velocity * std::cos(rotation_), velocity * std::sin(rotation_), 0};
+        position += {velocity * baseSpeed_ * std::cos(rotation_), velocity * baseSpeed_ * std::sin(rotation_), 0};
     }
 
 };

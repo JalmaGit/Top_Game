@@ -3,3 +3,8 @@
 //
 
 #include "playerVisualizer.hpp"
+
+std::shared_ptr<Mesh> playerModelCreation(){
+
+    return std::shared_ptr<Mesh>();
+}

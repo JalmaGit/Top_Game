@@ -46,7 +46,7 @@ struct KeyChecker{
     }
 
     Vector2 getKeyInput(){
-        Vector2 nextMove;
+        Vector2 nextMove = {0,0};
         if (keyW.buttonPressed()) {
             nextMove.y = 1;
         }

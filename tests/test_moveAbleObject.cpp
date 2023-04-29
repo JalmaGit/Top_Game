@@ -19,119 +19,122 @@ TEST_CASE("Zero Position") {
     CHECK(moveAbleObject.getRotation() == rotation);
 }
 
-TEST_CASE("Forward, Backwards and Turning") {
+TEST_CASE("Checking Default Constructor"){
+    MoveAbleObject moveAbleObject;
+    Vector3 expectedPosition{0, 0, 0};
+
+    CHECK(moveAbleObject.getRotation() == 0);
+    CHECK(moveAbleObject.getPosition() == expectedPosition);
+    CHECK(moveAbleObject.getTurnSpeed() == 1);
+    CHECK(moveAbleObject.getBaseSpeed() == 50);
+}
+
+TEST_CASE("Forward, Backwards and Turning for small velocity and large turnDirection") {
 
     MoveAbleObject moveAbleObject;
     Vector3 expectedPosition{0, 0, 0};
 
-    float velocity = 1;
     float turnSpeed = math::PI / 8;
+    float baseSpeed = 1;
+
+    float velocity = 1;
+    float turnDirection = 1;
     float currentAngle = 0;
 
+    moveAbleObject.setTurnSpeed(math::PI / 8);
+    moveAbleObject.setBaseSpeed(1);
+
     for (int i = 0; currentAngle < 2 * math::PI; i++) {
 
-        currentAngle += turnSpeed;
-        expectedPosition += {velocity * cos(currentAngle), velocity * sin(currentAngle), 0};
-        moveAbleObject.move(velocity, turnSpeed);
+        currentAngle += turnSpeed * turnDirection;
+        expectedPosition += {baseSpeed * velocity * cos(currentAngle), baseSpeed * velocity * sin(currentAngle), 0};
+        moveAbleObject.move(velocity, turnDirection);
 
         CHECK(moveAbleObject.getPosition() == expectedPosition);
 
         moveAbleObject.move(-velocity, 0);
-        expectedPosition -= {velocity * cos(currentAngle), velocity * sin(currentAngle), 0};
+        expectedPosition -= {baseSpeed * velocity * cos(currentAngle), baseSpeed * velocity * sin(currentAngle), 0};
 
         CHECK(moveAbleObject.getPosition() == expectedPosition);
     }
+}
 
-    moveAbleObject.setRotation(0);
+TEST_CASE("Forward, Backwards and Turning for high velocity and small turnDirection") {
 
-    velocity = 1000;
-    currentAngle = 0;
-    turnSpeed = math::PI / 80;
+    MoveAbleObject moveAbleObject;
+    Vector3 expectedPosition{0, 0, 0};
+
+    float turnSpeed = math::PI / 80;
+    float baseSpeed = 1000;
+
+    float velocity = 1;
+    float turnDirection = 1;
+    float currentAngle = 0;
+
+    moveAbleObject.setTurnSpeed(math::PI / 80);
+    moveAbleObject.setBaseSpeed(1000);
 
     for (int i = 0; currentAngle < 2 * math::PI; i++) {
 
-        currentAngle += turnSpeed;
-        expectedPosition += {velocity * cos(currentAngle), velocity * sin(currentAngle), 0};
-        moveAbleObject.move(velocity, turnSpeed);
+        currentAngle += turnSpeed * turnDirection;
+        expectedPosition += {baseSpeed * velocity * cos(currentAngle), baseSpeed * velocity * sin(currentAngle), 0};
+        moveAbleObject.move(velocity, turnDirection);
 
         CHECK(moveAbleObject.getPosition() == expectedPosition);
 
-
         moveAbleObject.move(-velocity, 0);
-        expectedPosition -= {velocity * cos(currentAngle), velocity * sin(currentAngle), 0};
+        expectedPosition -= {baseSpeed * velocity * cos(currentAngle), baseSpeed * velocity * sin(currentAngle), 0};
 
         CHECK(moveAbleObject.getPosition() == expectedPosition);
     }
-
 }
 
 TEST_CASE("Moving in Circle") {
-
     MoveAbleObject moveAbleObject;
     Vector3 expectedPosition{0, 0, 0};
 
+    float turnSpeed = math::PI / 80;
+    float baseSpeed = 1000;
+
     float velocity = 1;
-    float turnSpeed = math::PI / 8;
+    float turnDirection = 1;
     float currentAngle = 0;
 
-    for (int i = 0; currentAngle < 2 * math::PI; i++) {
-
-        currentAngle += turnSpeed;
-        expectedPosition += {cos(currentAngle), sin(currentAngle), 0};
-        moveAbleObject.move(velocity, turnSpeed);
-
-        CHECK(moveAbleObject.getPosition() == expectedPosition);
-
-    }
-    moveAbleObject.setRotation(0);
-
-    velocity = 1000;
-    currentAngle = 0;
-    turnSpeed = math::PI / 80;
+    moveAbleObject.setTurnSpeed(math::PI / 80);
+    moveAbleObject.setBaseSpeed(1000);
 
     for (int i = 0; currentAngle < 2 * math::PI; i++) {
 
-        currentAngle += turnSpeed;
-        expectedPosition += {velocity * cos(currentAngle), velocity * sin(currentAngle), 0};
-        moveAbleObject.move(velocity, turnSpeed);
+        currentAngle += turnSpeed * turnDirection;
+        expectedPosition += {baseSpeed * velocity * cos(currentAngle), baseSpeed * velocity * sin(currentAngle), 0};
+        moveAbleObject.move(velocity, turnDirection);
 
         CHECK(moveAbleObject.getPosition() == expectedPosition);
     }
-
 }
 
 TEST_CASE("Circles not from Zero Position"){
-    MoveAbleObject moveAbleObject{1,1,1};
-    Vector3 expectedPosition{1, 1, 1};
+    Vector3 startPos{100, 100, 0};
+    MoveAbleObject moveAbleObject{startPos};
+    Vector3 expectedPosition{100, 100, 0};
+
+    float turnSpeed = math::PI / 80;
+    float baseSpeed = 1000;
 
     float velocity = 1;
-    float turnSpeed = math::PI / 8;
+    float turnDirection = 1;
     float currentAngle = 0;
 
-    for (int i = 0; currentAngle < 2 * math::PI; i++) {
-
-        currentAngle += turnSpeed;
-        expectedPosition += {cos(currentAngle), sin(currentAngle), 0};
-        moveAbleObject.move(velocity, turnSpeed);
-
-        CHECK(moveAbleObject.getPosition() == expectedPosition);
-
-    }
-    expectedPosition = {100, 100, 100};
-    moveAbleObject.setPosition(expectedPosition);
-    moveAbleObject.setRotation(0);
-
-
-    velocity = 1000;
-    currentAngle = 0;
-    turnSpeed = math::PI / 80;
+    moveAbleObject.setTurnSpeed(math::PI / 80);
+    moveAbleObject.setBaseSpeed(1000);
 
     for (int i = 0; currentAngle < 2 * math::PI; i++) {
 
-        currentAngle += turnSpeed;
-        expectedPosition += {velocity * cos(currentAngle), velocity * sin(currentAngle), 0};
-        moveAbleObject.move(velocity, turnSpeed);
+        currentAngle += turnSpeed * turnDirection;
+        expectedPosition += {baseSpeed * velocity * cos(currentAngle), baseSpeed * velocity * sin(currentAngle), 0};
+        moveAbleObject.move(velocity, turnDirection);
 
         CHECK(moveAbleObject.getPosition() == expectedPosition);
     }
+
 }

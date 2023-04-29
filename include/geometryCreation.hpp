@@ -13,14 +13,6 @@ using namespace threepp;
 
 namespace utils {
 
-    enum Direction{ //Is this good? //DOG SHIT
-        NONE,
-        UP,
-        DOWN,
-        LEFT,
-        RIGHT
-    };
-
     std::shared_ptr<Mesh> createBox(BoxGeometry::Params params, float position);
 
     std::shared_ptr<Mesh> createPlane(float x, float y);
