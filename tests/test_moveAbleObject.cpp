@@ -47,16 +47,64 @@ TEST_CASE("Forward, Backwards and Turning for small velocity and large turnDirec
     for (int i = 0; currentAngle < 2 * math::PI; i++) {
 
         currentAngle += turnSpeed * turnDirection;
-        expectedPosition += {baseSpeed * velocity * cos(currentAngle), baseSpeed * velocity * sin(currentAngle), 0};
+        expectedPosition += {baseSpeed * velocity * sin(currentAngle), baseSpeed * velocity * cos(currentAngle), 0};
         moveAbleObject.move(velocity, turnDirection);
 
         CHECK(moveAbleObject.getPosition() == expectedPosition);
 
         moveAbleObject.move(-velocity, 0);
-        expectedPosition -= {baseSpeed * velocity * cos(currentAngle), baseSpeed * velocity * sin(currentAngle), 0};
+        expectedPosition -= {baseSpeed * velocity * sin(currentAngle), baseSpeed * velocity * cos(currentAngle), 0};
 
         CHECK(moveAbleObject.getPosition() == expectedPosition);
     }
+}
+
+TEST_CASE("Forward and Backwards"){
+    MoveAbleObject moveAbleObject;
+    moveAbleObject.setBaseSpeed(1);
+    Vector3 expectedPosition{0, 10, 0};
+
+    moveAbleObject.move(10,0);
+
+    CHECK(moveAbleObject.getPosition() == expectedPosition);
+
+    expectedPosition = {0,0,0};
+
+    moveAbleObject.resetPosAndRotation();
+
+    CHECK(moveAbleObject.getPosition() == expectedPosition);
+
+    expectedPosition = {0,-20,0};
+
+    moveAbleObject.move(-20,0);
+
+    CHECK(moveAbleObject.getPosition() == expectedPosition);
+
+}
+
+TEST_CASE("Simple Forward with a 90 degree turn"){
+    MoveAbleObject moveAbleObject;
+    moveAbleObject.setBaseSpeed(1);
+
+    float turn = math::PI/2;
+
+    Vector3 expectedPosition{10, cos(turn), 0};
+
+    moveAbleObject.move(10,turn);
+
+    CHECK(moveAbleObject.getPosition() == expectedPosition);
+
+    expectedPosition = {0,0,0};
+
+    moveAbleObject.resetPosAndRotation();
+
+    CHECK(moveAbleObject.getPosition() == expectedPosition);
+
+    expectedPosition = {0,-20,0};
+
+    moveAbleObject.move(-20,0);
+
+    CHECK(moveAbleObject.getPosition() == expectedPosition);
 }
 
 TEST_CASE("Forward, Backwards and Turning for high velocity and small turnDirection") {
@@ -77,13 +125,13 @@ TEST_CASE("Forward, Backwards and Turning for high velocity and small turnDirect
     for (int i = 0; currentAngle < 2 * math::PI; i++) {
 
         currentAngle += turnSpeed * turnDirection;
-        expectedPosition += {baseSpeed * velocity * cos(currentAngle), baseSpeed * velocity * sin(currentAngle), 0};
+        expectedPosition += {baseSpeed * velocity * sin(currentAngle), baseSpeed * velocity * cos(currentAngle), 0};
         moveAbleObject.move(velocity, turnDirection);
 
         CHECK(moveAbleObject.getPosition() == expectedPosition);
 
         moveAbleObject.move(-velocity, 0);
-        expectedPosition -= {baseSpeed * velocity * cos(currentAngle), baseSpeed * velocity * sin(currentAngle), 0};
+        expectedPosition -= {baseSpeed * velocity * sin(currentAngle), baseSpeed * velocity * cos(currentAngle), 0};
 
         CHECK(moveAbleObject.getPosition() == expectedPosition);
     }
@@ -106,7 +154,7 @@ TEST_CASE("Moving in Circle") {
     for (int i = 0; currentAngle < 2 * math::PI; i++) {
 
         currentAngle += turnSpeed * turnDirection;
-        expectedPosition += {baseSpeed * velocity * cos(currentAngle), baseSpeed * velocity * sin(currentAngle), 0};
+        expectedPosition += {baseSpeed * velocity * sin(currentAngle), baseSpeed * velocity * cos(currentAngle), 0};
         moveAbleObject.move(velocity, turnDirection);
 
         CHECK(moveAbleObject.getPosition() == expectedPosition);
@@ -131,7 +179,7 @@ TEST_CASE("Circles not from Zero Position"){
     for (int i = 0; currentAngle < 2 * math::PI; i++) {
 
         currentAngle += turnSpeed * turnDirection;
-        expectedPosition += {baseSpeed * velocity * cos(currentAngle), baseSpeed * velocity * sin(currentAngle), 0};
+        expectedPosition += {baseSpeed * velocity * sin(currentAngle), baseSpeed * velocity * cos(currentAngle), 0};
         moveAbleObject.move(velocity, turnDirection);
 
         CHECK(moveAbleObject.getPosition() == expectedPosition);

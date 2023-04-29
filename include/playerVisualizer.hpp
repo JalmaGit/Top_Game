@@ -11,15 +11,15 @@
 #include "geometryCreation.hpp"
 #include <iostream>
 
-class Player { //kan dette testes?
+class PlayerVisualizer { //kan dette testes?
 public:
     std::shared_ptr<Mesh> playerModel;
 
-    explicit Player(){
+    explicit PlayerVisualizer(){
         playerModel = playerModelCreation();
     }
 
-    auto setPlayerPosition(Vector3& position, const Quaternion& rotation) const{
+    auto setPlayerPosition(Vector3 position, const Quaternion& rotation) const{
         playerModel->position.copy(position);
         playerModel->rotation.setFromQuaternion(rotation);
     }

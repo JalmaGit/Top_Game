@@ -48,8 +48,6 @@ public:
         score_ -= newRemoveScore;
     }
 
-
-
 private:
     int health_;
     int score_;

@@ -66,21 +66,27 @@ public:
         moveFor(velocity);
     }
 
+    void resetPosAndRotation(){
+        setPosition(resetPos_);
+        setRotation(resetRot_);
+    }
+
 
 private:
     float rotation_;
     float baseSpeed_{};
     float turnSpeed_{};
 
-
+    Vector3 resetPos_{0,0,0};
+    float resetRot_{0};
 
     void rotateBy(float turnDirection){
         rotation_ += turnSpeed_ * turnDirection;
-        rotation.setFromAxisAngle(upDirection, rotation_);
+        rotation.setFromAxisAngle(upDirection, -rotation_);
     }
 
     void moveFor(float velocity){
-        position += {velocity * baseSpeed_ * std::cos(rotation_), velocity * baseSpeed_ * std::sin(rotation_), 0};
+        position += {velocity * baseSpeed_ * std::sin(rotation_), velocity * baseSpeed_ * std::cos(rotation_), 0};
     }
 
 };
