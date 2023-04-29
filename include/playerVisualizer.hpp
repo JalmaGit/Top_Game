@@ -19,14 +19,14 @@ public:
         playerModel = playerModelCreation();
     }
 
-    auto setPlayerPosition(Vector3& position, Quaternion rotation) const{
+    auto setPlayerPosition(Vector3& position, const Quaternion& rotation) const{
         playerModel->position.copy(position);
         playerModel->rotation.setFromQuaternion(rotation);
     }
 
 private:
 
-    std::shared_ptr<Mesh> playerModelCreation();
+    static std::shared_ptr<Mesh> playerModelCreation();
 
 };
 
