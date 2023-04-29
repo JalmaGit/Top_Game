@@ -58,9 +58,11 @@ int main() {
 
         player.move(vector2.y*dt, -vector2.x*dt);
         playerVisualizer.setPlayerPosition(player.getPosition(),player.rotation);
+
         Vector3 direction {std::sin(player.getRotation()), std::cos(player.getRotation()), -1};
         direction *= -5;
         std::cout << direction << std::endl;
+
         camera->position = player.getPosition()+direction;
         camera->setRotationFromQuaternion(player.rotation);
         camera->rotateX(math::PI/3);

@@ -71,7 +71,6 @@ public:
         setRotation(resetRot_);
     }
 
-
 private:
     float rotation_;
     float baseSpeed_{};
