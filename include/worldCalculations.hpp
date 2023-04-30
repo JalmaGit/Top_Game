@@ -8,7 +8,6 @@
 class WorldCalulations {
 public:
 
-
     WorldCalulations(){
 
     }

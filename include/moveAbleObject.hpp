@@ -61,23 +61,29 @@ public:
         return turnSpeed_;
     }
 
+    [[nodiscard]] Vector3 getDirection(){
+        direction_ = {std::sin(rotation_), std::cos(rotation_), 0};
+        return direction_;
+    }
+
     void move(float velocity, float turnDirection){
         rotateBy(turnDirection);
         moveFor(velocity);
     }
 
     void resetPosAndRotation(){
-        setPosition(resetPos_);
-        setRotation(resetRot_);
+        setPosition(resetPosition_);
+        setRotation(resetRotation_);
     }
 
 private:
+    Vector3 direction_{};
     float rotation_;
     float baseSpeed_{};
     float turnSpeed_{};
 
-    Vector3 resetPos_{0,0,0};
-    float resetRot_{0};
+    Vector3 resetPosition_{0, 0, 0};
+    float resetRotation_{0};
 
     void rotateBy(float turnDirection){
         rotation_ += turnSpeed_ * turnDirection;

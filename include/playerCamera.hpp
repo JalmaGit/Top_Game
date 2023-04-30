@@ -2,8 +2,8 @@
 // Created by Jalma on 29/04/2023.
 //
 
-#ifndef TOP_GAME_CAMERACALCULATIONS_HPP
-#define TOP_GAME_CAMERACALCULATIONS_HPP
+#ifndef TOP_GAME_PLAYERCAMERA_HPP
+#define TOP_GAME_PLAYERCAMERA_HPP
 
 #include "threepp/math/Vector3.hpp"
 #include "threepp/math/Quaternion.hpp"
@@ -11,11 +11,11 @@
 
 using namespace threepp;
 
-class CameraCalculations {
+class PlayerCamera { //Ask Teacher about calling Camera?
 public:
     Quaternion quaternion;
 
-    explicit CameraCalculations (Vector3 objPosition = {0,0,0}, float objAngle = 0){ //Ask on Tuesday about this comment
+    explicit PlayerCamera (Vector3 objPosition = {0, 0, 0}, float objAngle = 0){ //Ask on Tuesday about this comment
         setDistanceFromObj(5);
         setPosition({0,0,0});
         setCameraHeight(5);
@@ -65,4 +65,4 @@ private:
 
 };
 
-#endif //TOP_GAME_CAMERACALCULATIONS_HPP
+#endif //TOP_GAME_PLAYERCAMERA_HPP

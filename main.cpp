@@ -4,7 +4,7 @@
 #include "playerVisualizer.hpp"
 #include "keyInput.hpp"
 #include "world.hpp"
-#include "cameraCalculations.hpp"
+#include "playerCamera.hpp"
 
 using namespace threepp;
 
@@ -22,7 +22,7 @@ int main() {
 
     keyChecker.setKeyInput(canvas);
 
-   // Raycaster raycaster;
+
 
     Player player;
     PlayerVisualizer playerVisualizer;
@@ -34,7 +34,7 @@ int main() {
 
     scene->add(camera);
 
-    CameraCalculations cameraCalculations(player.getPosition(),player.getRotation());
+    PlayerCamera cameraCalculations(player.getPosition(), player.getRotation());
 
     cameraCalculations.setCameraAngle(math::PI/3);
     camera->position = cameraCalculations.getPosition();
@@ -45,6 +45,8 @@ int main() {
     scene->add(worldGen.boxInWorld);
     scene->add(worldGen.worldFlor);
 
+    Raycaster raycaster;
+    raycaster.params.lineThreshold = 0.1f;
 
     canvas.onWindowResize([&](WindowSize size) {
         camera->aspect = size.getAspect();
@@ -53,6 +55,7 @@ int main() {
     });
 
     canvas.animate([&](float dt) {
+        raycaster.set(player.getPosition(),player.getDirection());
 
         Vector2 vector2 = keyChecker.getKeyInput();
 

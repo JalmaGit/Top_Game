@@ -12,12 +12,12 @@
 
 using namespace threepp;
 
-class CameraHandler { //kan dette testes?
+class CameraVisualizer { //kan dette testes?
 public:
 
     std::shared_ptr<PerspectiveCamera> camera;
 
-    CameraHandler (){
+    CameraVisualizer (){
         camera = PerspectiveCamera::create();
     }
 
