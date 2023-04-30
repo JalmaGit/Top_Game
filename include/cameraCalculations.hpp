@@ -7,17 +7,22 @@
 
 #include "moveAbleObject.hpp"
 
-class cameraCalculations {
+class CameraCalculations {
 public:
-    cameraCalculations(){
+    CameraCalculations (Vector3& objPosition, float objAngle){
+        setDistanceFromObj(5);
+        setTrailingCamera(objPosition, objAngle);
+    }
 
+    void setDistanceFromObj(float newDistanceFrom){
+        distanceFrom_ = newDistanceFrom;
     }
 
     void setPosition(Vector3 position){
         position_ = position;
     }
 
-    void attachToObject(Vector3 objPosition, float objAngle){
+    void setTrailingCamera(Vector3& objPosition, float objAngle){
         position_ = {sin(objAngle), cos(objAngle),0};
     }
 
@@ -25,9 +30,13 @@ public:
         return position_;
     }
 
+    float getDistanceFromObj(){
+        return distanceFrom_;
+    }
+
 private:
     Vector3 position_;
-
+    float distanceFrom_;
 
 };
 
