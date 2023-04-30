@@ -5,21 +5,28 @@
 #ifndef TOP_GAME_CAMERAHANDLER_HPP
 #define TOP_GAME_CAMERAHANDLER_HPP
 
-#include ""
+#include "threepp/cameras/PerspectiveCamera.hpp"
+#include "threepp/math/Vector3.hpp"
+#include "threepp/math/Quaternion.hpp"
+#include "threepp/math/MathUtils.hpp"
+
+using namespace threepp;
 
 class CameraHandler { //kan dette testes?
 public:
 
-    explicit CameraHandler(){
+    std::shared_ptr<PerspectiveCamera> camera;
 
+    CameraHandler (){
+        camera = PerspectiveCamera::create();
     }
 
-    auto setCammeraPosition(Vector3& position, Quaternion rotation) const{
-        playerModel->position.copy(position);
-        playerModel->rotation.setFromQuaternion(rotation);
+    auto setCammeraPosition(Vector3& position, Quaternion rotation, float cameraAngle) const{
+
     }
 
 private:
+
 
 };
 

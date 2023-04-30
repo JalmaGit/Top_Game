@@ -38,9 +38,7 @@ std::shared_ptr<Mesh> PlayerVisualizer::playerModelCreation(){
 
     auto extrudeMesh = Mesh::create(extrudeGeometry,arrowMaterial);
 
-
     arrow->add(extrudeMesh);
-
 
     return arrow;
 

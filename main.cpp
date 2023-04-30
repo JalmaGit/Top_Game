@@ -4,6 +4,7 @@
 #include "playerVisualizer.hpp"
 #include "keyInput.hpp"
 #include "world.hpp"
+#include "cameraCalculations.hpp"
 
 using namespace threepp;
 
@@ -14,16 +15,6 @@ int main() {
 
     auto scene = Scene::create();
 
-    auto camera = PerspectiveCamera::create(75, canvas.getAspect(), 0.1f, 2000);
-
-    scene->add(camera);
-    camera->position.z = 25;
-    camera->position.y;
-    camera->rotateX(math::PI/4);
-
-
-    //OrbitControls controls{camera, canvas};
-
     auto light = HemisphereLight::create(Color::aliceblue, Color::grey);
     scene->add(light);
 
@@ -33,12 +24,21 @@ int main() {
 
    // Raycaster raycaster;
 
-
     Player player;
     PlayerVisualizer playerVisualizer;
     playerVisualizer.setPlayerPosition(player.getPosition(),player.rotation);
    // raycaster.set(player.getPosition(),player.getRotation();
     scene->add(playerVisualizer.playerModel);
+
+    auto camera = PerspectiveCamera::create(75, canvas.getAspect(), 0.1f, 2000);
+
+    scene->add(camera);
+
+    CameraCalculations cameraCalculations(player.getPosition(),player.getRotation());
+
+    cameraCalculations.setCameraAngle(math::PI/3);
+    camera->position = cameraCalculations.getPosition();
+    camera->rotateX(cameraCalculations.getCameraAngle());
 
     WorldGen worldGen{1000,500};
 
@@ -59,13 +59,11 @@ int main() {
         player.move(vector2.y*dt, -vector2.x*dt);
         playerVisualizer.setPlayerPosition(player.getPosition(),player.rotation);
 
-        Vector3 direction {std::sin(player.getRotation()), std::cos(player.getRotation()), -1};
-        direction *= -5;
-        std::cout << direction << std::endl;
+        cameraCalculations.updateTrailingCamera(player.getPosition(),player.getRotation());
 
-        camera->position = player.getPosition()+direction;
+        camera->position = cameraCalculations.getPosition();
         camera->setRotationFromQuaternion(player.rotation);
-        camera->rotateX(math::PI/3);
+        camera->rotateX(cameraCalculations.getCameraAngle());
 
         renderer.render(scene, camera);
     });

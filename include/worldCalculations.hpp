@@ -9,8 +9,18 @@ class WorldCalulations {
 public:
 
 
+    WorldCalulations(){
+
+    }
+
+    void addBoxPos(){
+
+    };
+
 
 private:
+
+
 };
 
 #endif //TOP_GAME_WORLDCALCULATIONS_HPP

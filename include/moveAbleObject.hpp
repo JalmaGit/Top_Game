@@ -45,7 +45,7 @@ public:
         turnSpeed_ = newTurnSpeed;
     }
 
-    [[nodiscard]] Vector3 getPosition() const {
+    [[nodiscard]] const Vector3 getPosition() const {
         return position;
     }
 

@@ -10,3 +10,4 @@ endfunction()
 
 add_test_executable(test_moveAbleObject)
 add_test_executable(test_player)
+add_test_executable(test_cameraCalculations)
