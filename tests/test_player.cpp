@@ -35,13 +35,15 @@ TEST_CASE("Forward, Backwards and Turning") {
     for (int i = 0; currentAngle < 2 * math::PI; i++) {
 
         currentAngle += turnSpeed * turnDirection;
-        expectedPosition += {baseSpeed * velocity * cos(currentAngle), baseSpeed * velocity * sin(currentAngle), 0};
+        expectedPosition += { baseSpeed * velocity * sin(currentAngle), baseSpeed * velocity * cos(currentAngle), 0};
         player.move(velocity, turnDirection);
 
-        CHECK(player.getPosition() == expectedPosition);
+        REQUIRE_THAT(player.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
+        REQUIRE_THAT(player.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
+        REQUIRE_THAT(player.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
 
         player.move(-velocity, 0);
-        expectedPosition -= {baseSpeed * velocity * cos(currentAngle), baseSpeed * velocity * sin(currentAngle), 0};
+        expectedPosition -= {baseSpeed * velocity * sin(currentAngle), baseSpeed * velocity * cos(currentAngle), 0};
 
         CHECK(player.getPosition() == expectedPosition);
     }

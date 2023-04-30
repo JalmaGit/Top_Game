@@ -50,12 +50,16 @@ TEST_CASE("Forward, Backwards and Turning for small velocity and large turnDirec
         expectedPosition += {baseSpeed * velocity * sin(currentAngle), baseSpeed * velocity * cos(currentAngle), 0};
         moveAbleObject.move(velocity, turnDirection);
 
-        CHECK(moveAbleObject.getPosition() == expectedPosition);
+        REQUIRE_THAT(moveAbleObject.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
+        REQUIRE_THAT(moveAbleObject.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
+        REQUIRE_THAT(moveAbleObject.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
 
         moveAbleObject.move(-velocity, 0);
         expectedPosition -= {baseSpeed * velocity * sin(currentAngle), baseSpeed * velocity * cos(currentAngle), 0};
 
-        CHECK(moveAbleObject.getPosition() == expectedPosition);
+        REQUIRE_THAT(moveAbleObject.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
+        REQUIRE_THAT(moveAbleObject.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
+        REQUIRE_THAT(moveAbleObject.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
     }
 }
 
@@ -66,17 +70,25 @@ TEST_CASE("Forward and Backwards"){
 
     moveAbleObject.move(10,0);
 
-    CHECK(moveAbleObject.getPosition() == expectedPosition);
+    REQUIRE_THAT(moveAbleObject.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
+    REQUIRE_THAT(moveAbleObject.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
+    REQUIRE_THAT(moveAbleObject.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
 
     expectedPosition = {0,0,0};
 
     moveAbleObject.resetPosAndRotation();
 
-    CHECK(moveAbleObject.getPosition() == expectedPosition);
+    REQUIRE_THAT(moveAbleObject.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
+    REQUIRE_THAT(moveAbleObject.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
+    REQUIRE_THAT(moveAbleObject.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
 
     expectedPosition = {0,-20,0};
 
     moveAbleObject.move(-20,0);
+
+    REQUIRE_THAT(moveAbleObject.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
+    REQUIRE_THAT(moveAbleObject.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
+    REQUIRE_THAT(moveAbleObject.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
 
     CHECK(moveAbleObject.getPosition() == expectedPosition);
 
@@ -88,17 +100,21 @@ TEST_CASE("Simple Forward with a 90 degree turn"){
 
     float turn = math::PI/2;
 
-    Vector3 expectedPosition{10, cos(turn), 0};
+    Vector3 expectedPosition{10*sin(turn), 10*cos(turn), 0};
 
     moveAbleObject.move(10,turn);
 
-    CHECK(moveAbleObject.getPosition() == expectedPosition);
+    REQUIRE_THAT(moveAbleObject.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
+    REQUIRE_THAT(moveAbleObject.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
+    REQUIRE_THAT(moveAbleObject.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
 
     expectedPosition = {0,0,0};
 
     moveAbleObject.resetPosAndRotation();
 
-    CHECK(moveAbleObject.getPosition() == expectedPosition);
+    REQUIRE_THAT(moveAbleObject.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
+    REQUIRE_THAT(moveAbleObject.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
+    REQUIRE_THAT(moveAbleObject.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
 
     expectedPosition = {0,-20,0};
 
@@ -128,12 +144,16 @@ TEST_CASE("Forward, Backwards and Turning for high velocity and small turnDirect
         expectedPosition += {baseSpeed * velocity * sin(currentAngle), baseSpeed * velocity * cos(currentAngle), 0};
         moveAbleObject.move(velocity, turnDirection);
 
-        CHECK(moveAbleObject.getPosition() == expectedPosition);
+        REQUIRE_THAT(moveAbleObject.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
+        REQUIRE_THAT(moveAbleObject.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
+        REQUIRE_THAT(moveAbleObject.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
 
         moveAbleObject.move(-velocity, 0);
         expectedPosition -= {baseSpeed * velocity * sin(currentAngle), baseSpeed * velocity * cos(currentAngle), 0};
 
-        CHECK(moveAbleObject.getPosition() == expectedPosition);
+        REQUIRE_THAT(moveAbleObject.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
+        REQUIRE_THAT(moveAbleObject.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
+        REQUIRE_THAT(moveAbleObject.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
     }
 }
 
@@ -157,7 +177,9 @@ TEST_CASE("Moving in Circle") {
         expectedPosition += {baseSpeed * velocity * sin(currentAngle), baseSpeed * velocity * cos(currentAngle), 0};
         moveAbleObject.move(velocity, turnDirection);
 
-        CHECK(moveAbleObject.getPosition() == expectedPosition);
+        REQUIRE_THAT(moveAbleObject.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
+        REQUIRE_THAT(moveAbleObject.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
+        REQUIRE_THAT(moveAbleObject.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
     }
 }
 
@@ -182,7 +204,9 @@ TEST_CASE("Circles not from Zero Position"){
         expectedPosition += {baseSpeed * velocity * sin(currentAngle), baseSpeed * velocity * cos(currentAngle), 0};
         moveAbleObject.move(velocity, turnDirection);
 
-        CHECK(moveAbleObject.getPosition() == expectedPosition);
+        REQUIRE_THAT(moveAbleObject.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
+        REQUIRE_THAT(moveAbleObject.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
+        REQUIRE_THAT(moveAbleObject.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
     }
 
 }

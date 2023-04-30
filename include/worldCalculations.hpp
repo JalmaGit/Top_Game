@@ -8,7 +8,7 @@
 class WorldCalulations {
 public:
 
-    
+
 
 private:
 };
