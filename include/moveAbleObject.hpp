@@ -8,7 +8,6 @@
 #include "threepp/math/Vector3.hpp"
 #include "threepp/math/Quaternion.hpp"
 #include "threepp/math/MathUtils.hpp"
-#include <cmath>
 
 using namespace threepp;
 

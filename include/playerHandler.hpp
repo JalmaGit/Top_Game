@@ -12,7 +12,6 @@ public:
 
     explicit Player(int h = 100) : health_(h){
         setHealth(h);
-        playerSize_ = {10,10,100};
         score_ = 0;
     }
 
@@ -24,20 +23,12 @@ public:
         score_ = newScore;
     }
 
-    void setPlayerSize(Vector3& newPlayerSize){
-        playerSize_ = newPlayerSize;
-    }
-
     [[nodiscard]] int getHealth() const {
         return health_;
     }
 
     [[nodiscard]] int getScore() const {
         return score_;
-    }
-
-    [[nodiscard]] Vector3 getPlayerSize(){
-        return  playerSize_;
     }
 
     void addScore(int newAddScore) {

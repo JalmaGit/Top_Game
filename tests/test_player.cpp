@@ -52,14 +52,12 @@ TEST_CASE("Forward, Backwards and Turning") {
 TEST_CASE("Checking Default Constructor") {
     Player player;
     Vector3 expectedPosition{0, 0, 0};
-    Vector3 expectedPlayerSize{10, 10, 100};
 
     CHECK(player.getPosition() == expectedPosition);
     CHECK(player.getTurnSpeed() == 1);
     CHECK(player.getBaseSpeed() == 50);
     CHECK(player.getHealth() == 100);
     CHECK(player.getScore() == 0);
-    CHECK(player.getPlayerSize() == expectedPlayerSize);
 }
 
 TEST_CASE("Functions") {
@@ -72,13 +70,11 @@ TEST_CASE("Functions") {
     player.setBaseSpeed(5000);
     player.setHealth(200);
     player.setScore(1000);
-    player.setPlayerSize(newPlayerSize);
 
     CHECK(player.getTurnSpeed() == 100);
     CHECK(player.getBaseSpeed() == 5000);
     CHECK(player.getHealth() == 200);
     CHECK(player.getScore() == 1000);
-    CHECK(player.getPlayerSize() == expectedPlayerSize);
 
     player.addScore(20);
 
