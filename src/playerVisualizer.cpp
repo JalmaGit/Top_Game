@@ -30,7 +30,7 @@ std::shared_ptr<Mesh> PlayerVisualizer::playerModelCreation(){
     auto arrow = Mesh::create(arrowGeometry,arrowMaterial);
 
     ExtrudeGeometry::Options opts;
-    opts.depth = 3;
+    opts.depth = 2;
     auto extrudeGeometry = ExtrudeGeometry::create(arrowShape,opts);
     extrudeGeometry->rotateZ(-math::PI/2);
     extrudeGeometry->center();

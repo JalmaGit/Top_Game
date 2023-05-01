@@ -3,7 +3,7 @@
 #include "playerHandler.hpp"
 #include "playerVisualizer.hpp"
 #include "keyInput.hpp"
-#include "world.hpp"
+#include "worldVisualizer.hpp"
 #include "playerCamera.hpp"
 
 using namespace threepp;
@@ -22,12 +22,9 @@ int main() {
 
     keyChecker.setKeyInput(canvas);
 
-
-
     Player player;
     PlayerVisualizer playerVisualizer;
     playerVisualizer.setPlayerPosition(player.getPosition(),player.rotation);
-   // raycaster.set(player.getPosition(),player.getRotation();
     scene->add(playerVisualizer.playerModel);
 
     auto camera = PerspectiveCamera::create(75, canvas.getAspect(), 0.1f, 2000);
@@ -40,13 +37,16 @@ int main() {
     camera->position = cameraCalculations.getPosition();
     camera->rotateX(cameraCalculations.getCameraAngle());
 
-    WorldGen worldGen{1000,500};
+    WorldVisualizer worldVisualizer{1000, 500};
 
-    scene->add(worldGen.boxInWorld);
-    scene->add(worldGen.worldFlor);
+    Vector3 box1{50,50,2.5};
+
+    //worldVisualizer.addBox(box1);
+
+    scene->add(worldVisualizer.boxes);
+    scene->add(worldVisualizer.flor);
 
     Raycaster raycaster;
-    raycaster.params.lineThreshold = 0.1f;
 
     canvas.onWindowResize([&](WindowSize size) {
         camera->aspect = size.getAspect();
@@ -55,7 +55,15 @@ int main() {
     });
 
     canvas.animate([&](float dt) {
+
         raycaster.set(player.getPosition(),player.getDirection());
+
+        auto intersects = raycaster.intersectObjects(scene->children);
+
+        if (!intersects.empty()) {
+            auto& intersect = intersects.front();
+            std::cout << intersect.distance<< std::endl;
+        }
 
         Vector2 vector2 = keyChecker.getKeyInput();
 

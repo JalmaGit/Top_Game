@@ -2,7 +2,7 @@ set(sources
         "geometryCreation.cpp"
         "world.cpp"
         "player.cpp"
-        "playerVisualizer.cpp")
+        "playerVisualizer.cpp" worldVisualizer.cpp)
 
 add_library(gamelib "${sources}")
 target_link_libraries(gamelib PUBLIC threepp::threepp)

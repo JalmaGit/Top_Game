@@ -5,8 +5,6 @@
 #include "geometryCreation.hpp"
 #include "world.hpp"
 
-
-
 Box3 WorldGen::createUpperWorldEdge(const BoxGeometry::Params params) {
     BoxGeometry::Params topBoxParams{params.width, params.height, 100};
 
