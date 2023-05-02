@@ -37,13 +37,22 @@ int main() {
     camera->position = cameraCalculations.getPosition();
     camera->rotateX(cameraCalculations.getCameraAngle());
 
-    WorldVisualizer worldVisualizer{1000, 500};
 
-    Vector3 box1{50,50,2.5};
+    Vector3 position1{50,50,2.5};
+    Vector3 position2{50,0,2.5};
+    std::vector<Vector3> boxes;
+    boxes.emplace_back(position1);
+    boxes.emplace_back(position2);
 
-    //worldVisualizer.addBox(box1);
+    //Make struct that contains position and size of the box.
+    //Make unorderedmap
 
-    scene->add(worldVisualizer.boxes);
+    WorldVisualizer worldVisualizer{1000, 500,boxes};
+
+    for (auto element : worldVisualizer.boxes){
+        scene->add(element);
+    }
+
     scene->add(worldVisualizer.flor);
 
     Raycaster raycaster;
@@ -71,7 +80,6 @@ int main() {
         playerVisualizer.setPlayerPosition(player.getPosition(),player.rotation);
 
         cameraCalculations.updateTrailingCamera(player.getPosition(),player.getRotation());
-
         camera->position = cameraCalculations.getPosition();
         camera->setRotationFromQuaternion(player.rotation);
         camera->rotateX(cameraCalculations.getCameraAngle());

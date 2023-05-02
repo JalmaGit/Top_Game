@@ -201,7 +201,7 @@ TEST_CASE("Circles not from Zero Position"){
     for (int i = 0; currentAngle < 2 * math::PI; i++) {
 
         currentAngle += turnSpeed * turnDirection;
-        expectedPosition += {baseSpeed * velocity * sin(currentAngle), baseSpeed * velocity * cos(currentAngle), 0};
+        expectedPosition += {baseSpeed * velocity * std::sin(currentAngle), baseSpeed * velocity * std::cos(currentAngle), 0};
         moveAbleObject.move(velocity, turnDirection);
 
         REQUIRE_THAT(moveAbleObject.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));

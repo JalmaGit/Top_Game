@@ -18,7 +18,7 @@ public:
     Quaternion rotation;
     const Vector3 upDirection{0, 0, 1};
 
-    explicit MoveAbleObject(Vector3 startPos = {0,0,0}, float r = 0)
+    explicit MoveAbleObject(Vector3 startPos = {0,0,0}, float r = 0) //Husk å gå gjennom nanv i alt
             : rotation_(r) {
 
         position.copy(startPos);
@@ -88,9 +88,11 @@ private:
         rotation_ += turnSpeed_ * turnDirection;
         rotation.setFromAxisAngle(upDirection, -rotation_);
     }
-
+//Husk code som ikke går utenfor skjermen
     void moveFor(float velocity){
-        position += {velocity * baseSpeed_ * std::sin(rotation_), velocity * baseSpeed_ * std::cos(rotation_), 0};
+        position += {velocity * baseSpeed_ * std::sin(rotation_),
+                     velocity * baseSpeed_ * std::cos(rotation_),
+                     0};
     }
 
 };

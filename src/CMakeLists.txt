@@ -1,7 +1,7 @@
 set(sources
         "geometryCreation.cpp"
-        "world.cpp"
-        "player.cpp"
+        "notinUse/world.cpp"
+        "notinUse/player.cpp"
         "playerVisualizer.cpp" worldVisualizer.cpp)
 
 add_library(gamelib "${sources}")

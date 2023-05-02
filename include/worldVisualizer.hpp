@@ -7,6 +7,7 @@
 
 #include "threepp/objects/Mesh.hpp"
 #include "threepp/objects/Group.hpp"
+#include <iostream>
 
 using namespace threepp;
 
@@ -14,16 +15,17 @@ class WorldVisualizer {
 public:
 
     std::shared_ptr<Mesh> flor;
-    std::shared_ptr<Mesh> boxes;
-    std::shared_ptr<Group> boxGroup;
+    std::vector<std::shared_ptr<Mesh>> boxes;
 
-    WorldVisualizer(float x, float y, const std::vector<Vector3>& boxPositions):mapSizeX_(x),mapSizeY_(y){
+    WorldVisualizer(float x, float y, const std::vector<Vector3>& boxPositions = {}):mapSizeX_(x),mapSizeY_(y){
         flor = addPlane(x,y);
-        boxGroup = Group::create();
-        boxes = createBox(boxPosition_);
-        boxGroup->add(boxes);
-        boxGroup->add(createBox(boxPosition1_));
 
+        if(!boxPositions.empty()){
+            std::cout << "Boxes available, generating map" << std::endl;
+            for (auto element : boxPositions){
+                boxes.emplace_back(createBox(element));
+            }
+        } else{ std::cout << "No Boxes available, empty map" << std::endl;}
     }
 
     void addBox(Vector3 boxPosition){

@@ -12,7 +12,7 @@ public:
 
     explicit Player(int h = 100) : health_(h){
         setHealth(h);
-        Vector3 startPosition{0,0,2};
+        Vector3 startPosition{0, 0, 2};
         setPosition(startPosition);
         score_ = 0;
     }
