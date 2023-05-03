@@ -21,9 +21,9 @@ std::shared_ptr<Mesh> WorldVisualizer::addPlane(float width, float length) {
     return plane;
 }
 
-std::shared_ptr<Mesh> WorldVisualizer::createBox(Vector3 boxPosition) {
+std::shared_ptr<Mesh> WorldVisualizer::createBox(Vector3 boxPosition, Vector3 boxSize) {
 
-    auto boxGeometry = BoxGeometry::create(5,5,5);
+    auto boxGeometry = BoxGeometry::create(boxSize.x,boxSize.y,boxSize.z);
     auto boxMaterial = MeshBasicMaterial::create();
     boxMaterial->color = Color::skyblue;
     auto box = Mesh::create(boxGeometry, boxMaterial);

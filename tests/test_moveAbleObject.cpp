@@ -47,7 +47,7 @@ TEST_CASE("Forward, Backwards and Turning for small velocity and large turnDirec
     for (int i = 0; currentAngle < 2 * math::PI; i++) {
 
         currentAngle += turnSpeed * turnDirection;
-        expectedPosition += {baseSpeed * velocity * sin(currentAngle), baseSpeed * velocity * cos(currentAngle), 0};
+        expectedPosition += {baseSpeed * velocity * std::sin(currentAngle), baseSpeed * velocity * std::cos(currentAngle), 0};
         moveAbleObject.move(velocity, turnDirection);
 
         REQUIRE_THAT(moveAbleObject.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
@@ -55,7 +55,7 @@ TEST_CASE("Forward, Backwards and Turning for small velocity and large turnDirec
         REQUIRE_THAT(moveAbleObject.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
 
         moveAbleObject.move(-velocity, 0);
-        expectedPosition -= {baseSpeed * velocity * sin(currentAngle), baseSpeed * velocity * cos(currentAngle), 0};
+        expectedPosition -= {baseSpeed * velocity * std::sin(currentAngle), baseSpeed * velocity * std::cos(currentAngle), 0};
 
         REQUIRE_THAT(moveAbleObject.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
         REQUIRE_THAT(moveAbleObject.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
@@ -100,7 +100,7 @@ TEST_CASE("Simple Forward with a 90 degree turn"){
 
     float turn = math::PI/2;
 
-    Vector3 expectedPosition{10*sin(turn), 10*cos(turn), 0};
+    Vector3 expectedPosition{10*std::sin(turn), 10*std::cos(turn), 0};
 
     moveAbleObject.move(10,turn);
 
@@ -141,7 +141,7 @@ TEST_CASE("Forward, Backwards and Turning for high velocity and small turnDirect
     for (int i = 0; currentAngle < 2 * math::PI; i++) {
 
         currentAngle += turnSpeed * turnDirection;
-        expectedPosition += {baseSpeed * velocity * sin(currentAngle), baseSpeed * velocity * cos(currentAngle), 0};
+        expectedPosition += {baseSpeed * velocity * std::sin(currentAngle), baseSpeed * velocity * std::cos(currentAngle), 0};
         moveAbleObject.move(velocity, turnDirection);
 
         REQUIRE_THAT(moveAbleObject.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
@@ -149,7 +149,7 @@ TEST_CASE("Forward, Backwards and Turning for high velocity and small turnDirect
         REQUIRE_THAT(moveAbleObject.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
 
         moveAbleObject.move(-velocity, 0);
-        expectedPosition -= {baseSpeed * velocity * sin(currentAngle), baseSpeed * velocity * cos(currentAngle), 0};
+        expectedPosition -= {baseSpeed * velocity * std::sin(currentAngle), baseSpeed * velocity * std::cos(currentAngle), 0};
 
         REQUIRE_THAT(moveAbleObject.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
         REQUIRE_THAT(moveAbleObject.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
@@ -174,7 +174,7 @@ TEST_CASE("Moving in Circle") {
     for (int i = 0; currentAngle < 2 * math::PI; i++) {
 
         currentAngle += turnSpeed * turnDirection;
-        expectedPosition += {baseSpeed * velocity * sin(currentAngle), baseSpeed * velocity * cos(currentAngle), 0};
+        expectedPosition += {baseSpeed * velocity * std::sin(currentAngle), baseSpeed * velocity * std::cos(currentAngle), 0};
         moveAbleObject.move(velocity, turnDirection);
 
         REQUIRE_THAT(moveAbleObject.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));

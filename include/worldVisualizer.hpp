@@ -17,19 +17,12 @@ public:
     std::shared_ptr<Mesh> flor;
     std::vector<std::shared_ptr<Mesh>> boxes;
 
-    WorldVisualizer(float x, float y, const std::vector<Vector3>& boxPositions = {}):mapSizeX_(x),mapSizeY_(y){
+    WorldVisualizer(float x, float y):mapSizeX_(x),mapSizeY_(y){
         flor = addPlane(x,y);
-
-        if(!boxPositions.empty()){
-            std::cout << "Boxes available, generating map" << std::endl;
-            for (auto element : boxPositions){
-                boxes.emplace_back(createBox(element));
-            }
-        } else{ std::cout << "No Boxes available, empty map" << std::endl;}
     }
 
-    void addBox(Vector3 boxPosition){
-       // boxes->add(createBox(boxPosition));
+    void addBox(Vector3 boxPosition, Vector3 boxSize){
+        boxes.emplace_back(createBox(boxPosition, boxSize));
     }
 
 
@@ -41,7 +34,7 @@ private:
 
     std::shared_ptr<Mesh> addPlane(float width, float length);
 
-    std::shared_ptr<Mesh> createBox(Vector3 boxPosition);
+    std::shared_ptr<Mesh> createBox(Vector3 boxPosition, Vector3 boxSize);
 
 
 };

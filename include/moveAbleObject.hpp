@@ -15,21 +15,21 @@ class MoveAbleObject {
 public:
 
     Vector3 position;
-    Quaternion rotation;
+    Quaternion quaternion;
     const Vector3 upDirection{0, 0, 1};
 
-    explicit MoveAbleObject(Vector3 startPos = {0,0,0}, float r = 0) //Husk å gå gjennom nanv i alt
-            : rotation_(r) {
+    explicit MoveAbleObject(Vector3 startPos = {0,0,0}, float angle = 0) //Husk å gå gjennom nanv i alt
+            : rotation_(angle) {
 
         position.copy(startPos);
-        setRotation(r);
+        setRotation(angle);
         setBaseSpeed(50);
         setTurnSpeed(1);
     }
 
     void setRotation(float angle) {
         rotation_= angle;
-        rotation.setFromAxisAngle(upDirection, angle);
+        quaternion.setFromAxisAngle(upDirection, angle);
     }
 
     void setPosition(Vector3 &pos) {
@@ -86,7 +86,7 @@ private:
 
     void rotateBy(float turnDirection){
         rotation_ += turnSpeed_ * turnDirection;
-        rotation.setFromAxisAngle(upDirection, -rotation_);
+        quaternion.setFromAxisAngle(upDirection, -rotation_);
     }
 //Husk code som ikke går utenfor skjermen
     void moveFor(float velocity){

@@ -5,6 +5,8 @@
 #include "keyInput.hpp"
 #include "worldVisualizer.hpp"
 #include "playerCamera.hpp"
+#include "fileReader.hpp"
+#include "cameraVisualizer.hpp"
 
 using namespace threepp;
 
@@ -24,42 +26,33 @@ int main() {
 
     Player player;
     PlayerVisualizer playerVisualizer;
-    playerVisualizer.setPlayerPosition(player.getPosition(),player.rotation);
+    playerVisualizer.setPlayerPosition(player.getPosition(),player.quaternion);
     scene->add(playerVisualizer.playerModel);
 
-    auto camera = PerspectiveCamera::create(75, canvas.getAspect(), 0.1f, 2000);
-
-    scene->add(camera);
-
     PlayerCamera cameraCalculations(player.getPosition(), player.getRotation());
-
-    cameraCalculations.setCameraAngle(math::PI/3);
-    camera->position = cameraCalculations.getPosition();
-    camera->rotateX(cameraCalculations.getCameraAngle());
+    CameraVisualizer cameraVisualizer(canvas.getAspect(),cameraCalculations.getCameraAngle(),cameraCalculations.getPosition());
+    scene->add(cameraVisualizer.camera);
 
 
-    Vector3 position1{50,50,2.5};
-    Vector3 position2{50,0,2.5};
-    std::vector<Vector3> boxes;
-    boxes.emplace_back(position1);
-    boxes.emplace_back(position2);
+    file_reader file;
+    std::optional<std::string> fileRead = file.read("bin/data/mapdata.txt");
 
-    //Make struct that contains position and size of the box.
-    //Make unorderedmap
+    WorldVisualizer worldVisualizer{1000, 500};
 
-    WorldVisualizer worldVisualizer{1000, 500,boxes};
-
-    for (auto element : worldVisualizer.boxes){
-        scene->add(element);
+    for (auto& it: file.mapData) {
+        worldVisualizer.addBox(it.second.Position,it.second.Size);
     }
 
+    for (const auto& element : worldVisualizer.boxes){
+        scene->add(element);
+    }
     scene->add(worldVisualizer.flor);
 
     Raycaster raycaster;
 
     canvas.onWindowResize([&](WindowSize size) {
-        camera->aspect = size.getAspect();
-        camera->updateProjectionMatrix();
+        cameraVisualizer.camera->aspect = size.getAspect();
+        cameraVisualizer.camera->updateProjectionMatrix();
         renderer.setSize(size);
     });
 
@@ -77,13 +70,11 @@ int main() {
         Vector2 vector2 = keyChecker.getKeyInput();
 
         player.move(vector2.y*dt, -vector2.x*dt);
-        playerVisualizer.setPlayerPosition(player.getPosition(),player.rotation);
+        playerVisualizer.setPlayerPosition(player.getPosition(),player.quaternion);
 
         cameraCalculations.updateTrailingCamera(player.getPosition(),player.getRotation());
-        camera->position = cameraCalculations.getPosition();
-        camera->setRotationFromQuaternion(player.rotation);
-        camera->rotateX(cameraCalculations.getCameraAngle());
+        cameraVisualizer.updateCammeraPosition(cameraCalculations.getPosition(),player.quaternion,cameraCalculations.getCameraAngle());
 
-        renderer.render(scene, camera);
+        renderer.render(scene, cameraVisualizer.camera);
     });
 }

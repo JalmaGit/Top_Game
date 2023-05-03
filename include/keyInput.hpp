@@ -6,7 +6,6 @@
 #define TOP_GAME_KEYINPUT_HPP
 
 #include "threepp/threepp.hpp"
-#include "iostream"
 
 using namespace threepp;
 
@@ -31,7 +30,7 @@ struct MyListener : KeyListener {
 
 struct KeyChecker{
 
-    auto setKeyInput(Canvas& canvas){
+    void setKeyInput(Canvas& canvas){
         keyW.keyType = W;
         canvas.addKeyListener(&keyW);
 
@@ -43,6 +42,9 @@ struct KeyChecker{
 
         keyD.keyType = D;
         canvas.addKeyListener(&keyD);
+
+        keyShift.keyType = shift;
+        canvas.addKeyListener(&keyShift);
     }
 
     Vector2 getKeyInput(){
@@ -59,22 +61,26 @@ struct KeyChecker{
         if (keyD.buttonPressed()) {
             nextMove.x = -1;
         }
+        if (keyShift.buttonPressed()){
+            nextMove.x *= 2;
+            nextMove.y *= 2;
+        }
 
         return nextMove;
     }
 
 private:
-
-
     int W{87};
     int A{65};
     int S{83};
     int D{68};
+    int shift{69};
 
     MyListener keyW;
     MyListener keyA;
     MyListener keyS;
     MyListener keyD;
+    MyListener keyShift;
 
 };
 

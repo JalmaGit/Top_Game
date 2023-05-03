@@ -19,7 +19,7 @@ public:
         setDistanceFromObj(5);
         setPosition({0,0,0});
         setCameraHeight(5);
-        setCameraAngle(math::PI/4);
+        setCameraAngle(math::PI/3);
         upVector_ = {0,0,1};
         updateTrailingCamera(objPosition, objAngle);
     }
@@ -42,7 +42,7 @@ public:
 
     void updateTrailingCamera(Vector3 objPosition, float objAngle){
         quaternion.setFromAxisAngle(upVector_,objAngle);
-        position_ = {distanceFrom_*sin(objAngle)+objPosition.x, distanceFrom_*cos(objAngle)+objPosition.y, position_.z};
+        position_ = {distanceFrom_*std::sin(objAngle)+objPosition.x, distanceFrom_*std::cos(objAngle)+objPosition.y, position_.z};
     }
 
     Vector3 getPosition(){

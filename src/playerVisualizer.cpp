@@ -3,8 +3,14 @@
 //
 
 #include "playerVisualizer.hpp"
+
 #include "threepp/geometries/EdgesGeometry.hpp"
+#include "threepp/geometries/ShapeGeometry.hpp"
 #include "threepp/geometries/ExtrudeGeometry.hpp"
+#include "threepp/extras/core/Shape.hpp"
+#include "threepp/materials/MeshPhongMaterial.hpp"
+
+using namespace threepp;
 
 std::shared_ptr<Mesh> PlayerVisualizer::playerModelCreation(){
     float x = 0, y = 0;

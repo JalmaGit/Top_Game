@@ -17,16 +17,19 @@ public:
 
     std::shared_ptr<PerspectiveCamera> camera;
 
-    CameraVisualizer (){
-        camera = PerspectiveCamera::create();
+    CameraVisualizer (float aspect, float cameraAngle, Vector3 position){
+        camera = PerspectiveCamera::create(75, aspect, 0.1f, 2000);
+        camera->position = position;
+        camera->rotateX(cameraAngle);
     }
 
-    auto setCammeraPosition(Vector3& position, Quaternion rotation, float cameraAngle) const{
-
+    void updateCammeraPosition(Vector3 position, const Quaternion& quaternion, float cameraAngle) const{
+        camera->position = position;
+        camera->setRotationFromQuaternion(quaternion);
+        camera->rotateX(cameraAngle);
     }
 
 private:
-
 
 };
 

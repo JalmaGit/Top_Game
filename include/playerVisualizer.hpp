@@ -8,8 +8,9 @@
 #include "threepp/objects/Mesh.hpp"
 #include "threepp/math/Vector3.hpp"
 #include "threepp/math/Quaternion.hpp"
-#include "geometryCreation.hpp"
 #include <iostream>
+
+using namespace threepp;
 
 class PlayerVisualizer { //kan dette testes?
 public:

@@ -10,7 +10,7 @@
 TEST_CASE("Zero Position") {
 
     Player player;
-    Vector3 ZeroPosition{0, 0, 0};
+    Vector3 ZeroPosition{0, 0, 2};
     float rotation = 0;
 
     CHECK(player.position == ZeroPosition);
@@ -20,7 +20,7 @@ TEST_CASE("Zero Position") {
 
 TEST_CASE("Forward, Backwards and Turning") {
     Player player;
-    Vector3 expectedPosition{0, 0, 0};
+    Vector3 expectedPosition{0, 0, 2};
 
     float turnSpeed = math::PI / 8;
     float baseSpeed = 1;
@@ -35,7 +35,7 @@ TEST_CASE("Forward, Backwards and Turning") {
     for (int i = 0; currentAngle < 2 * math::PI; i++) {
 
         currentAngle += turnSpeed * turnDirection;
-        expectedPosition += { baseSpeed * velocity * sin(currentAngle), baseSpeed * velocity * cos(currentAngle), 0};
+        expectedPosition += { baseSpeed * velocity * std::sin(currentAngle), baseSpeed * velocity * std::cos(currentAngle), 0};
         player.move(velocity, turnDirection);
 
         REQUIRE_THAT(player.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
@@ -43,7 +43,7 @@ TEST_CASE("Forward, Backwards and Turning") {
         REQUIRE_THAT(player.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
 
         player.move(-velocity, 0);
-        expectedPosition -= {baseSpeed * velocity * sin(currentAngle), baseSpeed * velocity * cos(currentAngle), 0};
+        expectedPosition -= {baseSpeed * velocity * std::sin(currentAngle), baseSpeed * velocity * std::cos(currentAngle), 0};
 
         CHECK(player.getPosition() == expectedPosition);
     }
@@ -51,7 +51,7 @@ TEST_CASE("Forward, Backwards and Turning") {
 
 TEST_CASE("Checking Default Constructor") {
     Player player;
-    Vector3 expectedPosition{0, 0, 0};
+    Vector3 expectedPosition{0, 0, 2};
 
     CHECK(player.getPosition() == expectedPosition);
     CHECK(player.getTurnSpeed() == 1);
