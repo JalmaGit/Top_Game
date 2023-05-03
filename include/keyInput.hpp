@@ -28,9 +28,9 @@ struct MyListener : KeyListener {
     }
 };
 
-struct KeyChecker{
+struct KeyChecker {
 
-    void setKeyInput(Canvas& canvas){
+    void setKeyInput(Canvas &canvas) {
         keyW.keyType = W;
         canvas.addKeyListener(&keyW);
 
@@ -47,8 +47,8 @@ struct KeyChecker{
         canvas.addKeyListener(&keyShift);
     }
 
-    Vector2 getKeyInput(){
-        Vector2 nextMove = {0,0};
+    Vector2 getKeyInput() {
+        Vector2 nextMove = {0, 0};
         if (keyW.buttonPressed()) {
             nextMove.y = 1;
         }
@@ -61,7 +61,7 @@ struct KeyChecker{
         if (keyD.buttonPressed()) {
             nextMove.x = -1;
         }
-        if (keyShift.buttonPressed()){
+        if (keyShift.buttonPressed()) {
             nextMove.x *= 2;
             nextMove.y *= 2;
         }

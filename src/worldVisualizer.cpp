@@ -7,7 +7,7 @@
 #include "threepp/materials/MeshBasicMaterial.hpp"
 #include "threepp/geometries/BoxGeometry.hpp"
 
-using namespace threepp;
+using namespace threepp; //This is fine bc this is cpp file or source file
 
 std::shared_ptr<Mesh> WorldVisualizer::addPlane(float width, float length) {
     TextureLoader loader;

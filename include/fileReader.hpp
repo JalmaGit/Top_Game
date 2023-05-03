@@ -20,7 +20,7 @@ struct BoxParameters {
     threepp::Vector3 Size;
 };
 
-struct file_reader {
+class mapFileReader {
 
 public: //Taken some kode from: https://stackoverflow.com/questions/7868936/read-file-line-by-line-using-ifstream-in-c
 
@@ -46,7 +46,7 @@ public: //Taken some kode from: https://stackoverflow.com/questions/7868936/read
             std::string line;
             std::string lineOutput;
 
-            std::getline(myFile,line);
+            std::getline(myFile, line);
             lineOutput = line;
 
             while (std::getline(myFile, line)) {
@@ -68,22 +68,26 @@ public: //Taken some kode from: https://stackoverflow.com/questions/7868936/read
                 std::string zSValue;
 
                 std::stringstream ssPositionData(positionData);
-                getline(ssPositionData, xPValue , ':');
-                getline(ssPositionData, yPValue , ':');
-                getline(ssPositionData, zPValue , ':');
+                getline(ssPositionData, xPValue, ':');
+                getline(ssPositionData, yPValue, ':');
+                getline(ssPositionData, zPValue, ':');
                 boxParams.Position.x = static_cast<float> (std::atof(xPValue.c_str()));
                 boxParams.Position.y = static_cast<float> (std::atof(yPValue.c_str()));
                 boxParams.Position.z = static_cast<float> (std::atof(zPValue.c_str()));
 
+                //Try to make expecption if any number is not pressent/is a char of some sort
+                //try to read up on boost library
+                //DRY
+
                 std::stringstream ssSizeData(sizeData);
-                getline(ssSizeData, xSValue , ':');
-                getline(ssSizeData, ySValue , ':');
-                getline(ssSizeData, zSValue , ':');
+                getline(ssSizeData, xSValue, ':');
+                getline(ssSizeData, ySValue, ':');
+                getline(ssSizeData, zSValue, ':');
                 boxParams.Size.x = static_cast<float> (std::atof(xSValue.c_str()));
                 boxParams.Size.y = static_cast<float> (std::atof(ySValue.c_str()));
                 boxParams.Size.z = static_cast<float> (std::atof(zSValue.c_str()));
 
-                mapData.insert({keyValue,boxParams});
+                mapData.insert({keyValue, boxParams});
 
             }
             cache_.insert({pathStr, lineOutput});

@@ -34,7 +34,7 @@ int main() {
     scene->add(cameraVisualizer.camera);
 
 
-    file_reader file;
+    mapFileReader file;
     std::optional<std::string> fileRead = file.read("bin/data/mapdata.txt");
 
     WorldVisualizer worldVisualizer{1000, 500};

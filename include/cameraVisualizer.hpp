@@ -10,28 +10,23 @@
 #include "threepp/math/Quaternion.hpp"
 #include "threepp/math/MathUtils.hpp"
 
-using namespace threepp;
+using namespace threepp; //don't do this do threepp::[function]
 
-class CameraVisualizer { //kan dette testes?
+class CameraVisualizer { //PlayerCamera
 public:
-
     std::shared_ptr<PerspectiveCamera> camera;
 
-    CameraVisualizer (float aspect, float cameraAngle, Vector3 position){
+    CameraVisualizer(float aspect, float cameraAngle, Vector3 position) {
         camera = PerspectiveCamera::create(75, aspect, 0.1f, 2000);
         camera->position = position;
         camera->rotateX(cameraAngle);
     }
 
-    void updateCammeraPosition(Vector3 position, const Quaternion& quaternion, float cameraAngle) const{
+    void updateCammeraPosition(Vector3 position, const Quaternion &quaternion, float cameraAngle) const {
         camera->position = position;
         camera->setRotationFromQuaternion(quaternion);
         camera->rotateX(cameraAngle);
     }
-
-private:
-
 };
-
 
 #endif //TOP_GAME_CAMERAHANDLER_HPP

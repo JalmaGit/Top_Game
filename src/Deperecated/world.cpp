@@ -2,8 +2,8 @@
 // Created by Jalma on 28/03/2023.
 //
 
-#include "NotInUse/geometryCreation.hpp"
-#include "NotInUse/world.hpp"
+#include "Deperecated/geometryCreation.hpp"
+#include "Deperecated/world.hpp"
 
 Box3 WorldGen::createUpperWorldEdge(const BoxGeometry::Params params) {
     BoxGeometry::Params topBoxParams{params.width, params.height, 100};

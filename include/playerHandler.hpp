@@ -5,23 +5,23 @@
 #ifndef TOP_GAME_PLAYERHANDLER_HPP
 #define TOP_GAME_PLAYERHANDLER_HPP
 
-#include "moveAbleObject.hpp"
-//Ask about this on monday
+#include "moveAbleObject.hpp" //Make Headerfile same name as class
+
 class Player : public MoveAbleObject {
 public:
 
-    explicit Player(int h = 100) : health_(h){
+    explicit Player(int h = 100) : health_(h) {
         setHealth(h);
         Vector3 startPosition{0, 0, 2};
         setPosition(startPosition);
         score_ = 0;
     }
 
-    void setHealth(int newHealth){
+    void setHealth(int newHealth) {
         health_ = newHealth;
     }
 
-    void setScore(int newScore){
+    void setScore(int newScore) {
         score_ = newScore;
     }
 
@@ -37,7 +37,7 @@ public:
         score_ += newAddScore;
     }
 
-    void removeScore (int newRemoveScore) {
+    void removeScore(int newRemoveScore) {
         score_ -= newRemoveScore;
     }
 
@@ -46,6 +46,5 @@ private:
     int score_;
     Vector3 playerSize_;
 };
-
 
 #endif //TOP_GAME_PLAYERHANDLER_HPP

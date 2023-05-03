@@ -1,7 +1,7 @@
 set(sources
-        "notinUse/geometryCreation.cpp"
-        "notinUse/world.cpp"
-        "notinUse/player.cpp"
+        "Deperecated/geometryCreation.cpp"
+        "Deperecated/world.cpp"
+        "Deperecated/player.cpp"
         "playerVisualizer.cpp"
         "worldVisualizer.cpp")
 

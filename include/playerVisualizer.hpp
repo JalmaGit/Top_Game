@@ -16,11 +16,11 @@ class PlayerVisualizer { //kan dette testes?
 public:
     std::shared_ptr<Mesh> playerModel;
 
-    explicit PlayerVisualizer(){
+    explicit PlayerVisualizer() {
         playerModel = playerModelCreation();
     }
 
-    auto setPlayerPosition(Vector3 position, const Quaternion& rotation) const{
+    auto setPlayerPosition(Vector3 position, const Quaternion &rotation) const {
         playerModel->position.copy(position);
         playerModel->rotation.setFromQuaternion(rotation);
     }

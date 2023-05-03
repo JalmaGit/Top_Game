@@ -8,52 +8,54 @@
 #include "threepp/math/Vector3.hpp"
 #include "threepp/math/Quaternion.hpp"
 #include "threepp/math/MathUtils.hpp"
+#include <cmath>
 
-using namespace threepp;
+using namespace threepp; //Dont use namespace in headerfiles
 
-class PlayerCamera { //Ask Teacher about calling Camera?
+class PlayerCamera {  //PlayerCameraPosition or CameraAttacher
 public:
     Quaternion quaternion;
 
-    explicit PlayerCamera (Vector3 objPosition = {0, 0, 0}, float objAngle = 0){ //Ask on Tuesday about this comment
+    explicit PlayerCamera(Vector3 objPosition = {0, 0, 0}, float objAngle = 0) { //Ask on Tuesday about this comment
         setDistanceFromObj(5);
-        setPosition({0,0,0});
+        setPosition({0, 0, 0});
         setCameraHeight(5);
-        setCameraAngle(math::PI/3);
-        upVector_ = {0,0,1};
+        setCameraAngle(math::PI / 3);
+        upVector_ = {0, 0, 1};
         updateTrailingCamera(objPosition, objAngle);
     }
 
-    void setDistanceFromObj(float newDistanceFrom){
+    void setDistanceFromObj(float newDistanceFrom) {
         distanceFrom_ = -newDistanceFrom;
     }
 
-    void setPosition(Vector3 position){
+    void setPosition(Vector3 position) {
         position_ = position;
     }
 
-    void setCameraHeight (float newCameraHeight){
+    void setCameraHeight(float newCameraHeight) {
         position_.z = newCameraHeight;
     }
 
-    void setCameraAngle(float newCameraAngle){
+    void setCameraAngle(float newCameraAngle) {
         cameraAngle_ = newCameraAngle;
     }
 
-    void updateTrailingCamera(Vector3 objPosition, float objAngle){
-        quaternion.setFromAxisAngle(upVector_,objAngle);
-        position_ = {distanceFrom_*std::sin(objAngle)+objPosition.x, distanceFrom_*std::cos(objAngle)+objPosition.y, position_.z};
+    void updateTrailingCamera(Vector3 objPosition, float objAngle) {
+        quaternion.setFromAxisAngle(upVector_, objAngle);
+        position_ = {distanceFrom_ * std::sin(objAngle) + objPosition.x,
+                     distanceFrom_ * std::cos(objAngle) + objPosition.y, position_.z};
     }
 
-    Vector3 getPosition(){
+    Vector3 getPosition() {
         return position_;
     }
 
-    [[nodiscard]] float getDistanceFromObj() const{
+    [[nodiscard]] float getDistanceFromObj() const {
         return distanceFrom_;
     }
 
-    [[nodiscard]] float getCameraAngle() const{
+    [[nodiscard]] float getCameraAngle() const {
         return cameraAngle_;
     }
 

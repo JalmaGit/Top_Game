@@ -1,7 +1,7 @@
 
 #include "moveAbleObject.hpp"
-#include "threepp/math/Vector3.hpp"
-#include "threepp/math/MathUtils.hpp"
+#include <threepp/math/Vector3.hpp> //threepp use <> bc it's not part of my own library
+#include <threepp/math/MathUtils.hpp>
 
 #define CATCH_CONFIG_MAIN
 
