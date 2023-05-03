@@ -1,70 +1,32 @@
 //
-// Created by Jalma on 29/04/2023.
+// Created by Jalma on 28/04/2023.
 //
 
-#ifndef TOP_GAME_PLAYERCAMERA_HPP
-#define TOP_GAME_PLAYERCAMERA_HPP
+#ifndef TOP_GAME_CAMERAHANDLER_HPP
+#define TOP_GAME_CAMERAHANDLER_HPP
 
+#include "threepp/cameras/PerspectiveCamera.hpp"
 #include "threepp/math/Vector3.hpp"
 #include "threepp/math/Quaternion.hpp"
 #include "threepp/math/MathUtils.hpp"
-#include <cmath>
 
-using namespace threepp; //Dont use namespace in headerfiles
-
-class PlayerCamera {  //PlayerCameraPosition or CameraAttacher
+class PlayerCamera { //CameraAttacher
 public:
-    Quaternion quaternion;
+    std::shared_ptr<threepp::PerspectiveCamera> camera;
 
-    explicit PlayerCamera(Vector3 objPosition = {0, 0, 0}, float objAngle = 0) { //Ask on Tuesday about this comment
-        setDistanceFromObj(5);
-        setPosition({0, 0, 0});
-        setCameraHeight(5);
-        setCameraAngle(math::PI / 3);
-        upVector_ = {0, 0, 1};
-        updateTrailingCamera(objPosition, objAngle);
+    PlayerCamera(float aspect, float cameraAngle, threepp::Vector3 position) {
+        camera = threepp::PerspectiveCamera::create(75, aspect, 0.1f, 2000);
+        camera->position = position;
+        camera->rotateX(cameraAngle);
     }
 
-    void setDistanceFromObj(float newDistanceFrom) {
-        distanceFrom_ = -newDistanceFrom;
-    }
-
-    void setPosition(Vector3 position) {
-        position_ = position;
-    }
-
-    void setCameraHeight(float newCameraHeight) {
-        position_.z = newCameraHeight;
-    }
-
-    void setCameraAngle(float newCameraAngle) {
-        cameraAngle_ = newCameraAngle;
-    }
-
-    void updateTrailingCamera(Vector3 objPosition, float objAngle) {
-        quaternion.setFromAxisAngle(upVector_, objAngle);
-        position_ = {distanceFrom_ * std::sin(objAngle) + objPosition.x,
-                     distanceFrom_ * std::cos(objAngle) + objPosition.y, position_.z};
-    }
-
-    Vector3 getPosition() {
-        return position_;
-    }
-
-    [[nodiscard]] float getDistanceFromObj() const {
-        return distanceFrom_;
-    }
-
-    [[nodiscard]] float getCameraAngle() const {
-        return cameraAngle_;
-    }
-
-private:
-    Vector3 position_;
-    Vector3 upVector_;
-    float distanceFrom_{};
-    float cameraAngle_{};
-
+    void updateCameraPosition(threepp::Vector3 position, const threepp::Quaternion &quaternion, float cameraAngle) const;
 };
 
-#endif //TOP_GAME_PLAYERCAMERA_HPP
+void PlayerCamera::updateCameraPosition(threepp::Vector3 position, const threepp::Quaternion &quaternion, float cameraAngle) const {
+    camera->position = position;
+    camera->setRotationFromQuaternion(quaternion);
+    camera->rotateX(cameraAngle);
+}
+
+#endif //TOP_GAME_CAMERAHANDLER_HPP

@@ -9,19 +9,17 @@
 #include "threepp/objects/Group.hpp"
 #include <iostream>
 
-using namespace threepp;
-
 class WorldVisualizer {
 public:
 
-    std::shared_ptr<Mesh> flor;
-    std::vector<std::shared_ptr<Mesh>> boxes;
+    std::shared_ptr<threepp::Mesh> flor;
+    std::vector<std::shared_ptr<threepp::Mesh>> boxes;
 
     WorldVisualizer(float x, float y) : mapSizeX_(x), mapSizeY_(y) {
         flor = addPlane(x, y);
     }
 
-    void addBox(Vector3 boxPosition, Vector3 boxSize) {
+    void addBox(threepp::Vector3 boxPosition, threepp::Vector3 boxSize) {
         boxes.emplace_back(createBox(boxPosition, boxSize));
     }
 
@@ -29,12 +27,12 @@ public:
 private:
     float mapSizeX_{};
     float mapSizeY_{};
-    Vector3 boxPosition_{20, 0, 2.5};
-    Vector3 boxPosition1_{0, 0, 2.5};
+    threepp::Vector3 boxPosition_{20, 0, 2.5};
+    threepp::Vector3 boxPosition1_{0, 0, 2.5};
 
-    std::shared_ptr<Mesh> addPlane(float width, float length);
+    std::shared_ptr<threepp::Mesh> addPlane(float width, float length);
 
-    std::shared_ptr<Mesh> createBox(Vector3 boxPosition, Vector3 boxSize);
+    std::shared_ptr<threepp::Mesh> createBox(threepp::Vector3 boxPosition, threepp::Vector3 boxSize);
 
 
 };

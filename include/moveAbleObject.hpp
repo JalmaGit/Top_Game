@@ -10,18 +10,16 @@
 #include "threepp/math/MathUtils.hpp"
 #include <cmath>
 
-using namespace threepp; //fyfy don't please
-
-class MoveAbleObject {
+class MoveAble {
 public:
 
-    Vector3 position;
-    Quaternion quaternion;
-    const Vector3 upDirection{0, 0, 1};
+    threepp::Vector3 position;
+    threepp::Quaternion quaternion;
+    const threepp::Vector3 upDirection{0, 0, 1};
 
     //Rename to MoveAble
 
-    explicit MoveAbleObject(Vector3 startPos = {0, 0, 0}, float angle = 0) //Husk å gå gjennom nanv i alt
+    explicit MoveAble(threepp::Vector3 startPos = {0, 0, 0}, float angle = 0) //Husk å gå gjennom nanv i alt
             : rotation_(angle) {
 
         position.copy(startPos);
@@ -47,7 +45,7 @@ public:
         turnSpeed_ = newTurnSpeed;
     }
 
-    [[nodiscard]] const Vector3 getPosition() const {
+    [[nodiscard]] const threepp::Vector3 getPosition() const {
         return position;
     }
 
@@ -63,7 +61,7 @@ public:
         return turnSpeed_;
     }
 
-    [[nodiscard]] Vector3 getDirection() {
+    [[nodiscard]] threepp::Vector3 getDirection() {
         direction_ = {std::sin(rotation_), std::cos(rotation_), 0};
         return direction_;
     }
@@ -79,12 +77,12 @@ public:
     }
 
 private:
-    Vector3 direction_{};
+    threepp::Vector3 direction_{};
     float rotation_;
     float baseSpeed_{};
     float turnSpeed_{};
 
-    Vector3 resetPosition_{0, 0, 0};
+    threepp::Vector3 resetPosition_{0, 0, 0};
     float resetRotation_{0};
 
     void rotateBy(float turnDirection) {

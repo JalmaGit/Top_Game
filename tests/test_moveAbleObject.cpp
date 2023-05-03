@@ -10,7 +10,7 @@
 
 TEST_CASE("Zero Position") {
 
-    MoveAbleObject moveAbleObject;
+    MoveAble moveAbleObject;
     Vector3 ZeroPosition{0, 0, 0};
     float rotation = 0;
 
@@ -20,7 +20,7 @@ TEST_CASE("Zero Position") {
 }
 
 TEST_CASE("Checking Default Constructor"){
-    MoveAbleObject moveAbleObject;
+    MoveAble moveAbleObject;
     Vector3 expectedPosition{0, 0, 0};
 
     CHECK(moveAbleObject.getRotation() == 0);
@@ -31,7 +31,7 @@ TEST_CASE("Checking Default Constructor"){
 
 TEST_CASE("Forward, Backwards and Turning for small velocity and large turnDirection") {
 
-    MoveAbleObject moveAbleObject;
+    MoveAble moveAbleObject;
     Vector3 expectedPosition{0, 0, 0};
 
     float turnSpeed = math::PI / 8;
@@ -64,7 +64,7 @@ TEST_CASE("Forward, Backwards and Turning for small velocity and large turnDirec
 }
 
 TEST_CASE("Forward and Backwards"){
-    MoveAbleObject moveAbleObject;
+    MoveAble moveAbleObject;
     moveAbleObject.setBaseSpeed(1);
     Vector3 expectedPosition{0, 10, 0};
 
@@ -95,7 +95,7 @@ TEST_CASE("Forward and Backwards"){
 }
 
 TEST_CASE("Simple Forward with a 90 degree turn"){
-    MoveAbleObject moveAbleObject;
+    MoveAble moveAbleObject;
     moveAbleObject.setBaseSpeed(1);
 
     float turn = math::PI/2;
@@ -125,7 +125,7 @@ TEST_CASE("Simple Forward with a 90 degree turn"){
 
 TEST_CASE("Forward, Backwards and Turning for high velocity and small turnDirection") {
 
-    MoveAbleObject moveAbleObject;
+    MoveAble moveAbleObject;
     Vector3 expectedPosition{0, 0, 0};
 
     float turnSpeed = math::PI / 80;
@@ -158,7 +158,7 @@ TEST_CASE("Forward, Backwards and Turning for high velocity and small turnDirect
 }
 
 TEST_CASE("Moving in Circle") {
-    MoveAbleObject moveAbleObject;
+    MoveAble moveAbleObject;
     Vector3 expectedPosition{0, 0, 0};
 
     float turnSpeed = math::PI / 80;
@@ -185,7 +185,7 @@ TEST_CASE("Moving in Circle") {
 
 TEST_CASE("Circles not from Zero Position"){
     Vector3 startPos{100, 100, 0};
-    MoveAbleObject moveAbleObject{startPos};
+    MoveAble moveAbleObject{startPos};
     Vector3 expectedPosition{100, 100, 0};
 
     float turnSpeed = math::PI / 80;

@@ -4,9 +4,9 @@
 #include "playerVisualizer.hpp"
 #include "keyInput.hpp"
 #include "worldVisualizer.hpp"
+#include "cameraAttacher.hpp"
+#include "mapFileReader.hpp"
 #include "playerCamera.hpp"
-#include "fileReader.hpp"
-#include "cameraVisualizer.hpp"
 
 using namespace threepp;
 
@@ -29,8 +29,8 @@ int main() {
     playerVisualizer.setPlayerPosition(player.getPosition(),player.quaternion);
     scene->add(playerVisualizer.playerModel);
 
-    PlayerCamera cameraCalculations(player.getPosition(), player.getRotation());
-    CameraVisualizer cameraVisualizer(canvas.getAspect(),cameraCalculations.getCameraAngle(),cameraCalculations.getPosition());
+    CameraAttacher cameraCalculations(player.getPosition(), player.getRotation());
+    PlayerCamera cameraVisualizer(canvas.getAspect(), cameraCalculations.getCameraAngle(), cameraCalculations.getPosition());
     scene->add(cameraVisualizer.camera);
 
 
@@ -73,7 +73,8 @@ int main() {
         playerVisualizer.setPlayerPosition(player.getPosition(),player.quaternion);
 
         cameraCalculations.updateTrailingCamera(player.getPosition(),player.getRotation());
-        cameraVisualizer.updateCammeraPosition(cameraCalculations.getPosition(),player.quaternion,cameraCalculations.getCameraAngle());
+        cameraVisualizer.updateCameraPosition(cameraCalculations.getPosition(), player.quaternion,
+                                              cameraCalculations.getCameraAngle());
 
         renderer.render(scene, cameraVisualizer.camera);
     });

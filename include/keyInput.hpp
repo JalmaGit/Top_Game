@@ -5,21 +5,21 @@
 #ifndef TOP_GAME_KEYINPUT_HPP
 #define TOP_GAME_KEYINPUT_HPP
 
-#include "threepp/threepp.hpp"
+#include "threepp/input/KeyListener.hpp"
+#include "threepp/math/Vector2.hpp"
 
-using namespace threepp;
 
-struct MyListener : KeyListener {
+struct MyListener : threepp::KeyListener {
 
     int keyType{};
 
     bool button = false;
 
-    void onKeyPressed(KeyEvent evt) override {
+    void onKeyPressed(threepp::KeyEvent evt) override {
         if (evt.key == keyType) { button = true; }
     }
 
-    void onKeyReleased(KeyEvent evt) override {
+    void onKeyReleased(threepp::KeyEvent evt) override {
         if (evt.key == keyType) { button = false; }
     }
 
@@ -30,44 +30,9 @@ struct MyListener : KeyListener {
 
 struct KeyChecker {
 
-    void setKeyInput(Canvas &canvas) {
-        keyW.keyType = W;
-        canvas.addKeyListener(&keyW);
+    void setKeyInput(threepp::Canvas &canvas);
 
-        keyA.keyType = A;
-        canvas.addKeyListener(&keyA);
-
-        keyS.keyType = S;
-        canvas.addKeyListener(&keyS);
-
-        keyD.keyType = D;
-        canvas.addKeyListener(&keyD);
-
-        keyShift.keyType = shift;
-        canvas.addKeyListener(&keyShift);
-    }
-
-    Vector2 getKeyInput() {
-        Vector2 nextMove = {0, 0};
-        if (keyW.buttonPressed()) {
-            nextMove.y = 1;
-        }
-        if (keyS.buttonPressed()) {
-            nextMove.y = -1;
-        }
-        if (keyA.buttonPressed()) {
-            nextMove.x = 1;
-        }
-        if (keyD.buttonPressed()) {
-            nextMove.x = -1;
-        }
-        if (keyShift.buttonPressed()) {
-            nextMove.x *= 2;
-            nextMove.y *= 2;
-        }
-
-        return nextMove;
-    }
+    threepp::Vector2 getKeyInput();
 
 private:
     int W{87};
@@ -83,5 +48,44 @@ private:
     MyListener keyShift;
 
 };
+
+threepp::Vector2 KeyChecker::getKeyInput() {
+    threepp::Vector2 nextMove = {0, 0};
+    if (keyW.buttonPressed()) {
+        nextMove.y = 1;
+    }
+    if (keyS.buttonPressed()) {
+        nextMove.y = -1;
+    }
+    if (keyA.buttonPressed()) {
+        nextMove.x = 1;
+    }
+    if (keyD.buttonPressed()) {
+        nextMove.x = -1;
+    }
+    if (keyShift.buttonPressed()) {
+        nextMove.x *= 2;
+        nextMove.y *= 2;
+    }
+
+    return nextMove;
+}
+
+void KeyChecker::setKeyInput(threepp::Canvas &canvas) {
+    keyW.keyType = W;
+    canvas.addKeyListener(&keyW);
+
+    keyA.keyType = A;
+    canvas.addKeyListener(&keyA);
+
+    keyS.keyType = S;
+    canvas.addKeyListener(&keyS);
+
+    keyD.keyType = D;
+    canvas.addKeyListener(&keyD);
+
+    keyShift.keyType = shift;
+    canvas.addKeyListener(&keyShift);
+}
 
 #endif //TOP_GAME_KEYINPUT_HPP

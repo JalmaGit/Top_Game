@@ -1,7 +1,7 @@
 //
 // Created by Jalma on 30/04/2023.
 //
-#include "playerCamera.hpp"
+#include "cameraAttacher.hpp"
 #include "threepp/math/Vector3.hpp"
 #include "threepp/math/MathUtils.hpp"
 
@@ -10,7 +10,7 @@
 #include <catch2/catch.hpp>
 
 TEST_CASE("Default Constructor Test"){
-    PlayerCamera cameraCalculations;
+    CameraAttacher cameraCalculations;
 
     REQUIRE_THAT(cameraCalculations.getCameraAngle(), Catch::Matchers::WithinRel(1.046, 0.1));
     REQUIRE_THAT(cameraCalculations.getDistanceFromObj(), Catch::Matchers::WithinRel(-5.0,0.01));

@@ -10,24 +10,22 @@
 #include "threepp/math/Quaternion.hpp"
 #include <iostream>
 
-using namespace threepp;
-
 class PlayerVisualizer { //kan dette testes?
 public:
-    std::shared_ptr<Mesh> playerModel;
+    std::shared_ptr<threepp::Mesh> playerModel;
 
     explicit PlayerVisualizer() {
         playerModel = playerModelCreation();
     }
 
-    auto setPlayerPosition(Vector3 position, const Quaternion &rotation) const {
+    auto setPlayerPosition(threepp::Vector3 position, const threepp::Quaternion &rotation) const {
         playerModel->position.copy(position);
         playerModel->rotation.setFromQuaternion(rotation);
     }
 
 private:
 
-    static std::shared_ptr<Mesh> playerModelCreation();
+    static std::shared_ptr<threepp::Mesh> playerModelCreation();
 
 };
 
