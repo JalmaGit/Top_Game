@@ -10,7 +10,7 @@ find_package(imgui CONFIG REQUIRED)
 
 add_subdirectory(src)
 
-add_executable(Top_Game main.cpp)
+add_executable(Top_Game main.cpp include/raycasterAttacher.hpp)
 target_link_libraries(Top_Game PUBLIC gamelib imgui::imgui)
 
 file(COPY "${CMAKE_SOURCE_DIR}/data" DESTINATION "${CMAKE_BINARY_DIR}/bin")

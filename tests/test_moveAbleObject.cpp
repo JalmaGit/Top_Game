@@ -2,6 +2,7 @@
 #include "moveAbleObject.hpp"
 #include <threepp/math/Vector3.hpp> //threepp use <> bc it's not part of my own library
 #include <threepp/math/MathUtils.hpp>
+#include <cmath>
 
 #define CATCH_CONFIG_MAIN
 
@@ -11,7 +12,7 @@
 TEST_CASE("Zero Position") {
 
     MoveAble moveAbleObject;
-    Vector3 ZeroPosition{0, 0, 0};
+    threepp::Vector3 ZeroPosition{0, 0, 0};
     float rotation = 0;
 
     CHECK(moveAbleObject.position == ZeroPosition);
@@ -21,7 +22,7 @@ TEST_CASE("Zero Position") {
 
 TEST_CASE("Checking Default Constructor"){
     MoveAble moveAbleObject;
-    Vector3 expectedPosition{0, 0, 0};
+    threepp::Vector3 expectedPosition{0, 0, 0};
 
     CHECK(moveAbleObject.getRotation() == 0);
     CHECK(moveAbleObject.getPosition() == expectedPosition);
@@ -32,19 +33,19 @@ TEST_CASE("Checking Default Constructor"){
 TEST_CASE("Forward, Backwards and Turning for small velocity and large turnDirection") {
 
     MoveAble moveAbleObject;
-    Vector3 expectedPosition{0, 0, 0};
+    threepp::Vector3 expectedPosition{0, 0, 0};
 
-    float turnSpeed = math::PI / 8;
+    float turnSpeed = threepp::math::PI / 8;
     float baseSpeed = 1;
 
     float velocity = 1;
     float turnDirection = 1;
     float currentAngle = 0;
 
-    moveAbleObject.setTurnSpeed(math::PI / 8);
+    moveAbleObject.setTurnSpeed(threepp::math::PI / 8);
     moveAbleObject.setBaseSpeed(1);
 
-    for (int i = 0; currentAngle < 2 * math::PI; i++) {
+    for (int i = 0; currentAngle < 2 * threepp::math::PI; i++) {
 
         currentAngle += turnSpeed * turnDirection;
         expectedPosition += {baseSpeed * velocity * std::sin(currentAngle), baseSpeed * velocity * std::cos(currentAngle), 0};
@@ -66,7 +67,7 @@ TEST_CASE("Forward, Backwards and Turning for small velocity and large turnDirec
 TEST_CASE("Forward and Backwards"){
     MoveAble moveAbleObject;
     moveAbleObject.setBaseSpeed(1);
-    Vector3 expectedPosition{0, 10, 0};
+    threepp::Vector3 expectedPosition{0, 10, 0};
 
     moveAbleObject.move(10,0);
 
@@ -98,9 +99,9 @@ TEST_CASE("Simple Forward with a 90 degree turn"){
     MoveAble moveAbleObject;
     moveAbleObject.setBaseSpeed(1);
 
-    float turn = math::PI/2;
+    float turn = threepp::math::PI/2;
 
-    Vector3 expectedPosition{10*std::sin(turn), 10*std::cos(turn), 0};
+    threepp::Vector3 expectedPosition{10*std::sin(turn), 10*std::cos(turn), 0};
 
     moveAbleObject.move(10,turn);
 
@@ -126,19 +127,19 @@ TEST_CASE("Simple Forward with a 90 degree turn"){
 TEST_CASE("Forward, Backwards and Turning for high velocity and small turnDirection") {
 
     MoveAble moveAbleObject;
-    Vector3 expectedPosition{0, 0, 0};
+    threepp::Vector3 expectedPosition{0, 0, 0};
 
-    float turnSpeed = math::PI / 80;
+    float turnSpeed = threepp::math::PI / 80;
     float baseSpeed = 1000;
 
     float velocity = 1;
     float turnDirection = 1;
     float currentAngle = 0;
 
-    moveAbleObject.setTurnSpeed(math::PI / 80);
+    moveAbleObject.setTurnSpeed(threepp::math::PI / 80);
     moveAbleObject.setBaseSpeed(1000);
 
-    for (int i = 0; currentAngle < 2 * math::PI; i++) {
+    for (int i = 0; currentAngle < 2 * threepp::math::PI; i++) {
 
         currentAngle += turnSpeed * turnDirection;
         expectedPosition += {baseSpeed * velocity * std::sin(currentAngle), baseSpeed * velocity * std::cos(currentAngle), 0};
@@ -159,19 +160,19 @@ TEST_CASE("Forward, Backwards and Turning for high velocity and small turnDirect
 
 TEST_CASE("Moving in Circle") {
     MoveAble moveAbleObject;
-    Vector3 expectedPosition{0, 0, 0};
+    threepp::Vector3 expectedPosition{0, 0, 0};
 
-    float turnSpeed = math::PI / 80;
+    float turnSpeed = threepp::math::PI / 80;
     float baseSpeed = 1000;
 
     float velocity = 1;
     float turnDirection = 1;
     float currentAngle = 0;
 
-    moveAbleObject.setTurnSpeed(math::PI / 80);
+    moveAbleObject.setTurnSpeed(threepp::math::PI / 80);
     moveAbleObject.setBaseSpeed(1000);
 
-    for (int i = 0; currentAngle < 2 * math::PI; i++) {
+    for (int i = 0; currentAngle < 2 * threepp::math::PI; i++) {
 
         currentAngle += turnSpeed * turnDirection;
         expectedPosition += {baseSpeed * velocity * std::sin(currentAngle), baseSpeed * velocity * std::cos(currentAngle), 0};
@@ -184,21 +185,21 @@ TEST_CASE("Moving in Circle") {
 }
 
 TEST_CASE("Circles not from Zero Position"){
-    Vector3 startPos{100, 100, 0};
+    threepp::Vector3 startPos{100, 100, 0};
     MoveAble moveAbleObject{startPos};
-    Vector3 expectedPosition{100, 100, 0};
+    threepp::Vector3 expectedPosition{100, 100, 0};
 
-    float turnSpeed = math::PI / 80;
+    float turnSpeed = threepp::math::PI / 80;
     float baseSpeed = 1000;
 
     float velocity = 1;
     float turnDirection = 1;
     float currentAngle = 0;
 
-    moveAbleObject.setTurnSpeed(math::PI / 80);
+    moveAbleObject.setTurnSpeed(threepp::math::PI / 80);
     moveAbleObject.setBaseSpeed(1000);
 
-    for (int i = 0; currentAngle < 2 * math::PI; i++) {
+    for (int i = 0; currentAngle < 2 * threepp::math::PI; i++) {
 
         currentAngle += turnSpeed * turnDirection;
         expectedPosition += {baseSpeed * velocity * std::sin(currentAngle), baseSpeed * velocity * std::cos(currentAngle), 0};

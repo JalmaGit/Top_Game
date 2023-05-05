@@ -2,6 +2,7 @@
 #include "playerHandler.hpp"
 #include "threepp/math/Vector3.hpp"
 #include "threepp/math/MathUtils.hpp"
+#include <cmath>
 
 #define CATCH_CONFIG_MAIN
 
@@ -10,7 +11,7 @@
 TEST_CASE("Zero Position") {
 
     Player player;
-    Vector3 ZeroPosition{0, 0, 2};
+    threepp::Vector3 ZeroPosition{0, 0, 2};
     float rotation = 0;
 
     CHECK(player.position == ZeroPosition);
@@ -20,19 +21,19 @@ TEST_CASE("Zero Position") {
 
 TEST_CASE("Forward, Backwards and Turning") {
     Player player;
-    Vector3 expectedPosition{0, 0, 2};
+    threepp::Vector3 expectedPosition{0, 0, 2};
 
-    float turnSpeed = math::PI / 8;
+    float turnSpeed = threepp::math::PI / 8;
     float baseSpeed = 1;
 
     float velocity = 1;
     float turnDirection = 1;
     float currentAngle = 0;
 
-    player.setTurnSpeed(math::PI / 8);
+    player.setTurnSpeed(threepp::math::PI / 8);
     player.setBaseSpeed(1);
 
-    for (int i = 0; currentAngle < 2 * math::PI; i++) {
+    for (int i = 0; currentAngle < 2 * threepp::math::PI; i++) {
 
         currentAngle += turnSpeed * turnDirection;
         expectedPosition += { baseSpeed * velocity * std::sin(currentAngle), baseSpeed * velocity * std::cos(currentAngle), 0};
@@ -51,7 +52,7 @@ TEST_CASE("Forward, Backwards and Turning") {
 
 TEST_CASE("Checking Default Constructor") {
     Player player;
-    Vector3 expectedPosition{0, 0, 2};
+    threepp::Vector3 expectedPosition{0, 0, 2};
 
     CHECK(player.getPosition() == expectedPosition);
     CHECK(player.getTurnSpeed() == 1);
@@ -63,8 +64,8 @@ TEST_CASE("Checking Default Constructor") {
 TEST_CASE("Functions") {
     Player player;
 
-    Vector3 expectedPlayerSize{25, 25, 50};
-    Vector3 newPlayerSize{25, 25, 50};
+    threepp::Vector3 expectedPlayerSize{25, 25, 50};
+    threepp::Vector3 newPlayerSize{25, 25, 50};
 
     player.setTurnSpeed(100);
     player.setBaseSpeed(5000);

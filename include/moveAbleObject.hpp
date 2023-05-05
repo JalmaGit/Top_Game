@@ -10,6 +10,7 @@
 #include "threepp/math/MathUtils.hpp"
 #include <cmath>
 
+
 class MoveAble {
 public:
 
@@ -33,7 +34,7 @@ public:
         quaternion.setFromAxisAngle(upDirection, angle);
     }
 
-    void setPosition(Vector3 &pos) {
+    void setPosition(threepp::Vector3 &pos) {
         position = pos;
     }
 
@@ -90,7 +91,6 @@ private:
         quaternion.setFromAxisAngle(upDirection, -rotation_);
     }
 
-//Husk code som ikke går utenfor skjermen
     void moveFor(float velocity) {
         position += {velocity * baseSpeed_ * std::sin(rotation_),
                      velocity * baseSpeed_ * std::cos(rotation_),

@@ -25,6 +25,7 @@ public:
         score_ = newScore;
     }
 
+
     [[nodiscard]] int getHealth() const {
         return health_;
     }

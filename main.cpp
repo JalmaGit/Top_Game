@@ -66,7 +66,29 @@ int main() {
             auto& intersect = intersects.front();
             std::cout << intersect.distance<< std::endl;
         }
+     /*
+        if(w == 1) {
+            if(checkForward){
+                player.move(vector2.y*dt,-vector2.x*dt);
+            }
+        }
+        if(s == -1) {
+            if(checkBackward){
+                player.move(vector2.y*dt,-vector2.x*dt);
+            }
+        }
+        if(d == 1){
+            if(check){
+                player.move(vector2.y*dt,-vector2.x*dt);
+            }
+        }
+        if(a == 1){
+            if(check){
+                player.move(vector2.y*dt,-vector2.x*dt);
+            }
+        }
 
+*/
         Vector2 vector2 = keyChecker.getKeyInput();
 
         player.move(vector2.y*dt, -vector2.x*dt);
