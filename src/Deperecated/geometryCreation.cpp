@@ -15,7 +15,6 @@ std::shared_ptr<Mesh> utils::createBox(const BoxGeometry::Params params, float p
     box->rotateX(math::PI / 2);
     box->position.z = params.height / 2;
     box->position.x = position;
-
     return box;
 }
 

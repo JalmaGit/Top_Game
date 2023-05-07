@@ -18,9 +18,13 @@ public:
         playerModel = playerModelCreation();
     }
 
-    auto setPlayerPosition(threepp::Vector3 position, const threepp::Quaternion &rotation) const {
+    void setPlayerPosition(threepp::Vector3 position, const threepp::Quaternion &rotation) const {
         playerModel->position.copy(position);
         playerModel->rotation.setFromQuaternion(rotation);
+    }
+
+    void getPlayerSize(){
+
     }
 
 private:

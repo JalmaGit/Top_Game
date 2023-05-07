@@ -24,8 +24,6 @@ public:
 
 private:
 
-
-
     void setFromOrigin(threepp::Vector3 newOrigin) {
         origin = newOrigin;
     }

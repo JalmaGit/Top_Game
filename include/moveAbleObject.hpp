@@ -63,7 +63,6 @@ public:
     }
 
     [[nodiscard]] threepp::Vector3 getDirection() {
-        direction_ = {std::sin(rotation_), std::cos(rotation_), 0};
         return direction_;
     }
 
@@ -92,6 +91,7 @@ private:
     }
 
     void moveFor(float velocity) {
+        direction_ = {velocity*std::sin(rotation_), velocity*std::cos(rotation_), 0};
         position += {velocity * baseSpeed_ * std::sin(rotation_),
                      velocity * baseSpeed_ * std::cos(rotation_),
                      0};

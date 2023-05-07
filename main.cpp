@@ -7,8 +7,17 @@
 #include "cameraAttacher.hpp"
 #include "mapFileReader.hpp"
 #include "playerCamera.hpp"
+#include "raycasters.hpp"
 
 using namespace threepp;
+
+void checkForward(){
+
+}
+
+void checkBacwards(){
+
+}
 
 int main() {
 
@@ -48,7 +57,7 @@ int main() {
     }
     scene->add(worldVisualizer.flor);
 
-    Raycaster raycaster;
+    Raycasters raycasters;
 
     canvas.onWindowResize([&](WindowSize size) {
         cameraVisualizer.camera->aspect = size.getAspect();
@@ -58,14 +67,8 @@ int main() {
 
     canvas.animate([&](float dt) {
 
-        raycaster.set(player.getPosition(),player.getDirection());
-
-        auto intersects = raycaster.intersectObjects(scene->children);
-
-        if (!intersects.empty()) {
-            auto& intersect = intersects.front();
-            std::cout << intersect.distance<< std::endl;
-        }
+        raycasters.updateRayCasterDirection(player.getPosition(),keyChecker.getKeyInput(),player.getRotation());
+        raycasters.checkRayCasters(*scene, player.getDirection());
      /*
         if(w == 1) {
             if(checkForward){
@@ -87,16 +90,20 @@ int main() {
                 player.move(vector2.y*dt,-vector2.x*dt);
             }
         }
-
 */
-        Vector2 vector2 = keyChecker.getKeyInput();
 
-        player.move(vector2.y*dt, -vector2.x*dt);
+        playerVisualizer.getPlayerSize();
+
+        Vector2 nextMove = keyChecker.getKeyInput();
+
+        player.move(nextMove.y*dt, -nextMove.x*dt);
         playerVisualizer.setPlayerPosition(player.getPosition(),player.quaternion);
 
         cameraCalculations.updateTrailingCamera(player.getPosition(),player.getRotation());
         cameraVisualizer.updateCameraPosition(cameraCalculations.getPosition(), player.quaternion,
                                               cameraCalculations.getCameraAngle());
+
+        std::cout << ", player position" << player.getPosition() << std::endl;
 
         renderer.render(scene, cameraVisualizer.camera);
     });
