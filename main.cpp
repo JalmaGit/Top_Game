@@ -11,14 +11,6 @@
 
 using namespace threepp;
 
-void checkForward(){
-
-}
-
-void checkBacwards(){
-
-}
-
 int main() {
 
     Canvas canvas{Canvas::Parameters().antialiasing(4)};
@@ -57,7 +49,7 @@ int main() {
     }
     scene->add(worldVisualizer.flor);
 
-    Raycasters raycasters;
+    Raycasters raycasters{10};
 
     canvas.onWindowResize([&](WindowSize size) {
         cameraVisualizer.camera->aspect = size.getAspect();
@@ -67,43 +59,19 @@ int main() {
 
     canvas.animate([&](float dt) {
 
-        raycasters.updateRayCasterDirection(player.getPosition(),keyChecker.getKeyInput(),player.getRotation());
-        raycasters.checkRayCasters(*scene, player.getDirection());
-     /*
-        if(w == 1) {
-            if(checkForward){
-                player.move(vector2.y*dt,-vector2.x*dt);
-            }
-        }
-        if(s == -1) {
-            if(checkBackward){
-                player.move(vector2.y*dt,-vector2.x*dt);
-            }
-        }
-        if(d == 1){
-            if(check){
-                player.move(vector2.y*dt,-vector2.x*dt);
-            }
-        }
-        if(a == 1){
-            if(check){
-                player.move(vector2.y*dt,-vector2.x*dt);
-            }
-        }
-*/
-
-        playerVisualizer.getPlayerSize();
 
         Vector2 nextMove = keyChecker.getKeyInput();
+        raycasters.updateRayCasterDirections(player.getPosition(),keyChecker.getKeyInput(),player.getRotation());
+        player.setNextDirection(nextMove.y*dt);
+        raycasters.checkMovement(*scene, player.direction_);
 
         player.move(nextMove.y*dt, -nextMove.x*dt);
         playerVisualizer.setPlayerPosition(player.getPosition(),player.quaternion);
 
+
         cameraCalculations.updateTrailingCamera(player.getPosition(),player.getRotation());
         cameraVisualizer.updateCameraPosition(cameraCalculations.getPosition(), player.quaternion,
                                               cameraCalculations.getCameraAngle());
-
-        std::cout << ", player position" << player.getPosition() << std::endl;
 
         renderer.render(scene, cameraVisualizer.camera);
     });

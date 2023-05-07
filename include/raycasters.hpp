@@ -9,73 +9,65 @@
 #include <cmath>
 #include <iostream>
 
-class Raycasters{
+class Raycasters {
 public:
-    threepp::Raycaster raycasterF;
-    threepp::Raycaster raycaster90;
-    threepp::Raycaster raycaster45;
-    threepp::Raycaster raycastern45;
-    threepp::Raycaster raycastern90;
+    std::vector<threepp::Raycaster> raycasters;
 
-    void updateRayCasterDirection(threepp::Vector3 origin, threepp::Vector2 direction, float objAngle){
-        float angle = objAngle;
-        threepp::Vector3 newDirection1{direction.y*std::sin(angle),direction.y*std::cos(angle),0};
-        raycasterF.set(origin,newDirection1);
-        angle += threepp::math::PI/4;
-        threepp::Vector3 newDirection2{direction.y*std::sin(angle),direction.y*std::cos(angle),0};
-        raycaster45.set(origin,newDirection2);
-        angle += threepp::math::PI/4;
-        threepp::Vector3 newDirection3{direction.y*std::sin(angle),direction.y*std::cos(angle),0};
-        raycaster90.set(origin,newDirection3);
-        angle -= 3*threepp::math::PI/4;
-        threepp::Vector3 newDirection4{direction.y*std::sin(angle),direction.y*std::cos(angle),0};
-        raycastern45.set(origin,newDirection4);
-        angle -= threepp::math::PI/4;
-        threepp::Vector3 newDirection5{direction.y*std::sin(angle),direction.y*std::cos(angle),0};
-        raycastern90.set(origin,newDirection5);
+    explicit Raycasters (int numberOfRayCasters){
+        totalNumberOfRayCasters = static_cast<float> (numberOfRayCasters);
+        for (int i = 0; i < numberOfRayCasters; i++){
+            raycasters.emplace_back(createRayCaster());
+        }
+
     }
 
-    threepp::Vector3 checkRayCasters(threepp::Object3D& scene, threepp::Vector3 direction){
-        auto intersects1 = raycasterF.intersectObjects(scene.children);
-        auto intersects2 = raycaster90.intersectObjects(scene.children);
-        auto intersects3 = raycastern90.intersectObjects(scene.children);
-        auto intersects4 = raycaster45.intersectObjects(scene.children);
-        auto intersects5= raycastern45.intersectObjects(scene.children);
+    static threepp::Raycaster createRayCaster(){
+        threepp::Raycaster raycaster;
+        return raycaster;
+    }
 
 
-        if (!intersects1.empty()) {
-            auto& intersect = intersects1.front();
-            std::cout << " Forward: "<< intersect.point;
-            std::cout << ", Normal: "<< intersect.face.value().normal;
-            if (intersect.distance < 3){}
+    void updateRayCasterDirections(threepp::Vector3 origin, threepp::Vector2 direction, float objAngle){
+        float angle = objAngle;
+        angle -= threepp::math::PI/4;
+        for (auto& element : raycasters){
+            threepp::Vector3 newDirection{direction.y * std::sin(angle), direction.y * std::cos(angle), 0};
+            element.set(origin, newDirection);
+            angle += (threepp::math::PI/2)/(totalNumberOfRayCasters-1);
         }
-       /* if (!intersects2.empty()) {
-            auto& intersect = intersects2.front();
-            std::cout << ", positive 90: "<<intersect.face.value().normal;
-            if(intersect.distance < 3){
-                intersect.face.value().normal
+    }
+
+    void checkMovement(threepp::Object3D &scene, threepp::Vector3 &direction){
+        std::vector<std::vector<threepp::Intersection>> intersections;
+        intersections.reserve(raycasters.size());
+        for (auto& element : raycasters){
+            intersections.emplace_back(element.intersectObjects(scene.children));
+        }
+
+        for (auto& element : intersections){
+
+            if (!element.empty()) {
+                auto &intersect = element.front();
+
+                if (intersect.distance < 3) {
+                    float w1 = (direction.x*intersect.face.value().normal.x
+                                + direction.y*intersect.face.value().normal.z)/
+                               (intersect.face.value().normal.x*intersect.face.value().normal.x +
+                                intersect.face.value().normal.z*intersect.face.value().normal.z) ;
+                    threepp::Vector3 W1{intersect.face.value().normal.x*w1,intersect.face.value().normal.z*w1,0};
+
+                    threepp::Vector3 W2{
+                            direction.x-W1.x,direction.y-W1.y,0
+                    };
+                    direction.x = W2.x;
+                    direction.y = W2.y;
+                }
             }
         }
-        if (!intersects4.empty()) {
-            auto& intersect = intersects4.front();
-            std::cout << ", positive 45: "<<intersect.distance;
-        }
-        if (!intersects3.empty()) {
-            auto& intersect = intersects3.front();
-            std::cout << ", negative 90: "<<intersect.distance;
-        }
-        if (!intersects5.empty()) {
-            auto& intersect = intersects5.front();
-            std::cout << ", negative 45: "<<intersect.distance<< std::endl;
-        }
-*/
-        threepp::Vector3 newDirection;
-
-        return newDirection;
-
     }
 
 private:
+    float totalNumberOfRayCasters;
 
 };
 
