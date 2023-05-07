@@ -11,36 +11,28 @@
 
 class Raycasters {
 public:
-    std::vector<threepp::Raycaster> raycasters;
 
     explicit Raycasters (int numberOfRayCasters){
-        totalNumberOfRayCasters = static_cast<float> (numberOfRayCasters);
+        totalNumberOfRayCasters_ = static_cast<float> (numberOfRayCasters);
         for (int i = 0; i < numberOfRayCasters; i++){
-            raycasters.emplace_back(createRayCaster());
+            raycasters_.emplace_back(createRayCaster());
         }
-
     }
-
-    static threepp::Raycaster createRayCaster(){
-        threepp::Raycaster raycaster;
-        return raycaster;
-    }
-
 
     void updateRayCasterDirections(threepp::Vector3 origin, threepp::Vector2 direction, float objAngle){
         float angle = objAngle;
         angle -= threepp::math::PI/4;
-        for (auto& element : raycasters){
+        for (auto& element : raycasters_){
             threepp::Vector3 newDirection{direction.y * std::sin(angle), direction.y * std::cos(angle), 0};
             element.set(origin, newDirection);
-            angle += (threepp::math::PI/2)/(totalNumberOfRayCasters-1);
+            angle += (threepp::math::PI/2)/(totalNumberOfRayCasters_ - 1);
         }
     }
 
     void checkMovement(threepp::Object3D &scene, threepp::Vector3 &direction){
         std::vector<std::vector<threepp::Intersection>> intersections;
-        intersections.reserve(raycasters.size());
-        for (auto& element : raycasters){
+        intersections.reserve(raycasters_.size());
+        for (auto& element : raycasters_){
             intersections.emplace_back(element.intersectObjects(scene.children));
         }
 
@@ -67,7 +59,15 @@ public:
     }
 
 private:
-    float totalNumberOfRayCasters;
+
+    std::vector<threepp::Raycaster> raycasters_;
+    float totalNumberOfRayCasters_;
+
+    static threepp::Raycaster createRayCaster(){
+        threepp::Raycaster raycaster;
+        return raycaster;
+    }
+
 
 };
 

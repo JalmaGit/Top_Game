@@ -8,6 +8,7 @@
 #include "mapFileReader.hpp"
 #include "playerCamera.hpp"
 #include "raycasters.hpp"
+#include <string>
 
 using namespace threepp;
 
@@ -59,6 +60,7 @@ int main() {
 
     canvas.animate([&](float dt) {
 
+        renderer.textHandle(std::to_string(player.getHealth()));
 
         Vector2 nextMove = keyChecker.getKeyInput();
         raycasters.updateRayCasterDirections(player.getPosition(),keyChecker.getKeyInput(),player.getRotation());

@@ -23,10 +23,6 @@ public:
         playerModel->rotation.setFromQuaternion(rotation);
     }
 
-    void getPlayerSize(){
-
-    }
-
 private:
 
     static std::shared_ptr<threepp::Mesh> playerModelCreation();

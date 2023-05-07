@@ -10,7 +10,7 @@
 class Player : public MoveAble {
 public:
 
-    explicit Player(int h = 100) : health_(h) {
+    explicit Player(int h = 1000) : health_(h) {
         setHealth(h);
         threepp::Vector3 startPosition{0, 0, 2};
         setPosition(startPosition);
