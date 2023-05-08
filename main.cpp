@@ -8,6 +8,7 @@
 #include "mapFileReader.hpp"
 #include "playerCamera.hpp"
 #include "raycasters.hpp"
+#include "coinVisualizer.hpp"
 #include <string>
 
 using namespace threepp;
@@ -34,6 +35,15 @@ int main() {
     CameraAttacher cameraCalculations(player.getPosition(), player.getRotation());
     PlayerCamera cameraVisualizer(canvas.getAspect(), cameraCalculations.getCameraAngle(), cameraCalculations.getPosition());
     scene->add(cameraVisualizer.camera);
+
+    auto scene2 = Scene::create();
+    scene2->add(scene);
+
+    Vector3 coinPosition{10,10,2};
+    CoinVisualizer coinVisualizer{coinPosition};
+    scene2->add(coinVisualizer.coin);
+
+
 
 
     mapFileReader file;
@@ -75,6 +85,6 @@ int main() {
         cameraVisualizer.updateCameraPosition(cameraCalculations.getPosition(), player.quaternion,
                                               cameraCalculations.getCameraAngle());
 
-        renderer.render(scene, cameraVisualizer.camera);
+        renderer.render(scene2, cameraVisualizer.camera);
     });
 }
