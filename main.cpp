@@ -9,6 +9,8 @@
 #include "playerCamera.hpp"
 #include "raycasters.hpp"
 #include "coinVisualizer.hpp"
+#include "spikeVisualizer.hpp"
+#include "coinMath.hpp"
 #include <string>
 
 using namespace threepp;
@@ -17,10 +19,12 @@ int main() {
 
     Canvas canvas{Canvas::Parameters().antialiasing(4)};
     GLRenderer renderer{canvas};
+    renderer.shadowMap().enabled = true;
 
     auto scene = Scene::create();
 
-    auto light = HemisphereLight::create(Color::aliceblue, Color::grey);
+    auto light = HemisphereLight::create();
+    light->intensity = 0.7f;
     scene->add(light);
 
     KeyChecker keyChecker;
@@ -36,20 +40,10 @@ int main() {
     PlayerCamera cameraVisualizer(canvas.getAspect(), cameraCalculations.getCameraAngle(), cameraCalculations.getPosition());
     scene->add(cameraVisualizer.camera);
 
-    auto scene2 = Scene::create();
-    scene2->add(scene);
-
-    Vector3 coinPosition{10,10,2};
-    CoinVisualizer coinVisualizer{coinPosition};
-    scene2->add(coinVisualizer.coin);
-
-
-
-
     mapFileReader file;
     std::optional<std::string> fileRead = file.read("bin/data/mapdata.txt");
 
-    WorldVisualizer worldVisualizer{1000, 500};
+    WorldVisualizer worldVisualizer{500, 500};
 
     for (auto& it: file.mapData) {
         worldVisualizer.addBox(it.second.Position,it.second.Size);
@@ -60,30 +54,61 @@ int main() {
     }
     scene->add(worldVisualizer.flor);
 
-    Raycasters raycasters{10};
+
+    Raycasters raycasters{7};
+    renderer.enableTextRendering();
+    auto &textHandler = renderer.textHandle();
+
+    auto scene2 = Scene::create();
+    scene2->add(scene);
+
+    auto scene3 = Scene::create();
+    Vector3 coinPosition{10,10,2};
+    CoinMath coinMath{coinPosition};
+    CoinVisualizer coinVisualizer{coinMath.position};
+    scene3->add(coinVisualizer.coin);
+
+    Vector3 spikePosition{-10,-10,0};
+    SpikeVisualizer spikeVisualizer{spikePosition};
+    scene3->add(spikeVisualizer.spike);
+
+    scene2->add(scene3);
 
     canvas.onWindowResize([&](WindowSize size) {
         cameraVisualizer.camera->aspect = size.getAspect();
         cameraVisualizer.camera->updateProjectionMatrix();
         renderer.setSize(size);
+        textHandler.scale = size.getAspect();
     });
+
 
     canvas.animate([&](float dt) {
 
-        renderer.textHandle(std::to_string(player.getHealth()));
 
-        Vector2 nextMove = keyChecker.getKeyInput();
-        raycasters.updateRayCasterDirections(player.getPosition(),keyChecker.getKeyInput(),player.getRotation());
-        player.setNextDirection(nextMove.y*dt);
-        raycasters.checkMovement(*scene, player.direction_);
+        Vector3 nextMove = keyChecker.getKeyInput();
 
-        player.move(nextMove.y*dt, -nextMove.x*dt);
-        playerVisualizer.setPlayerPosition(player.getPosition(),player.quaternion);
+        if (nextMove.z != 1){
+            textHandler.setText(std::to_string(player.getScore()));
 
+            if(raycasters.checkForInteractable(*scene3)){
+                player.addScore(coinMath.givePoints());
+            }
 
-        cameraCalculations.updateTrailingCamera(player.getPosition(),player.getRotation());
-        cameraVisualizer.updateCameraPosition(cameraCalculations.getPosition(), player.quaternion,
-                                              cameraCalculations.getCameraAngle());
+            raycasters.updateRayCasterDirections(player.getPosition(),keyChecker.getKeyInput(),player.getRotation());
+            player.setNextDirection(nextMove.y,dt);
+            raycasters.checkForWalls(*scene, player.direction_);
+
+            player.move(-nextMove.x, dt);
+            playerVisualizer.setPlayerPosition(player.getPosition(),player.quaternion);
+
+            cameraCalculations.updateTrailingCamera(player.getPosition(),player.getRotation());
+            cameraVisualizer.updateCameraPosition(cameraCalculations.getPosition(), player.quaternion,
+                                                  cameraCalculations.getCameraAngle());
+        } else {
+            player.setScore(0);
+            player.position = {0,0,2};
+        }
+
 
         renderer.render(scene2, cameraVisualizer.camera);
     });

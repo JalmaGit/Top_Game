@@ -46,6 +46,8 @@ std::shared_ptr<Mesh> PlayerVisualizer::playerModelCreation(){
 
     arrow->add(extrudeMesh);
 
+    arrow->castShadow = true;
+
     return arrow;
 
 }

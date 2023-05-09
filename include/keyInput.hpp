@@ -32,25 +32,25 @@ struct KeyChecker {
 
     void setKeyInput(threepp::Canvas &canvas);
 
-    threepp::Vector2 getKeyInput();
+    threepp::Vector3 getKeyInput();
 
 private:
     int W{87};
     int A{65};
     int S{83};
     int D{68};
-    int shift{69};
+    int R{82};
 
     MyListener keyW;
     MyListener keyA;
     MyListener keyS;
     MyListener keyD;
-    MyListener keyShift;
+    MyListener keyR;
 
 };
 
-threepp::Vector2 KeyChecker::getKeyInput() {
-    threepp::Vector2 nextMove = {0, 0};
+threepp::Vector3 KeyChecker::getKeyInput() {
+    threepp::Vector3 nextMove = {0, 0, 0};
     if (keyW.buttonPressed()) {
         nextMove.y = 1;
     }
@@ -63,9 +63,8 @@ threepp::Vector2 KeyChecker::getKeyInput() {
     if (keyD.buttonPressed()) {
         nextMove.x = -1;
     }
-    if (keyShift.buttonPressed()) {
-        nextMove.x *= 2;
-        nextMove.y *= 2;
+    if (keyR.buttonPressed()) {
+        nextMove.z = 1;
     }
 
     return nextMove;
@@ -84,8 +83,8 @@ void KeyChecker::setKeyInput(threepp::Canvas &canvas) {
     keyD.keyType = D;
     canvas.addKeyListener(&keyD);
 
-    keyShift.keyType = shift;
-    canvas.addKeyListener(&keyShift);
+    keyR.keyType = R;
+    canvas.addKeyListener(&keyR);
 }
 
 #endif //TOP_GAME_KEYINPUT_HPP

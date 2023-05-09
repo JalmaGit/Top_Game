@@ -36,8 +36,7 @@ public:
 
         coinMesh->add(innerMesh);
 
-        return  coinMesh;
-
+        return coinMesh;
     }
 
 private:

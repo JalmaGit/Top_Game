@@ -27,8 +27,8 @@ public:
         setTurnSpeed(1);
     }
 
-    void setNextDirection(float velocity){
-        direction_ = {baseSpeed_ * velocity*std::sin(rotation_), baseSpeed_ * velocity*std::cos(rotation_), 0};
+    void setNextDirection(float velocity, float dt){
+        direction_ = {baseSpeed_ * velocity*std::sin(rotation_)*dt, baseSpeed_ * velocity*std::cos(rotation_)*dt, 0};
     }
 
     void setRotation(float angle) {
@@ -68,8 +68,8 @@ public:
         return direction_;
     }
 
-    void move(float velocity, float turnDirection) {
-        rotateBy(turnDirection);
+    void move(float turnDirection, float dt) {
+        rotateBy(turnDirection*dt);
         moveFor();
     }
 

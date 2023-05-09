@@ -19,7 +19,7 @@ public:
         }
     }
 
-    void updateRayCasterDirections(threepp::Vector3 origin, threepp::Vector2 direction, float objAngle){
+    void updateRayCasterDirections(threepp::Vector3 origin, threepp::Vector3 direction, float objAngle){
         float angle = objAngle;
         angle -= threepp::math::PI/4;
         for (auto& element : raycasters_){
@@ -29,7 +29,7 @@ public:
         }
     }
 
-    void checkMovement(threepp::Object3D &scene, threepp::Vector3 &direction){
+    void checkForWalls(threepp::Object3D &scene, threepp::Vector3 &direction){
         std::vector<std::vector<threepp::Intersection>> intersections;
         intersections.reserve(raycasters_.size());
         for (auto& element : raycasters_){
@@ -58,6 +58,25 @@ public:
         }
     }
 
+   bool checkForInteractable(threepp::Object3D &scene){
+        std::vector<std::vector<threepp::Intersection>> intersections;
+        intersections.reserve(raycasters_.size());
+        for (auto& element : raycasters_){
+            intersections.emplace_back(element.intersectObjects(scene.children));
+        }
+
+        for (auto& element : intersections){
+
+            if (!element.empty()) {
+                auto &intersect = element.front();
+                if (intersect.distance < 3) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 private:
 
     std::vector<threepp::Raycaster> raycasters_;
@@ -65,6 +84,8 @@ private:
 
     static threepp::Raycaster createRayCaster(){
         threepp::Raycaster raycaster;
+        raycaster.near = 0.1;
+        raycaster.far = 100;
         return raycaster;
     }
 
