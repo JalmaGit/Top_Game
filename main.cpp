@@ -3,9 +3,8 @@
 #include "playerHandler.hpp"
 #include "playerVisualizer.hpp"
 #include "keyInput.hpp"
-#include "worldVisualizer.hpp"
+#include "worldScene.hpp"
 #include "cameraAttacher.hpp"
-#include "mapFileReader.hpp"
 #include "playerCamera.hpp"
 #include "raycasters.hpp"
 #include "coinVisualizer.hpp"
@@ -23,12 +22,7 @@ int main() {
 
     auto scene = Scene::create();
 
-    auto light = HemisphereLight::create();
-    light->intensity = 0.7f;
-    scene->add(light);
-
     KeyChecker keyChecker;
-
     keyChecker.setKeyInput(canvas);
 
     Player player;
@@ -40,20 +34,8 @@ int main() {
     PlayerCamera cameraVisualizer(canvas.getAspect(), cameraCalculations.getCameraAngle(), cameraCalculations.getPosition());
     scene->add(cameraVisualizer.camera);
 
-    mapFileReader file;
-    std::optional<std::string> fileRead = file.read("bin/data/mapdata.txt");
-
-    WorldVisualizer worldVisualizer{500, 500};
-
-    for (auto& it: file.mapData) {
-        worldVisualizer.addBox(it.second.Position,it.second.Size);
-    }
-
-    for (const auto& element : worldVisualizer.boxes){
-        scene->add(element);
-    }
-    scene->add(worldVisualizer.flor);
-
+    WorldScene worldScene;
+    scene->add(worldScene.scene);
 
     Raycasters raycasters{7};
     renderer.enableTextRendering();
@@ -96,7 +78,7 @@ int main() {
 
             raycasters.updateRayCasterDirections(player.getPosition(),keyChecker.getKeyInput(),player.getRotation());
             player.setNextDirection(nextMove.y,dt);
-            raycasters.checkForWalls(*scene, player.direction_);
+            raycasters.checkForWalls(*worldScene.scene, player.direction_);
 
             player.move(-nextMove.x, dt);
             playerVisualizer.setPlayerPosition(player.getPosition(),player.quaternion);
