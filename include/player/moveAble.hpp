@@ -2,8 +2,8 @@
 // Created by Jalma on 26/04/2023.
 //
 
-#ifndef TOP_GAME_MOVEABLEOBJECT_HPP
-#define TOP_GAME_MOVEABLEOBJECT_HPP
+#ifndef TOP_GAME_MOVEABLE_HPP
+#define TOP_GAME_MOVEABLE_HPP
 
 #include "threepp/math/Vector3.hpp"
 #include "threepp/math/Quaternion.hpp"
@@ -13,12 +13,12 @@
 
 class MoveAble {
 public:
-    threepp::Vector3 direction_{};
+    threepp::Vector3 direction{};
     threepp::Vector3 position;
     threepp::Quaternion quaternion;
     const threepp::Vector3 upDirection{0, 0, 1};
 
-    explicit MoveAble(threepp::Vector3 startPos = {0, 0, 0}, float angle = 0) //Husk å gå gjennom nanv i alt
+    explicit MoveAble(threepp::Vector3 startPos = {0, 0, 0}, float angle = 0)
             : rotation_(angle) {
 
         position.copy(startPos);
@@ -27,8 +27,10 @@ public:
         setTurnSpeed(1);
     }
 
-    void setNextDirection(float velocity, float dt){
-        direction_ = {baseSpeed_ * velocity*std::sin(rotation_)*dt, baseSpeed_ * velocity*std::cos(rotation_)*dt, 0};
+    void setForceVector(float velocity, float dt){
+        direction = {baseSpeed_ * velocity * std::sin(rotation_) * dt,
+                     baseSpeed_ * velocity * std::cos(rotation_) * dt,
+                     0};
     }
 
     void setRotation(float angle) {
@@ -65,7 +67,7 @@ public:
     }
 
     [[nodiscard]] threepp::Vector3 getDirection() const {
-        return direction_;
+        return direction;
     }
 
     void move(float turnDirection, float dt) {
@@ -93,11 +95,11 @@ private:
     }
 
     void moveFor() {
-        position += {direction_.x,
-                       direction_.y,
+        position += {direction.x,
+                     direction.y,
                      0};
     }
 
 };
 
-#endif //TOP_GAME_MOVEABLEOBJECT_HPP
+#endif //TOP_GAME_MOVEABLE_HPP

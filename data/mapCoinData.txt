@@ -1,0 +1,3 @@
+CoinName - Position(x,y,z) - BoxSize(width,height,depth) Needs BoxSize bc of how the fileReader reads the mapWallData
+Coin1,10.0,0.0,0.0,0.0,0.0,0.0
+Coin2,30.0,0.0,0.0,0.0,0.0,0.0

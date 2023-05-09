@@ -5,14 +5,12 @@
 #ifndef TOP_GAME_SPIKEMATH_HPP
 #define TOP_GAME_SPIKEMATH_HPP
 
-#include <threepp/math/Vector3.hpp>
+#include "threepp/math/Vector3.hpp"
 
 class SpikeMath{
 public:
-    threepp::Vector3 position;
-    explicit SpikeMath(threepp::Vector3 newPosition){
+    explicit SpikeMath(){
         damage_ = 100;
-        position = newPosition;
     }
 
     [[nodiscard]] int dealDamage() const{

@@ -1,15 +1,16 @@
 #include <iostream>
 #include "threepp/threepp.hpp"
-#include "playerHandler.hpp"
-#include "playerVisualizer.hpp"
+#include "player/player.hpp"
+#include "player/playerVisualizer.hpp"
 #include "keyInput.hpp"
-#include "worldScene.hpp"
-#include "cameraAttacher.hpp"
-#include "playerCamera.hpp"
+#include "world/worldLayer.hpp"
+#include "player/cameraAttacher.hpp"
+#include "player/playerCamera.hpp"
 #include "raycasters.hpp"
-#include "coinVisualizer.hpp"
-#include "spikeVisualizer.hpp"
-#include "coinMath.hpp"
+#include "coin/coinLayer.hpp"
+#include "spike/spikeLayer.hpp"
+#include "coin/coinMath.hpp"
+#include "game.hpp"
 #include <string>
 
 using namespace threepp;
@@ -18,9 +19,12 @@ int main() {
 
     Canvas canvas{Canvas::Parameters().antialiasing(4)};
     GLRenderer renderer{canvas};
-    renderer.shadowMap().enabled = true;
 
     auto scene = Scene::create();
+
+    auto light = threepp::HemisphereLight::create(0xffffbb, 0x082820);
+    light->intensity = 1.0f;
+    scene->add(light);
 
     KeyChecker keyChecker;
     keyChecker.setKeyInput(canvas);
@@ -34,27 +38,20 @@ int main() {
     PlayerCamera cameraVisualizer(canvas.getAspect(), cameraCalculations.getCameraAngle(), cameraCalculations.getPosition());
     scene->add(cameraVisualizer.camera);
 
-    WorldScene worldScene;
-    scene->add(worldScene.scene);
+    WorldLayer worldScene;
+    scene->add(worldScene.layer);
 
     Raycasters raycasters{7};
+
+    CoinLayer coinLayer;
+
+    scene->add(coinLayer.layer);
+
+    SpikeLayer spikeLayer;
+    scene->add(spikeLayer.layer);
+
     renderer.enableTextRendering();
     auto &textHandler = renderer.textHandle();
-
-    auto scene2 = Scene::create();
-    scene2->add(scene);
-
-    auto scene3 = Scene::create();
-    Vector3 coinPosition{10,10,2};
-    CoinMath coinMath{coinPosition};
-    CoinVisualizer coinVisualizer{coinMath.position};
-    scene3->add(coinVisualizer.coin);
-
-    Vector3 spikePosition{-10,-10,0};
-    SpikeVisualizer spikeVisualizer{spikePosition};
-    scene3->add(spikeVisualizer.spike);
-
-    scene2->add(scene3);
 
     canvas.onWindowResize([&](WindowSize size) {
         cameraVisualizer.camera->aspect = size.getAspect();
@@ -69,16 +66,31 @@ int main() {
 
         Vector3 nextMove = keyChecker.getKeyInput();
 
+        textHandler.setText(std::to_string(player.getScore()));
+        std::cout << player.getHealth() << std::endl;
+
         if (nextMove.z != 1){
             textHandler.setText(std::to_string(player.getScore()));
+            std::cout << player.getHealth() << std::endl;
 
-            if(raycasters.checkForInteractable(*scene3)){
-                player.addScore(coinMath.givePoints());
+            if(raycasters.checkForInteractableStep(*coinLayer.layer)){
+                player.addScore(100);
+                coinLayer.setRandomCoinPosition();
+            }
+
+            if(raycasters.checkForInteractableStep(*spikeLayer.layer)){
+                player.takeDamage(spikeLayer.spikeMath_.dealDamage());
+            }
+
+            if(player.getHealth() < 0){
+                player.setScore(0);
+                player.setHealth(1000);
+                player.position = {0,0,2};
             }
 
             raycasters.updateRayCasterDirections(player.getPosition(),keyChecker.getKeyInput(),player.getRotation());
-            player.setNextDirection(nextMove.y,dt);
-            raycasters.checkForWalls(*worldScene.scene, player.direction_);
+            player.setForceVector(nextMove.y, dt);
+            raycasters.checkForCollisionStep(*worldScene.layer, player.direction);
 
             player.move(-nextMove.x, dt);
             playerVisualizer.setPlayerPosition(player.getPosition(),player.quaternion);
@@ -92,6 +104,6 @@ int main() {
         }
 
 
-        renderer.render(scene2, cameraVisualizer.camera);
+        renderer.render(scene, cameraVisualizer.camera);
     });
 }

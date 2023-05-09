@@ -8,9 +8,8 @@
 #include "threepp/objects/Mesh.hpp"
 #include "threepp/math/Vector3.hpp"
 #include "threepp/math/Quaternion.hpp"
-#include <iostream>
 
-class PlayerVisualizer { //kan dette testes?
+class PlayerVisualizer {
 public:
     std::shared_ptr<threepp::Mesh> playerModel;
 

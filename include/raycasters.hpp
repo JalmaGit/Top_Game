@@ -5,7 +5,7 @@
 #ifndef TOP_GAME_RAYCASTERS_HPP
 #define TOP_GAME_RAYCASTERS_HPP
 
-#include "threepp/threepp.hpp"
+#include <threepp/threepp.hpp>
 #include <cmath>
 #include <iostream>
 
@@ -22,6 +22,7 @@ public:
     void updateRayCasterDirections(threepp::Vector3 origin, threepp::Vector3 direction, float objAngle){
         float angle = objAngle;
         angle -= threepp::math::PI/4;
+        origin.z-=1;
         for (auto& element : raycasters_){
             threepp::Vector3 newDirection{direction.y * std::sin(angle), direction.y * std::cos(angle), 0};
             element.set(origin, newDirection);
@@ -29,7 +30,7 @@ public:
         }
     }
 
-    void checkForWalls(threepp::Object3D &scene, threepp::Vector3 &direction){
+    void checkForCollisionStep(threepp::Object3D &scene, threepp::Vector3 &direction){
         std::vector<std::vector<threepp::Intersection>> intersections;
         intersections.reserve(raycasters_.size());
         for (auto& element : raycasters_){
@@ -58,7 +59,7 @@ public:
         }
     }
 
-   bool checkForInteractable(threepp::Object3D &scene){
+    bool checkForInteractableStep(threepp::Object3D &scene){
         std::vector<std::vector<threepp::Intersection>> intersections;
         intersections.reserve(raycasters_.size());
         for (auto& element : raycasters_){
@@ -88,8 +89,6 @@ private:
         raycaster.far = 100;
         return raycaster;
     }
-
-
 };
 
 #endif //TOP_GAME_RAYCASTERS_HPP

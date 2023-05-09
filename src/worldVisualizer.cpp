@@ -1,7 +1,7 @@
 //
 // Created by Jalma on 01/05/2023.
 //
-#include "worldVisualizer.hpp"
+#include "world/worldVisualizer.hpp"
 #include "threepp/loaders/TextureLoader.hpp"
 #include "threepp/geometries/PlaneGeometry.hpp"
 #include "threepp/materials/MeshBasicMaterial.hpp"

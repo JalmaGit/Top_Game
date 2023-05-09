@@ -2,16 +2,16 @@
 // Created by Jalma on 28/04/2023.
 //
 
-#ifndef TOP_GAME_PLAYERHANDLER_HPP
-#define TOP_GAME_PLAYERHANDLER_HPP
+#ifndef TOP_GAME_PLAYER_HPP
+#define TOP_GAME_PLAYER_HPP
 
-#include "moveAbleObject.hpp" //Make Headerfile same name as class
+#include "moveAble.hpp" //Make Headerfile same name as class
 
 class Player : public MoveAble {
 public:
 
-    explicit Player(int h = 1000) : health_(h) {
-        setHealth(h);
+    explicit Player(int health = 1000) : health_(health) {
+        setHealth(health);
         threepp::Vector3 startPosition{0, 0, 2};
         setPosition(startPosition);
         score_ = 0;
@@ -41,10 +41,14 @@ public:
         score_ -= newRemoveScore;
     }
 
+    void takeDamage(int damage){
+        health_ -= damage;
+    }
+
 private:
     int health_;
     int score_;
     threepp::Vector3 playerSize_;
 };
 
-#endif //TOP_GAME_PLAYERHANDLER_HPP
+#endif //TOP_GAME_PLAYER_HPP

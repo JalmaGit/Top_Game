@@ -5,8 +5,9 @@
 #ifndef TOP_GAME_KEYINPUT_HPP
 #define TOP_GAME_KEYINPUT_HPP
 
-#include "threepp/input/KeyListener.hpp"
-#include "threepp/math/Vector2.hpp"
+#include <threepp/input/KeyListener.hpp>
+#include <threepp/math/Vector2.hpp>
+#include <map>
 
 
 struct MyListener : threepp::KeyListener {

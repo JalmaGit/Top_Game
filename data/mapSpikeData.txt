@@ -1,0 +1,4 @@
+SpikeName - Position(x,y,z) - BoxSize(width,height,depth) Needs BoxSize bc of how the fileReader works
+Spike1,0.0,10.0,0.0,0.0,0.0,0.0
+Spike2,10.0,0.0,0.0,0.0,0.0,0.0
+SpikeX,0.0,10.0,0.0,0.0,0.0,0.0

@@ -5,17 +5,21 @@
 #ifndef TOP_GAME_COINVISUALIZER_HPP
 #define TOP_GAME_COINVISUALIZER_HPP
 
-#include <threepp/math/Vector3.hpp>
+#include "threepp/math/Vector3.hpp"
 #include "threepp/objects/Mesh.hpp"
-#include <threepp/geometries/CylinderGeometry.hpp>
-#include <threepp/materials/MeshBasicMaterial.hpp>
+#include "threepp/geometries/CylinderGeometry.hpp"
+#include "threepp/materials/MeshBasicMaterial.hpp"
 
 class CoinVisualizer{
 public:
     std::shared_ptr<threepp::Mesh> coin;
 
-    explicit CoinVisualizer(threepp::Vector3 newPosition){
+    explicit CoinVisualizer(){
         coin = createCoin();
+        coin->position = {-10,0,2};
+    }
+
+    void updateCoinPosition(threepp::Vector3 newPosition){
         coin->position = newPosition;
     }
 

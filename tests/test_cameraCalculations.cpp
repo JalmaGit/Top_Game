@@ -1,7 +1,7 @@
 //
 // Created by Jalma on 30/04/2023.
 //
-#include "cameraAttacher.hpp"
+#include "player/cameraAttacher.hpp"
 #include "threepp/math/Vector3.hpp"
 #include "threepp/math/MathUtils.hpp"
 

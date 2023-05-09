@@ -2,7 +2,7 @@
 // Created by Jalma on 28/04/2023.
 //
 
-#include "playerVisualizer.hpp"
+#include "player/playerVisualizer.hpp"
 
 #include "threepp/geometries/EdgesGeometry.hpp"
 #include "threepp/geometries/ShapeGeometry.hpp"
@@ -45,8 +45,6 @@ std::shared_ptr<Mesh> PlayerVisualizer::playerModelCreation(){
     auto extrudeMesh = Mesh::create(extrudeGeometry,arrowMaterial);
 
     arrow->add(extrudeMesh);
-
-    arrow->castShadow = true;
 
     return arrow;
 
