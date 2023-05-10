@@ -1,16 +1,10 @@
-//
-// Created by Jalma on 19.04.2023.
-//
-
 #ifndef TOP_GAME_GAMELOGIC_HPP
+#define TOP_GAME_GAMELOGIC_HPP
 
-#include "threepp/threepp.hpp"
+#include <threepp/threepp.hpp>
 #include "playerOld.hpp"
 #include "worldOld.hpp"
 #include <cmath>
-
-#define TOP_GAME_GAMELOGIC_HPP
-
 
 class GameLogic {
 public:
@@ -28,7 +22,6 @@ public:
         lastPlayerShadowPos = shadowBox->position;
         lastPlayerRotation = shadowBox->rotation;
 
-        //box3Shadow.setFromCenterAndSize(shadowBox->position,shadowBox->scale);
         scene->add(shadowBox);
 
         scene->add(player.playerCamera);
@@ -46,7 +39,6 @@ public:
     auto gameTic(Player &player, float &dt, Vector2 &direction) {
 
         shadowBox->geometry()->computeBoundingBox();
-        //shadowBox->geometry()->computeBoundingSphere();
         box3Shadow.copy(*shadowBox->geometry()->boundingSphere).applyMatrix4(*shadowBox->matrixWorld);
 
         for (const auto &worldHitBoxes: worldGen.worldHitBoxes) {
@@ -64,7 +56,6 @@ public:
         }
         if (hitBoxDetected) {
             shadowBox->position.copy(lastPlayerShadowPos);
-            //shadowBox->rotation.copy(lastPlayerRotation);
         }
         std::cout << hitBoxDetected << std::endl;
 

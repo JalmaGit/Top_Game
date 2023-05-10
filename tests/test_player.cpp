@@ -1,7 +1,7 @@
 
 #include "player/player.hpp"
-#include "threepp/math/Vector3.hpp"
-#include "threepp/math/MathUtils.hpp"
+#include <threepp/math/Vector3.hpp>
+#include <threepp/math/MathUtils.hpp>
 #include <cmath>
 
 #define CATCH_CONFIG_MAIN

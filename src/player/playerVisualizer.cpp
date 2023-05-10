@@ -1,16 +1,21 @@
-//
-// Created by Jalma on 28/04/2023.
-//
 
-#include "player/playerVisualizer.hpp"
-
-#include "threepp/geometries/EdgesGeometry.hpp"
-#include "threepp/geometries/ShapeGeometry.hpp"
-#include "threepp/geometries/ExtrudeGeometry.hpp"
-#include "threepp/extras/core/Shape.hpp"
-#include "threepp/materials/MeshPhongMaterial.hpp"
+#include <player/playerVisualizer.hpp>
+#include <threepp/geometries/EdgesGeometry.hpp>
+#include <threepp/geometries/ShapeGeometry.hpp>
+#include <threepp/geometries/ExtrudeGeometry.hpp>
+#include <threepp/extras/core/Shape.hpp>
+#include <threepp/materials/MeshPhongMaterial.hpp>
 
 using namespace threepp;
+
+PlayerVisualizer::PlayerVisualizer() {
+    playerModel = playerModelCreation();
+}
+
+void PlayerVisualizer::setPlayerPosition(threepp::Vector3 position, const Quaternion &rotation) const {
+    playerModel->position.copy(position);
+    playerModel->rotation.setFromQuaternion(rotation);
+}
 
 std::shared_ptr<Mesh> PlayerVisualizer::playerModelCreation() {
     float x = 0, y = 0;
@@ -49,3 +54,6 @@ std::shared_ptr<Mesh> PlayerVisualizer::playerModelCreation() {
     return arrow;
 
 }
+
+
+

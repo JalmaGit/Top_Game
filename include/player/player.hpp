@@ -1,7 +1,3 @@
-//
-// Created by Jalma on 28/04/2023.
-//
-
 #ifndef TOP_GAME_PLAYEROLD_HPP
 #define TOP_GAME_PLAYER_HPP
 
@@ -10,40 +6,23 @@
 class Player : public MoveAble {
 public:
 
-    explicit Player(int health = 1000) : health_(health) {
-        setHealth(health);
-        threepp::Vector3 startPosition{0, 0, 2};
-        setPosition(startPosition);
-        score_ = 0;
-    }
+    explicit Player(int health = 1000);
 
-    void setHealth(int newHealth) {
-        health_ = newHealth;
-    }
+    void setHealth(int newHealth);
 
     void setScore(int newScore) {
         score_ = newScore;
     }
 
-    [[nodiscard]] int getHealth() const {
-        return health_;
-    }
+    [[nodiscard]] int getHealth() const;
 
-    [[nodiscard]] int getScore() const {
-        return score_;
-    }
+    [[nodiscard]] int getScore() const;
 
-    void addScore(int newAddScore) {
-        score_ += newAddScore;
-    }
+    void addScore(int newAddScore);
 
-    void removeScore(int newRemoveScore) {
-        score_ -= newRemoveScore;
-    }
+    void removeScore(int newRemoveScore);
 
-    void takeDamage(int damage) {
-        health_ -= damage;
-    }
+    void takeDamage(int damage);
 
 private:
     int health_;

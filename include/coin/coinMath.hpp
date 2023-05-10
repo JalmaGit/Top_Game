@@ -1,13 +1,8 @@
-//
-// Created by Jalma on 07/05/2023.
-//
-
 #ifndef TOP_GAME_COINMATH_HPP
 #define TOP_GAME_COINMATH_HPP
 
 #include <vector>
-#include "threepp/math/Vector3.hpp"
-
+#include <threepp/math/Vector3.hpp>
 
 class CoinMath {
 public:
@@ -15,17 +10,11 @@ public:
 
     explicit CoinMath();
 
-    [[nodiscard]] int givePoints() const {
-        return points_;
-    }
+    [[nodiscard]] int givePoints() const;
 
-    void setPossiblePositions(const std::vector<threepp::Vector3> &newPossiblePositions) {
-        possiblePositions_ = newPossiblePositions;
-    }
+    void setPossiblePositions(const std::vector<threepp::Vector3> &newPossiblePositions);
 
-    threepp::Vector3 getRandomNewPosition() {
-        return possiblePositions_[1];
-    }
+    threepp::Vector3 getRandomNewPosition();
 
 private:
 

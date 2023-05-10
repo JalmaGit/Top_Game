@@ -1,6 +1,4 @@
-//
-// Created by Jalma on 01/05/2023.
-//
+
 #include "world/worldVisualizer.hpp"
 #include "threepp/loaders/TextureLoader.hpp"
 #include "threepp/geometries/PlaneGeometry.hpp"
@@ -9,6 +7,14 @@
 #include "threepp/geometries/BoxGeometry.hpp"
 
 using namespace threepp; //This is fine bc this is cpp file or source file
+
+WorldVisualizer::WorldVisualizer(float mapSizeX, float mapSizeY) {
+    flor = createPlane(mapSizeX, mapSizeY);
+}
+
+void WorldVisualizer::addBox(threepp::Vector3 boxPosition, threepp::Vector3 boxSize) {
+    boxes.emplace_back(createBox(boxPosition, boxSize));
+}
 
 std::shared_ptr<Mesh> WorldVisualizer::createPlane(float width, float length) {
     TextureLoader loader;
@@ -41,3 +47,7 @@ std::shared_ptr<Mesh> WorldVisualizer::createBox(Vector3 boxPosition, Vector3 bo
 
     return box;
 }
+
+
+
+

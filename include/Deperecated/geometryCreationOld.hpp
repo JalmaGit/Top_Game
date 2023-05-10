@@ -1,13 +1,7 @@
-//
-// Created by Jalma on 27.03.2023.
-//
-
 #ifndef THREEPP_VCPKG_TEST_GEOMETRY_CREATION_HPP
 #define THREEPP_VCPKG_TEST_GEOMETRY_CREATION_HPP
 
-#include "threepp/threepp.hpp"
-
-//Be more spefici when you only need specific things
+#include <threepp/threepp.hpp>
 
 using namespace threepp;
 

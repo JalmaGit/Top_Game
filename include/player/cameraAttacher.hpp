@@ -1,13 +1,9 @@
-//
-// Created by Jalma on 29/04/2023.
-//
-
 #ifndef TOP_GAME_CAMERAATTACHER_HPP
 #define TOP_GAME_CAMERAATTACHER_HPP
 
-#include "threepp/math/Vector3.hpp"
-#include "threepp/math/Quaternion.hpp"
-#include "threepp/math/MathUtils.hpp"
+#include <threepp/math/Vector3.hpp>
+#include <threepp/math/Quaternion.hpp>
+#include <threepp/math/MathUtils.hpp>
 #include <cmath>
 
 class CameraAttacher {
@@ -15,48 +11,23 @@ public:
     threepp::Quaternion quaternion;
 
     explicit CameraAttacher(threepp::Vector3 objPosition = {0, 0, 0},
-                            float objAngle = 0) { //Ask on Tuesday about this comment
-        setDistanceFromObj(5);
-        setPosition({0, 0, 0});
-        setCameraHeight(5);
-        setCameraAngle(threepp::math::PI / 3);
-        upVector_ = {0, 0, 1};
-        updateTrailingCamera(objPosition, objAngle);
-    }
+                            float objAngle = 0);
 
-    void setDistanceFromObj(float newDistanceFrom) {
-        distanceFrom_ = -newDistanceFrom;
-    }
+    void setDistanceFromObj(float newDistanceFrom);
 
-    void setPosition(threepp::Vector3 position) {
-        position_ = position;
-    }
+    void setPosition(threepp::Vector3 position);
 
-    void setCameraHeight(float newCameraHeight) {
-        position_.z = newCameraHeight;
-    }
+    void setCameraHeight(float newCameraHeight);
 
-    void setCameraAngle(float newCameraAngle) {
-        cameraAngle_ = newCameraAngle;
-    }
+    void setCameraAngle(float newCameraAngle);
 
-    void updateTrailingCamera(threepp::Vector3 objPosition, float objAngle) {
-        quaternion.setFromAxisAngle(upVector_, objAngle);
-        position_ = {distanceFrom_ * std::sin(objAngle) + objPosition.x,
-                     distanceFrom_ * std::cos(objAngle) + objPosition.y, position_.z};
-    }
+    void updateTrailingCamera(threepp::Vector3 objPosition, float objAngle);
 
-    threepp::Vector3 getPosition() {
-        return position_;
-    }
+    threepp::Vector3 getPosition();
 
-    [[nodiscard]] float getDistanceFromObj() const {
-        return distanceFrom_;
-    }
+    [[nodiscard]] float getDistanceFromObj() const;
 
-    [[nodiscard]] float getCameraAngle() const {
-        return cameraAngle_;
-    }
+    [[nodiscard]] float getCameraAngle() const;
 
 private:
     threepp::Vector3 position_;

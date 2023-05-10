@@ -1,11 +1,7 @@
-//
-// Created by Jalma on 27.03.2023.
-//
-
 #ifndef THREEPP_VCPKG_TEST_WORLD_HPP
 #define THREEPP_VCPKG_TEST_WORLD_HPP
 
-#include "threepp/threepp.hpp"
+#include <threepp/threepp.hpp>
 #include "geometryCreationOld.hpp"
 #include "iostream"
 

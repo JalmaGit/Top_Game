@@ -1,16 +1,11 @@
-//
-// Created by Jalma on 06.04.2023.
-//
-
 #ifndef TOP_GAME_PLAYEROLD_HPP
 #define TOP_GAME_PLAYEROLD_HPP
 
-#include "threepp/threepp.hpp"
+#include <threepp/threepp.hpp>
 #include "geometryCreationOld.hpp"
 #include <iostream>
 
-class Player { //Make visulizer and the math/movent seperate playerCamera shouldn't be here
-    //Splitt out stuff to make each not dependent on each other.
+class Player {
 public:
     std::shared_ptr<Mesh> playerModel;
 

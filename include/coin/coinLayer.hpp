@@ -1,7 +1,3 @@
-//
-// Created by Jalma on 09/05/2023.
-//
-
 #ifndef TOP_GAME_COINLAYER_HPP
 #define TOP_GAME_COINLAYER_HPP
 
@@ -15,30 +11,16 @@
 class CoinLayer {
 public:
     std::shared_ptr<threepp::Scene> layer;
+    CoinMath coinMath;
 
-    CoinLayer(){
-        layer = threepp::Scene::create();
+    CoinLayer();;
 
-        mapFileReader file;
-        std::optional<std::string> fileRead = file.read("bin/data/mapCoinData.txt");
-
-        for (auto &element: file.mapData) {
-            coinPositions.emplace_back(element.second.Position);
-        }
-
-        coinMath_.setPossiblePositions(coinPositions);
-
-        layer->add(coinVisualizer_.coin);
-    }
-
-    void setRandomCoinPosition() {
-        coinVisualizer_.updateCoinPosition(coinMath_.getRandomNewPosition());
-    }
+    void setRandomCoinPosition();
 
 private:
 
     std::vector<threepp::Vector3> coinPositions;
-    CoinMath coinMath_;
+
     CoinVisualizer coinVisualizer_;
 };
 
