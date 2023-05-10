@@ -10,33 +10,33 @@
 #include "threepp/geometries/CylinderGeometry.hpp"
 #include "threepp/materials/MeshBasicMaterial.hpp"
 
-class CoinVisualizer{
+class CoinVisualizer {
 public:
     std::shared_ptr<threepp::Mesh> coin;
 
-    explicit CoinVisualizer(){
+    explicit CoinVisualizer() {
         coin = createCoin();
-        coin->position = {-10,0,2};
+        coin->position = {-10, 0, 2};
     }
 
-    void updateCoinPosition(threepp::Vector3 newPosition){
+    void updateCoinPosition(threepp::Vector3 newPosition) const {
         coin->position = newPosition;
     }
 
-    std::shared_ptr<threepp::Mesh> createCoin(){
-        auto geometry = threepp::CylinderGeometry::create(2,2,1);
+    std::shared_ptr<threepp::Mesh> createCoin() {
+        auto geometry = threepp::CylinderGeometry::create(2, 2, 1);
         geometry->center();
         auto material = threepp::MeshBasicMaterial::create();
         material->color = threepp::Color::yellow;
 
-        std::shared_ptr<threepp::Mesh> coinMesh = threepp::Mesh::create(geometry,material);
+        std::shared_ptr<threepp::Mesh> coinMesh = threepp::Mesh::create(geometry, material);
 
-        auto innerGeometry = threepp::CylinderGeometry::create(1,1,2);
+        auto innerGeometry = threepp::CylinderGeometry::create(1, 1, 2);
         innerGeometry->center();
         auto innerMaterial = threepp::MeshBasicMaterial::create();
         innerMaterial->color = threepp::Color::yellow;
 
-        auto innerMesh = threepp::Mesh::create(innerGeometry,innerMaterial);
+        auto innerMesh = threepp::Mesh::create(innerGeometry, innerMaterial);
 
         coinMesh->add(innerMesh);
 
@@ -46,7 +46,6 @@ public:
 private:
 
 };
-
 
 
 #endif //TOP_GAME_COINVISUALIZER_HPP

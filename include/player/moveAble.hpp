@@ -27,7 +27,7 @@ public:
         setTurnSpeed(1);
     }
 
-    void setForceVector(float velocity, float dt){
+    void setForceVector(float velocity, float dt) {
         direction = {baseSpeed_ * velocity * std::sin(rotation_) * dt,
                      baseSpeed_ * velocity * std::cos(rotation_) * dt,
                      0};
@@ -71,7 +71,7 @@ public:
     }
 
     void move(float turnDirection, float dt) {
-        rotateBy(turnDirection*dt);
+        rotateBy(turnDirection * dt);
         moveFor();
     }
 

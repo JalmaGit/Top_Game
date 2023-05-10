@@ -5,25 +5,25 @@
 #ifndef TOP_GAME_COINMATH_HPP
 #define TOP_GAME_COINMATH_HPP
 
+#include <vector>
 #include "threepp/math/Vector3.hpp"
 
 
-class CoinMath{
+class CoinMath {
 public:
     threepp::Vector3 position;
-    explicit CoinMath(){
-        points_ = 100;
-    }
 
-    [[nodiscard]] int givePoints() const{
+    explicit CoinMath();
+
+    [[nodiscard]] int givePoints() const {
         return points_;
     }
 
-    void setPossiblePositions(const std::vector<threepp::Vector3>& newPossiblePositions){
+    void setPossiblePositions(const std::vector<threepp::Vector3> &newPossiblePositions) {
         possiblePositions_ = newPossiblePositions;
     }
 
-    threepp::Vector3 getRandomNewPosition(){
+    threepp::Vector3 getRandomNewPosition() {
         return possiblePositions_[1];
     }
 

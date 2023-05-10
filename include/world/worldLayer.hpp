@@ -15,7 +15,7 @@ class WorldLayer {
 public:
     std::shared_ptr<threepp::Scene> layer;
 
-    WorldLayer(){
+    WorldLayer() {
 
         layer = threepp::Scene::create();
 
@@ -24,11 +24,11 @@ public:
 
         WorldVisualizer worldVisualizer{500, 500};
 
-        for (auto& it: file.mapData) {
-            worldVisualizer.addBox(it.second.Position,it.second.Size);
+        for (auto &it: file.mapData) {
+            worldVisualizer.addBox(it.second.Position, it.second.Size);
         }
 
-        for (const auto& element : worldVisualizer.boxes){
+        for (const auto &element: worldVisualizer.boxes) {
             layer->add(element);
         }
 

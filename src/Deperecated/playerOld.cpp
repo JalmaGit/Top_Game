@@ -2,7 +2,7 @@
 // Created by Jalma on 06.04.2023.
 //
 
-#include "Deperecated//player.hpp"
+#include "Deperecated//playerOld.hpp"
 #include <iostream>
 
 std::shared_ptr<Mesh> Player::playerModelCreation() {

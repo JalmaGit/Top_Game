@@ -10,10 +10,10 @@
 
 using namespace threepp; //This is fine bc this is cpp file or source file
 
-std::shared_ptr<Mesh> WorldVisualizer::addPlane(float width, float length) {
+std::shared_ptr<Mesh> WorldVisualizer::createPlane(float width, float length) {
     TextureLoader loader;
 
-    auto planeGeometry = PlaneGeometry::create(width,length);
+    auto planeGeometry = PlaneGeometry::create(width, length);
     auto planeMaterial = MeshPhongMaterial::create();
     //planeMaterial->map = loader.load("bin/data/textures/flor.png");
 
@@ -26,10 +26,15 @@ std::shared_ptr<Mesh> WorldVisualizer::addPlane(float width, float length) {
 
 std::shared_ptr<Mesh> WorldVisualizer::createBox(Vector3 boxPosition, Vector3 boxSize) {
 
-    auto boxGeometry = BoxGeometry::create(boxSize.x,boxSize.y,boxSize.z);
+    auto boxGeometry = BoxGeometry::create(
+            boxSize.x,
+            boxSize.y,
+            boxSize.z);
+
     auto boxMaterial = MeshPhongMaterial::create();
     boxMaterial->color = 0xff0000;
     boxMaterial->emissive = 0x000000;
+
     auto box = Mesh::create(boxGeometry, boxMaterial);
     box->position = boxPosition;
     box->rotateX(math::PI / 2);

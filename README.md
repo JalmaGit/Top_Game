@@ -1,5 +1,5 @@
 # Top_Game
- - This project is named Top_Game and it's a top-down view type of game where the camera looks at the player from above. The player can move around to explore the map. if the player hits the map edge, the player will stopp
+ - This project is named Top_Game and it's a top-down view type of game where the playerCamera looks at the player from above. The player can move around to explore the map. if the player hits the map edge, the player will stopp
  - The project utilises the [Threepp library](https://github.com/markaren/threepp). Currently it's just in a demo stage with no actuall content with focus on getting the game to just work.
  - Used and looked at Example codes from [Threepp library](https://github.com/markaren/threepp) to understand and create a workable project
  
@@ -9,7 +9,7 @@
 
 ### The Player
  - The Player has some stuff attached to it
- *A camera*
+ *A playerCamera*
  *A stl-file*
  *A shadowBox*
  *Keylistner*
@@ -17,7 +17,7 @@
  The player is shown with the help of an stl-modell that has been importeted with the help of the STL-loader example found in threepp.
  From the STL-loader there has been loaded a shadowBox that acts as a collision modell and is used to check for if the player thouches an object on the map.
  The player is set up so that it can move in the **X**- and **Y**-axis. 
- This means that the program uppdates the position of the camera, stl-file and shadowBox when asked to do so.
+ This means that the program uppdates the position of the playerCamera, stl-file and shadowBox when asked to do so.
  The keybindings that has been set up with the Keylistner is:
  
  #### Move Keybinding

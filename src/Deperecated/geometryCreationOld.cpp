@@ -1,7 +1,7 @@
 //
 // Created by Jalma on 27.03.2023.
 //
-#include "Deperecated/geometryCreation.hpp"
+#include "Deperecated/geometryCreationOld.hpp"
 #include <iostream>
 
 using namespace threepp;
@@ -21,7 +21,7 @@ std::shared_ptr<Mesh> utils::createBox(const BoxGeometry::Params params, float p
 std::shared_ptr<Mesh> utils::createPlane(float x, float y) {
     TextureLoader loader;
 
-    auto planeGeometry = PlaneGeometry::create(x,y);
+    auto planeGeometry = PlaneGeometry::create(x, y);
     auto planeMaterial = MeshBasicMaterial::create();
     planeMaterial->map = loader.load("bin/data/textures/flor.png");
     planeMaterial->side = DoubleSide;
@@ -30,7 +30,7 @@ std::shared_ptr<Mesh> utils::createPlane(float x, float y) {
     return plane;
 }
 
-std::shared_ptr<Mesh> utils::createStlModel(const std::string& path) {
+std::shared_ptr<Mesh> utils::createStlModel(const std::string &path) {
     STLLoader stlLoader;
     auto stlGeometry = stlLoader.load(path);
     auto stlMaterial = MeshPhongMaterial::create();

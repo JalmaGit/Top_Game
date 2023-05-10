@@ -14,7 +14,8 @@ class CameraAttacher {
 public:
     threepp::Quaternion quaternion;
 
-    explicit CameraAttacher(threepp::Vector3 objPosition = {0, 0, 0}, float objAngle = 0) { //Ask on Tuesday about this comment
+    explicit CameraAttacher(threepp::Vector3 objPosition = {0, 0, 0},
+                            float objAngle = 0) { //Ask on Tuesday about this comment
         setDistanceFromObj(5);
         setPosition({0, 0, 0});
         setCameraHeight(5);

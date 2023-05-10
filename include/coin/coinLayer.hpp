@@ -5,8 +5,8 @@
 #ifndef TOP_GAME_COINLAYER_HPP
 #define TOP_GAME_COINLAYER_HPP
 
-#include "threepp/scenes/Scene.hpp"
-#include "threepp/math/Vector3.hpp"
+#include <threepp/scenes/Scene.hpp>
+#include <threepp/math/Vector3.hpp>
 #include "mapFileReader.hpp"
 #include "coinMath.hpp"
 #include "coinVisualizer.hpp"
@@ -22,7 +22,7 @@ public:
         mapFileReader file;
         std::optional<std::string> fileRead = file.read("bin/data/mapCoinData.txt");
 
-        for (auto& element : file.mapData){
+        for (auto &element: file.mapData) {
             coinPositions.emplace_back(element.second.Position);
         }
 
@@ -31,7 +31,7 @@ public:
         layer->add(coinVisualizer_.coin);
     }
 
-    void setRandomCoinPosition(){
+    void setRandomCoinPosition() {
         coinVisualizer_.updateCoinPosition(coinMath_.getRandomNewPosition());
     }
 
@@ -41,7 +41,6 @@ private:
     CoinMath coinMath_;
     CoinVisualizer coinVisualizer_;
 };
-
 
 
 #endif //TOP_GAME_COINLAYER_HPP

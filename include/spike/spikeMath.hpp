@@ -7,13 +7,13 @@
 
 #include "threepp/math/Vector3.hpp"
 
-class SpikeMath{
+class SpikeMath {
 public:
-    explicit SpikeMath(){
+    explicit SpikeMath() {
         damage_ = 100;
     }
 
-    [[nodiscard]] int dealDamage() const{
+    [[nodiscard]] int dealDamage() const {
         return damage_;
     }
 

@@ -11,24 +11,26 @@
 #include "threepp/geometries/ConeGeometry.hpp"
 #include "threepp/materials/MeshBasicMaterial.hpp"
 
-class SpikeVisualizer{
+class SpikeVisualizer {
 public:
     std::vector<std::shared_ptr<threepp::Mesh>> spike;
 
-    explicit SpikeVisualizer(const std::vector<threepp::Vector3>& positions){
-        for (auto& element : positions){
-        spike.emplace_back(createSpike(element));
+    explicit SpikeVisualizer(const std::vector<threepp::Vector3> &positions) {
+        for (auto &element: positions) {
+            spike.emplace_back(createSpike(element));
         }
     }
 
-    static std::shared_ptr<threepp::Mesh> createSpike(threepp::Vector3 position){
-        auto geometry = threepp::ConeGeometry::create(1,4);
+    static std::shared_ptr<threepp::Mesh> createSpike(threepp::Vector3 position) {
+        auto geometry = threepp::ConeGeometry::create(1, 4);
         auto material = threepp::MeshBasicMaterial::create();
         material->color = threepp::Color::blanchedalmond;
 
-        std::shared_ptr<threepp::Mesh> spikeMesh = threepp::Mesh::create(geometry,material);
-        spikeMesh->rotateX(threepp::math::PI/2);
+        std::shared_ptr<threepp::Mesh> spikeMesh = threepp::Mesh::create(
+                geometry,
+                material);
 
+        spikeMesh->rotateX(threepp::math::PI / 2);
         spikeMesh->position = position;
 
         return spikeMesh;

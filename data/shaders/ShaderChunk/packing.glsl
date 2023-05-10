@@ -33,7 +33,7 @@ vec2 unpackRGBATo2Half( vec4 v ) {
 	return vec2( v.x + ( v.y / 255.0 ), v.z + ( v.w / 255.0 ) );
 }
 
-// NOTE: viewZ/eyeZ is < 0 when in front of the camera per OpenGL conventions
+// NOTE: viewZ/eyeZ is < 0 when in front of the playerCamera per OpenGL conventions
 
 float viewZToOrthographicDepth( const in float viewZ, const in float near, const in float far ) {
 	return ( viewZ + near ) / ( near - far );

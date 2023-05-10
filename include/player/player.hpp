@@ -2,7 +2,7 @@
 // Created by Jalma on 28/04/2023.
 //
 
-#ifndef TOP_GAME_PLAYER_HPP
+#ifndef TOP_GAME_PLAYEROLD_HPP
 #define TOP_GAME_PLAYER_HPP
 
 #include "moveAble.hpp" //Make Headerfile same name as class
@@ -41,7 +41,7 @@ public:
         score_ -= newRemoveScore;
     }
 
-    void takeDamage(int damage){
+    void takeDamage(int damage) {
         health_ -= damage;
     }
 
@@ -51,4 +51,4 @@ private:
     threepp::Vector3 playerSize_;
 };
 
-#endif //TOP_GAME_PLAYER_HPP
+#endif //TOP_GAME_PLAYEROLD_HPP
