@@ -14,7 +14,7 @@ class PlayerCamera { //CameraAttacher
 public:
     std::shared_ptr<threepp::PerspectiveCamera> camera;
 
-    PlayerCamera(float aspect = 60, float cameraAngle = 0, threepp::Vector3 position = {0, 0, 0}) {
+    explicit PlayerCamera(float aspect = 60, float cameraAngle = 0, threepp::Vector3 position = {0, 0, 0}) {
         camera = threepp::PerspectiveCamera::create(75, aspect, 0.1f, 2000);
         camera->position = position;
         camera->rotateX(cameraAngle);
