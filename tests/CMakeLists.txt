@@ -7,8 +7,7 @@ function(add_test_executable name)
     add_test(NAME ${name} COMMAND ${name})
 endfunction()
 
-
-
 add_test_executable(test_moveAbleObject)
 add_test_executable(test_player)
 add_test_executable(test_cameraCalculations)
+add_test_executable(test_coinMath)
