@@ -1,7 +1,7 @@
 #ifndef TOP_GAME_PLAYEROLD_HPP
 #define TOP_GAME_PLAYER_HPP
 
-#include "moveAble.hpp" //Make Headerfile same name as class
+#include "moveAble.hpp"
 
 class Player : public MoveAble {
 public:
@@ -10,9 +10,7 @@ public:
 
     void setHealth(int newHealth);
 
-    void setScore(int newScore) {
-        score_ = newScore;
-    }
+    void setScore(int newScore);
 
     [[nodiscard]] int getHealth() const;
 
@@ -27,7 +25,6 @@ public:
 private:
     int health_;
     int score_;
-    threepp::Vector3 playerSize_;
 };
 
 #endif //TOP_GAME_PLAYEROLD_HPP

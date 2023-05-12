@@ -2,6 +2,7 @@
 #define TOP_GAME_COINMATH_HPP
 
 #include <vector>
+#include <random>
 #include <threepp/math/Vector3.hpp>
 
 class CoinMath {
@@ -14,7 +15,7 @@ public:
 
     void setPossiblePositions(const std::vector<threepp::Vector3> &newPossiblePositions);
 
-    threepp::Vector3 getRandomNewPosition();
+    threepp::Vector3 getNewPosition();
 
 private:
 

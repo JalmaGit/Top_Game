@@ -5,6 +5,7 @@
 #include <threepp/geometries/ExtrudeGeometry.hpp>
 #include <threepp/extras/core/Shape.hpp>
 #include <threepp/materials/MeshPhongMaterial.hpp>
+#include <threepp/math/MathUtils.hpp>
 
 using namespace threepp;
 
@@ -33,7 +34,6 @@ std::shared_ptr<Mesh> PlayerVisualizer::playerModelCreation() {
     auto arrowGeometry = ShapeGeometry::create(arrowShape);
     arrowGeometry->rotateZ(-math::PI / 2);
     arrowGeometry->center();
-    // arrowGeometry->scale(1,1,1);
 
     auto arrowMaterial = MeshPhongMaterial::create();
     arrowMaterial->color = Color::blue;
@@ -45,11 +45,12 @@ std::shared_ptr<Mesh> PlayerVisualizer::playerModelCreation() {
     auto extrudeGeometry = ExtrudeGeometry::create(arrowShape, opts);
     extrudeGeometry->rotateZ(-math::PI / 2);
     extrudeGeometry->center();
-    //extrudeGeometry->scale(1,1,1);
 
     auto extrudeMesh = Mesh::create(extrudeGeometry, arrowMaterial);
 
     arrow->add(extrudeMesh);
+
+    //arrow->castShadow = true;
 
     return arrow;
 

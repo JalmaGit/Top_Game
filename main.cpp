@@ -11,8 +11,10 @@ using namespace threepp;
 
 int main() {
 
-    Canvas canvas{Canvas::Parameters().antialiasing(4)};
+    Canvas canvas{Canvas::Parameters().vsync(false).antialiasing(16)};
     GLRenderer renderer{canvas};
+    renderer.shadowMap().enabled = true;
+    renderer.shadowMap().type = PCFSoftShadowMap;
 
     Game game(canvas.getAspect());
 
@@ -30,13 +32,11 @@ int main() {
     });
 
 
-    canvas.animate([&](float dt) {
-
+    canvas.animate([&](float dt) -> void {
 
         Vector3 nextMove = keyChecker.getKeyInput();
 
         textHandler.setText(std::to_string(game.player.getScore()));
-        std::cout << game.player.getHealth() << std::endl;
 
         game.running(nextMove,dt);
 

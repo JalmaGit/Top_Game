@@ -5,6 +5,8 @@ class SpikeMath {
 public:
     explicit SpikeMath();
 
+    void setNewDamage (int newDamage);
+
     [[nodiscard]] int dealDamage() const;
 
 private:

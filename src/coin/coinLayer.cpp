@@ -17,5 +17,5 @@ CoinLayer::CoinLayer() {
 }
 
 void CoinLayer::setRandomCoinPosition() {
-    coinVisualizer_.updateCoinPosition(coinMath.getRandomNewPosition());
+    coinVisualizer_.updateCoinPosition(coinMath.getNewPosition());
 }

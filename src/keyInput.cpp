@@ -6,15 +6,19 @@ threepp::Vector3 KeyChecker::getKeyInput() {
     if (keyW.buttonPressed()) {
         nextMove.y = 1;
     }
+
     if (keyS.buttonPressed()) {
         nextMove.y = -1;
     }
-    if (keyA.buttonPressed()) {
+
+    if (keyD.buttonPressed()) {
         nextMove.x = 1;
     }
-    if (keyD.buttonPressed()) {
+
+    if (keyA.buttonPressed()) {
         nextMove.x = -1;
     }
+
     if (keyR.buttonPressed()) {
         nextMove.z = 1;
     }

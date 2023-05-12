@@ -9,13 +9,39 @@
 
 #include <catch2/catch.hpp>
 
-TEST_CASE("Default Constructor Test"){
-    CameraAttacher cameraCalculations;
 
-    REQUIRE_THAT(cameraCalculations.getCameraAngle(), Catch::Matchers::WithinRel(1.046, 0.1));
-    REQUIRE_THAT(cameraCalculations.getDistanceFromObj(), Catch::Matchers::WithinRel(-5.0,0.01));
+TEST_CASE("Constructor Test") {
+    CameraAttacher cameraAttacher;
 
-    REQUIRE_THAT(cameraCalculations.getPosition().x, Catch::Matchers::WithinRel(0, 0.01));
-    REQUIRE_THAT(cameraCalculations.getPosition().y, Catch::Matchers::WithinRel(-5.0, 0.01));
-    REQUIRE_THAT(cameraCalculations.getPosition().z, Catch::Matchers::WithinRel(5.0, 0.01));
+    REQUIRE_THAT(cameraAttacher.getCameraAngle(), Catch::Matchers::WithinRel(1.046, 0.1));
+    REQUIRE_THAT(cameraAttacher.getDistanceFromObj(), Catch::Matchers::WithinRel(-5.0, 0.01));
+
+    REQUIRE_THAT(cameraAttacher.getPosition().x, Catch::Matchers::WithinRel(0, 0.01));
+    REQUIRE_THAT(cameraAttacher.getPosition().y, Catch::Matchers::WithinRel(-5.0, 0.01));
+    REQUIRE_THAT(cameraAttacher.getPosition().z, Catch::Matchers::WithinRel(5.0, 0.01));
+}
+
+TEST_CASE("Simple Movement") {
+    CameraAttacher cameraAttacher;
+
+    threepp::Vector3 objectToAttachPosition{0, 0, 0};
+    cameraAttacher.updateTrailingCamera(objectToAttachPosition,0);
+
+    REQUIRE_THAT(cameraAttacher.getPosition().x, Catch::Matchers::WithinRel(0, 0.01));
+    REQUIRE_THAT(cameraAttacher.getPosition().y, Catch::Matchers::WithinRel(-5.0, 0.01));
+    REQUIRE_THAT(cameraAttacher.getPosition().z, Catch::Matchers::WithinRel(5.0, 0.01));
+
+    objectToAttachPosition = {5,0,0};
+    cameraAttacher.updateTrailingCamera(objectToAttachPosition,0);
+
+    REQUIRE_THAT(cameraAttacher.getPosition().x, Catch::Matchers::WithinRel(5.0, 0.01));
+    REQUIRE_THAT(cameraAttacher.getPosition().y, Catch::Matchers::WithinRel(-5.0, 0.01));
+    REQUIRE_THAT(cameraAttacher.getPosition().z, Catch::Matchers::WithinRel(5.0, 0.01));
+
+    objectToAttachPosition = {5,0,0};
+    cameraAttacher.updateTrailingCamera(objectToAttachPosition,threepp::math::PI);
+
+    REQUIRE_THAT(cameraAttacher.getPosition().x, Catch::Matchers::WithinRel(5.0, 0.01));
+    REQUIRE_THAT(cameraAttacher.getPosition().y, Catch::Matchers::WithinRel(5.0, 0.01));
+    REQUIRE_THAT(cameraAttacher.getPosition().z, Catch::Matchers::WithinRel(5.0, 0.01));
 }

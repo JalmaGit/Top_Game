@@ -8,3 +8,7 @@ SpikeMath::SpikeMath() {
 int SpikeMath::dealDamage() const {
     return damage_;
 }
+
+void SpikeMath::setNewDamage(int newDamage) {
+    damage_ = newDamage;
+}

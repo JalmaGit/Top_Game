@@ -17,9 +17,9 @@ public:
 
 private:
 
-    std::shared_ptr<threepp::Mesh> createPlane(float width, float length);
+    static std::shared_ptr<threepp::Mesh> createPlane(float width, float length);
 
-    std::shared_ptr<threepp::Mesh> createBox(threepp::Vector3 boxPosition, threepp::Vector3 boxSize);
+    static std::shared_ptr<threepp::Mesh> createBox(threepp::Vector3 boxPosition, threepp::Vector3 boxSize);
 
 };
 

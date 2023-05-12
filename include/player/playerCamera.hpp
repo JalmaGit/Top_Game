@@ -12,7 +12,7 @@ public:
 
     explicit PlayerCamera(float aspect = 60, float cameraAngle = 0, threepp::Vector3 position = {0, 0, 0});
 
-    void updateCameraPosition(threepp::Vector3 position,
+    void updateCameraPosition(const threepp::Vector3& position,
                               const threepp::Quaternion &quaternion,
                               float cameraAngle) const;
 };

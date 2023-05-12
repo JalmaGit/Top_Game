@@ -3,9 +3,9 @@
 
 CameraAttacher::CameraAttacher(threepp::Vector3 objPosition, float objAngle) { //Ask on Tuesday about this comment
     setDistanceFromObj(5);
-    setPosition({0, 0, 0});
+    setPosition(objPosition);
     setCameraHeight(5);
-    setCameraAngle(threepp::math::PI / 3);
+    setCameraAngle(threepp::math::PI /3);
     upVector_ = {0, 0, 1};
     updateTrailingCamera(objPosition, objAngle);
 }

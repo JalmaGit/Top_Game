@@ -11,203 +11,205 @@
 
 TEST_CASE("Zero Position") {
 
-    MoveAble moveAbleObject;
+    MoveAble moveAble;
     threepp::Vector3 ZeroPosition{0, 0, 0};
     float rotation = 0;
 
-    CHECK(moveAbleObject.position == ZeroPosition);
-    CHECK(moveAbleObject.position == moveAbleObject.getPosition());
-    CHECK(moveAbleObject.getRotation() == rotation);
+    CHECK(moveAble.position == ZeroPosition);
+    CHECK(moveAble.position == moveAble.getPosition());
+    CHECK(moveAble.getRotation() == rotation);
 }
 
-TEST_CASE("Checking Default Constructor"){
-    MoveAble moveAbleObject;
+TEST_CASE("Checking Constructor"){
+
+    MoveAble moveAble;
     threepp::Vector3 expectedPosition{0, 0, 0};
 
-    CHECK(moveAbleObject.getRotation() == 0);
-    CHECK(moveAbleObject.getPosition() == expectedPosition);
-    CHECK(moveAbleObject.getTurnSpeed() == 1);
-    CHECK(moveAbleObject.getBaseSpeed() == 50);
+    CHECK(moveAble.getRotation() == 0);
+    CHECK(moveAble.getPosition() == expectedPosition);
+    CHECK(moveAble.getTurnSpeed() == 1);
+    CHECK(moveAble.getBaseSpeed() == 50);
 }
 
-TEST_CASE("Forward, Backwards and Turning for small velocity and large turnDirection") {
+TEST_CASE("Forward and Backwards") {
 
-    MoveAble moveAbleObject;
-    threepp::Vector3 expectedPosition{0, 0, 0};
+    MoveAble moveAble;
+    moveAble.setBaseSpeed(10);
+    moveAble.setForceVector(1, 0, 1);
+    moveAble.move();
 
-    float turnSpeed = threepp::math::PI / 8;
-    float baseSpeed = 1;
-
-    float velocity = 1;
-    float turnDirection = 1;
-    float currentAngle = 0;
-
-    moveAbleObject.setTurnSpeed(threepp::math::PI / 8);
-    moveAbleObject.setBaseSpeed(1);
-
-    for (int i = 0; currentAngle < 2 * threepp::math::PI; i++) {
-
-        currentAngle += turnSpeed * turnDirection;
-        expectedPosition += {baseSpeed * velocity * std::sin(currentAngle), baseSpeed * velocity * std::cos(currentAngle), 0};
-        moveAbleObject.move(velocity, turnDirection);
-
-        REQUIRE_THAT(moveAbleObject.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
-        REQUIRE_THAT(moveAbleObject.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
-        REQUIRE_THAT(moveAbleObject.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
-
-        moveAbleObject.move(-velocity, 0);
-        expectedPosition -= {baseSpeed * velocity * std::sin(currentAngle), baseSpeed * velocity * std::cos(currentAngle), 0};
-
-        REQUIRE_THAT(moveAbleObject.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
-        REQUIRE_THAT(moveAbleObject.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
-        REQUIRE_THAT(moveAbleObject.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
-    }
-}
-
-TEST_CASE("Forward and Backwards"){
-    MoveAble moveAbleObject;
-    moveAbleObject.setBaseSpeed(1);
     threepp::Vector3 expectedPosition{0, 10, 0};
 
-    moveAbleObject.move(10,0);
-
-    REQUIRE_THAT(moveAbleObject.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
-    REQUIRE_THAT(moveAbleObject.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
-    REQUIRE_THAT(moveAbleObject.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
+    REQUIRE_THAT(moveAble.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
+    REQUIRE_THAT(moveAble.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
+    REQUIRE_THAT(moveAble.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
 
     expectedPosition = {0,0,0};
 
-    moveAbleObject.resetPosAndRotation();
+    moveAble.resetPosAndRotation();
 
-    REQUIRE_THAT(moveAbleObject.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
-    REQUIRE_THAT(moveAbleObject.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
-    REQUIRE_THAT(moveAbleObject.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
+    REQUIRE_THAT(moveAble.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
+    REQUIRE_THAT(moveAble.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
+    REQUIRE_THAT(moveAble.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
+
+    moveAble.setForceVector(-1, 0, 2);
+    moveAble.move();
 
     expectedPosition = {0,-20,0};
 
-    moveAbleObject.move(-20,0);
+    REQUIRE_THAT(moveAble.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
+    REQUIRE_THAT(moveAble.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
+    REQUIRE_THAT(moveAble.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
 
-    REQUIRE_THAT(moveAbleObject.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
-    REQUIRE_THAT(moveAbleObject.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
-    REQUIRE_THAT(moveAbleObject.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
-
-    CHECK(moveAbleObject.getPosition() == expectedPosition);
+    CHECK(moveAble.getPosition() == expectedPosition);
 
 }
 
 TEST_CASE("Simple Forward with a 90 degree turn"){
-    MoveAble moveAbleObject;
-    moveAbleObject.setBaseSpeed(1);
 
-    float turn = threepp::math::PI/2;
+    MoveAble moveAble;
+    moveAble.setBaseSpeed(1);
+    moveAble.setTurnSpeed(threepp::math::PI / 2);
 
-    threepp::Vector3 expectedPosition{10*std::sin(turn), 10*std::cos(turn), 0};
+    moveAble.setForceVector(1, 1, 1);
+    moveAble.move();
 
-    moveAbleObject.move(10,turn);
+    threepp::Vector3 expectedPosition { std::sin(threepp::math::PI/2), std::cos(threepp::math::PI/2), 0};
 
-    REQUIRE_THAT(moveAbleObject.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
-    REQUIRE_THAT(moveAbleObject.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
-    REQUIRE_THAT(moveAbleObject.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
+    REQUIRE_THAT(moveAble.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
+    REQUIRE_THAT(moveAble.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
+    REQUIRE_THAT(moveAble.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
 
-    expectedPosition = {0,0,0};
+    moveAble.resetPosAndRotation();
 
-    moveAbleObject.resetPosAndRotation();
+    REQUIRE_THAT(moveAble.getPosition().y, Catch::Matchers::WithinRel(0.0, 0.1));
+    REQUIRE_THAT(moveAble.getPosition().x, Catch::Matchers::WithinRel(0.0, 0.1));
+    REQUIRE_THAT(moveAble.getPosition().z, Catch::Matchers::WithinRel(0.0, 0.1));
+}
 
-    REQUIRE_THAT(moveAbleObject.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
-    REQUIRE_THAT(moveAbleObject.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
-    REQUIRE_THAT(moveAbleObject.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
+TEST_CASE("Forward, Backwards and Turning for small velocity and large turnDirection") {
 
-    expectedPosition = {0,-20,0};
+    MoveAble moveAble;
+    threepp::Vector3 expectedPosition{0, 0, 0};
 
-    moveAbleObject.move(-20,0);
+    float turnSpeed = threepp::math::PI / 8;
+    float velocity = 1;
+    float turnDirection = 1;
+    float currentAngle = 0;
 
-    CHECK(moveAbleObject.getPosition() == expectedPosition);
+    moveAble.setTurnSpeed(threepp::math::PI / 8);
+    moveAble.setBaseSpeed(1);
+
+    for (int i = 0; currentAngle < 2 * threepp::math::PI; i++) {
+
+        currentAngle += turnSpeed * turnDirection;
+        expectedPosition += {velocity * std::sin(currentAngle),velocity * std::cos(currentAngle), 0};
+
+        moveAble.setForceVector(1, 1, 1);
+        moveAble.move();
+
+        REQUIRE_THAT(moveAble.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
+        REQUIRE_THAT(moveAble.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
+        REQUIRE_THAT(moveAble.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
+
+        moveAble.setForceVector(-1, 0, 1);
+        moveAble.move();
+        expectedPosition -= {velocity * std::sin(currentAngle), velocity * std::cos(currentAngle), 0};
+
+        REQUIRE_THAT(moveAble.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
+        REQUIRE_THAT(moveAble.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
+        REQUIRE_THAT(moveAble.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
+    }
 }
 
 TEST_CASE("Forward, Backwards and Turning for high velocity and small turnDirection") {
 
-    MoveAble moveAbleObject;
+    MoveAble moveAble;
     threepp::Vector3 expectedPosition{0, 0, 0};
 
     float turnSpeed = threepp::math::PI / 80;
-    float baseSpeed = 1000;
-
     float velocity = 1;
     float turnDirection = 1;
     float currentAngle = 0;
+    float baseSpeed = 1000;
 
-    moveAbleObject.setTurnSpeed(threepp::math::PI / 80);
-    moveAbleObject.setBaseSpeed(1000);
+    moveAble.setTurnSpeed(threepp::math::PI / 80);
+    moveAble.setBaseSpeed(1000);
 
     for (int i = 0; currentAngle < 2 * threepp::math::PI; i++) {
 
         currentAngle += turnSpeed * turnDirection;
-        expectedPosition += {baseSpeed * velocity * std::sin(currentAngle), baseSpeed * velocity * std::cos(currentAngle), 0};
-        moveAbleObject.move(velocity, turnDirection);
+        expectedPosition += {baseSpeed*velocity * std::sin(currentAngle),baseSpeed*velocity * std::cos(currentAngle), 0};
 
-        REQUIRE_THAT(moveAbleObject.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
-        REQUIRE_THAT(moveAbleObject.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
-        REQUIRE_THAT(moveAbleObject.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
+        moveAble.setForceVector(1, 1, 1);
+        moveAble.move();
 
-        moveAbleObject.move(-velocity, 0);
-        expectedPosition -= {baseSpeed * velocity * std::sin(currentAngle), baseSpeed * velocity * std::cos(currentAngle), 0};
+        REQUIRE_THAT(moveAble.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
+        REQUIRE_THAT(moveAble.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
+        REQUIRE_THAT(moveAble.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
 
-        REQUIRE_THAT(moveAbleObject.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
-        REQUIRE_THAT(moveAbleObject.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
-        REQUIRE_THAT(moveAbleObject.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
+        moveAble.setForceVector(-1, 0, 1);
+        moveAble.move();
+        expectedPosition -= {baseSpeed*velocity * std::sin(currentAngle), baseSpeed*velocity * std::cos(currentAngle), 0};
+
+        REQUIRE_THAT(moveAble.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
+        REQUIRE_THAT(moveAble.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
+        REQUIRE_THAT(moveAble.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
     }
 }
 
 TEST_CASE("Moving in Circle") {
-    MoveAble moveAbleObject;
+
+    MoveAble moveAble;
     threepp::Vector3 expectedPosition{0, 0, 0};
 
-    float turnSpeed = threepp::math::PI / 80;
-    float baseSpeed = 1000;
-
+    float turnSpeed = threepp::math::PI / 8;
     float velocity = 1;
     float turnDirection = 1;
     float currentAngle = 0;
+    float baseSpeed = 10;
 
-    moveAbleObject.setTurnSpeed(threepp::math::PI / 80);
-    moveAbleObject.setBaseSpeed(1000);
+    moveAble.setTurnSpeed(threepp::math::PI / 8);
+    moveAble.setBaseSpeed(10);
 
     for (int i = 0; currentAngle < 2 * threepp::math::PI; i++) {
 
         currentAngle += turnSpeed * turnDirection;
-        expectedPosition += {baseSpeed * velocity * std::sin(currentAngle), baseSpeed * velocity * std::cos(currentAngle), 0};
-        moveAbleObject.move(velocity, turnDirection);
+        expectedPosition += {baseSpeed*velocity * std::sin(currentAngle),baseSpeed*velocity * std::cos(currentAngle), 0};
 
-        REQUIRE_THAT(moveAbleObject.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
-        REQUIRE_THAT(moveAbleObject.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
-        REQUIRE_THAT(moveAbleObject.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
+        moveAble.setForceVector(1, 1, 1);
+        moveAble.move();
+
+        REQUIRE_THAT(moveAble.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
+        REQUIRE_THAT(moveAble.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
+        REQUIRE_THAT(moveAble.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
     }
 }
 
-TEST_CASE("Circles not from Zero Position"){
-    threepp::Vector3 startPos{100, 100, 0};
-    MoveAble moveAbleObject{startPos};
-    threepp::Vector3 expectedPosition{100, 100, 0};
+TEST_CASE("Circles not from Zero Position") {
 
-    float turnSpeed = threepp::math::PI / 80;
-    float baseSpeed = 1000;
+    MoveAble moveAble{{20, 20, 0}};
+    threepp::Vector3 expectedPosition{20, 20, 0};
 
+    float turnSpeed = threepp::math::PI / 8;
     float velocity = 1;
     float turnDirection = 1;
     float currentAngle = 0;
+    float baseSpeed = 10;
 
-    moveAbleObject.setTurnSpeed(threepp::math::PI / 80);
-    moveAbleObject.setBaseSpeed(1000);
+    moveAble.setTurnSpeed(threepp::math::PI / 8);
+    moveAble.setBaseSpeed(10);
 
     for (int i = 0; currentAngle < 2 * threepp::math::PI; i++) {
 
         currentAngle += turnSpeed * turnDirection;
-        expectedPosition += {baseSpeed * velocity * std::sin(currentAngle), baseSpeed * velocity * std::cos(currentAngle), 0};
-        moveAbleObject.move(velocity, turnDirection);
+        expectedPosition += {baseSpeed*velocity * std::sin(currentAngle),baseSpeed*velocity * std::cos(currentAngle), 0};
 
-        REQUIRE_THAT(moveAbleObject.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
-        REQUIRE_THAT(moveAbleObject.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
-        REQUIRE_THAT(moveAbleObject.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
+        moveAble.setForceVector(1, 1, 1);
+        moveAble.move();
+
+        REQUIRE_THAT(moveAble.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
+        REQUIRE_THAT(moveAble.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
+        REQUIRE_THAT(moveAble.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
     }
-
 }

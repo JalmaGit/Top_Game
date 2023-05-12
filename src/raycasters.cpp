@@ -13,7 +13,9 @@ void Raycasters::updateRayCasterDirections(threepp::Vector3 origin, threepp::Vec
     angle -= threepp::math::PI / 4;
     origin.z -= 1;
     for (auto &element: raycasters_) {
-        threepp::Vector3 newDirection{direction.y * std::sin(angle), direction.y * std::cos(angle), 0};
+        threepp::Vector3 newDirection{direction.y * std::sin(angle),
+                                      direction.y * std::cos(angle),
+                                      0};
         element.set(origin, newDirection);
         angle += (threepp::math::PI / 2) / (totalNumberOfRayCasters_ - 1);
     }
@@ -36,7 +38,9 @@ void Raycasters::checkForCollisionStep(threepp::Object3D &scene, threepp::Vector
                             + direction.y * intersect.face.value().normal.z) /
                            (intersect.face.value().normal.x * intersect.face.value().normal.x +
                             intersect.face.value().normal.z * intersect.face.value().normal.z);
-                threepp::Vector3 W1{intersect.face.value().normal.x * w1, intersect.face.value().normal.z * w1, 0};
+                threepp::Vector3 W1{intersect.face.value().normal.x * w1,
+                                    intersect.face.value().normal.z * w1,
+                                    0};
 
                 threepp::Vector3 W2{
                         direction.x - W1.x, direction.y - W1.y, 0

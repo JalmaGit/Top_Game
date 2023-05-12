@@ -6,6 +6,7 @@
 
 #include <catch2/catch.hpp>
 
+
 TEST_CASE("Default Constructor Test"){
    CoinMath coinMath;
 
@@ -22,8 +23,8 @@ TEST_CASE("Functions"){
 
     coinMath.setPossiblePositions(testPositionVector);
 
-    REQUIRE_THAT(coinMath.getRandomNewPosition().x, Catch::Matchers::WithinRel(0, 0.001));
-    REQUIRE_THAT(coinMath.getRandomNewPosition().y, Catch::Matchers::WithinRel(0, 0.001));
-    REQUIRE_THAT(coinMath.getRandomNewPosition().z, Catch::Matchers::WithinRel(0, 0.001));
+    REQUIRE_THAT(coinMath.getNewPosition().x, Catch::Matchers::WithinRel(0, 0.001));
+    REQUIRE_THAT(coinMath.getNewPosition().y, Catch::Matchers::WithinRel(0, 0.001));
+    REQUIRE_THAT(coinMath.getNewPosition().z, Catch::Matchers::WithinRel(0, 0.001));
 
 }

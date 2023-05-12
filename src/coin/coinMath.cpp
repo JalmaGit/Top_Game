@@ -1,5 +1,6 @@
 
 #include "coin/coinMath.hpp"
+#include <threepp/math/MathUtils.hpp>
 
 CoinMath::CoinMath() {
     points_ = 100;
@@ -13,6 +14,6 @@ int CoinMath::givePoints() const {
     return points_;
 }
 
-threepp::Vector3 CoinMath::getRandomNewPosition() {
-    return possiblePositions_[1];
+threepp::Vector3 CoinMath::getNewPosition() {
+    return possiblePositions_[threepp::math::randomInRange(0,static_cast<int> (possiblePositions_.size())-1)];
 }

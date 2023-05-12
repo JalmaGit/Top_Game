@@ -5,6 +5,7 @@
 #include "threepp/materials/MeshBasicMaterial.hpp"
 #include "threepp/materials/MeshPhongMaterial.hpp"
 #include "threepp/geometries/BoxGeometry.hpp"
+#include "threepp/math/MathUtils.hpp"
 
 using namespace threepp; //This is fine bc this is cpp file or source file
 
@@ -27,6 +28,8 @@ std::shared_ptr<Mesh> WorldVisualizer::createPlane(float width, float length) {
     planeMaterial->side = DoubleSide;
     auto plane = Mesh::create(planeGeometry, planeMaterial);
 
+    plane->receiveShadow = true;
+
     return plane;
 }
 
@@ -43,7 +46,9 @@ std::shared_ptr<Mesh> WorldVisualizer::createBox(Vector3 boxPosition, Vector3 bo
 
     auto box = Mesh::create(boxGeometry, boxMaterial);
     box->position = boxPosition;
-    box->rotateX(math::PI / 2);
+    box->rotateX(threepp::math::PI / 2);
+
+    box->castShadow = true;
 
     return box;
 }

@@ -16,7 +16,7 @@ public:
 
     explicit MoveAble(threepp::Vector3 startPos = {0, 0, 0}, float angle = 0);
 
-    void setForceVector(float velocity, float dt);
+    void setForceVector(float velocity, float turnDirection, float dt);
 
     void setRotation(float angle);
 
@@ -25,6 +25,8 @@ public:
     void setBaseSpeed(float newBaseSpeed);
 
     void setTurnSpeed(float newTurnSpeed);
+
+    void setResetPosition(threepp::Vector3 newResetPosition);
 
     [[nodiscard]] threepp::Vector3 getPosition() const;
 
@@ -36,7 +38,7 @@ public:
 
     [[nodiscard]] threepp::Vector3 getDirection() const;
 
-    void move(float turnDirection, float dt);
+    void move();
 
     void resetPosAndRotation();
 
@@ -49,7 +51,7 @@ private:
     threepp::Vector3 resetPosition_{0, 0, 0};
     float resetRotation_{0};
 
-    void rotateBy(float turnDirection);
+    void rotateBy();
 
     void moveFor();
 

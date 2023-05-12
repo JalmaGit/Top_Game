@@ -2,7 +2,7 @@
 #define TOP_GAME_GAME_HPP
 
 #include <threepp/scenes/Scene.hpp>
-#include <threepp/lights/HemisphereLight.hpp>
+#include <threepp/lights/SpotLight.hpp>
 #include <threepp/math/Vector3.hpp>
 #include "coin/coinLayer.hpp"
 #include "spike/spikeLayer.hpp"
@@ -16,22 +16,25 @@
 class Game {
 public:
     std::shared_ptr<threepp::Scene> scene;
-    std::shared_ptr<threepp::HemisphereLight> light;
+
+    PlayerCamera playerCamera;
+    Player player;
 
     explicit Game(float aspect);
 
     void running(threepp::Vector3 nextMove, float dt);
 
-    PlayerCamera playerCamera;
-    Player player;
-
 private:
-    CameraAttacher cameraCalculations;
-    SpikeLayer spikeLayer;
-    CoinLayer coinLayer;
-    PlayerVisualizer playerVisualizer;
-    WorldLayer worldScene;
-    Raycasters raycasters{7};
+    std::shared_ptr<threepp::SpotLight> spotLight_;
+
+    CameraAttacher cameraAttacher_;
+    SpikeLayer spikeLayer_;
+    CoinLayer coinLayer_;
+    PlayerVisualizer playerVisualizer_;
+    WorldLayer worldScene_;
+    Raycasters raycasters_{7};
+
+    void setSpotLight();
 };
 
 

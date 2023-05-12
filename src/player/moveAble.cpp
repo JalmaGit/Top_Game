@@ -2,14 +2,16 @@
 
 MoveAble::MoveAble(threepp::Vector3 startPos, float angle)
         : rotation_(angle) {
-
+    resetPosition_ = startPos;
+    resetRotation_ = angle;
     position.copy(startPos);
     setRotation(angle);
     setBaseSpeed(50);
     setTurnSpeed(1);
 }
 
-void MoveAble::setForceVector(float velocity, float dt) {
+void MoveAble::setForceVector(float velocity, float turnDirection, float dt) {
+    rotation_ += turnSpeed_ * turnDirection * dt;
     direction = {baseSpeed_ * velocity * std::sin(rotation_) * dt,
                  baseSpeed_ * velocity * std::cos(rotation_) * dt,
                  0};
@@ -52,8 +54,8 @@ threepp::Vector3 MoveAble::getDirection() const {
     return direction;
 }
 
-void MoveAble::move(float turnDirection, float dt) {
-    rotateBy(turnDirection * dt);
+void MoveAble::move() {
+    rotateBy();
     moveFor();
 }
 
@@ -62,8 +64,7 @@ void MoveAble::resetPosAndRotation() {
     setRotation(resetRotation_);
 }
 
-void MoveAble::rotateBy(float turnDirection) {
-    rotation_ += turnSpeed_ * turnDirection;
+void MoveAble::rotateBy() {
     quaternion.setFromAxisAngle(upDirection, -rotation_);
 }
 
@@ -71,4 +72,8 @@ void MoveAble::moveFor() {
     position += {direction.x,
                  direction.y,
                  0};
+}
+
+void MoveAble::setResetPosition(threepp::Vector3 newResetPosition) {
+    resetPosition_ = newResetPosition;
 }

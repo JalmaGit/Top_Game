@@ -8,8 +8,8 @@
 
 #include <catch2/catch.hpp>
 
-TEST_CASE("Zero Position") {
 
+TEST_CASE("Zero Position") {
     Player player;
     threepp::Vector3 ZeroPosition{0, 0, 2};
     float rotation = 0;
@@ -19,34 +19,32 @@ TEST_CASE("Zero Position") {
     CHECK(player.getRotation() == rotation);
 }
 
-TEST_CASE("Forward, Backwards and Turning") {
+TEST_CASE("Moving in circles") {
     Player player;
     threepp::Vector3 expectedPosition{0, 0, 2};
 
     float turnSpeed = threepp::math::PI / 8;
-    float baseSpeed = 1;
-
     float velocity = 1;
     float turnDirection = 1;
     float currentAngle = 0;
+    float baseSpeed = 10;
 
     player.setTurnSpeed(threepp::math::PI / 8);
-    player.setBaseSpeed(1);
+    player.setBaseSpeed(10);
 
     for (int i = 0; currentAngle < 2 * threepp::math::PI; i++) {
 
         currentAngle += turnSpeed * turnDirection;
-        expectedPosition += { baseSpeed * velocity * std::sin(currentAngle), baseSpeed * velocity * std::cos(currentAngle), 0};
-        player.move(velocity, turnDirection);
+        expectedPosition += {baseSpeed*velocity * std::sin(currentAngle),
+                             baseSpeed*velocity * std::cos(currentAngle),
+                             0};
+
+        player.setForceVector(1, 1, 1);
+        player.move();
 
         REQUIRE_THAT(player.getPosition().y, Catch::Matchers::WithinRel(expectedPosition.y));
         REQUIRE_THAT(player.getPosition().x, Catch::Matchers::WithinRel(expectedPosition.x));
         REQUIRE_THAT(player.getPosition().z, Catch::Matchers::WithinRel(expectedPosition.z));
-
-        player.move(-velocity, 0);
-        expectedPosition -= {baseSpeed * velocity * std::sin(currentAngle), baseSpeed * velocity * std::cos(currentAngle), 0};
-
-        CHECK(player.getPosition() == expectedPosition);
     }
 }
 
@@ -57,15 +55,12 @@ TEST_CASE("Checking Default Constructor") {
     CHECK(player.getPosition() == expectedPosition);
     CHECK(player.getTurnSpeed() == 1);
     CHECK(player.getBaseSpeed() == 50);
-    CHECK(player.getHealth() == 100);
+    CHECK(player.getHealth() == 1000);
     CHECK(player.getScore() == 0);
 }
 
 TEST_CASE("Functions") {
     Player player;
-
-    threepp::Vector3 expectedPlayerSize{25, 25, 50};
-    threepp::Vector3 newPlayerSize{25, 25, 50};
 
     player.setTurnSpeed(100);
     player.setBaseSpeed(5000);
