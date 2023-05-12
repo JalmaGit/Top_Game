@@ -28,34 +28,24 @@ std::optional <std::string> mapFileReader::read(const std::filesystem::path &pat
             BoxParameters boxParams;
             std::stringstream ssLine(line);
             std::string keyValue;
-            std::string xPValue;
-            std::string yPValue;
-            std::string zPValue;
-            std::string xSValue;
-            std::string ySValue;
-            std::string zSValue;
+            std::string lineValue;
 
             //TODO:DRY Try to shorten this? Make Exeception handeling
 
             getline(ssLine, keyValue, ',');
-
-            getline(ssLine, xPValue, ',');
-            getline(ssLine, yPValue, ',');
-            getline(ssLine, zPValue, ',');
-            boxParams.Position.x = static_cast<float> (std::atof(xPValue.c_str()));
-            boxParams.Position.y = static_cast<float> (std::atof(yPValue.c_str()));
-            boxParams.Position.z = static_cast<float> (std::atof(zPValue.c_str()));
-            getline(ssLine, xSValue, ',');
-            getline(ssLine, ySValue, ',');
-            getline(ssLine, zSValue, ',');
-            boxParams.Size.x = static_cast<float> (std::atof(xSValue.c_str()));
-            boxParams.Size.y = static_cast<float> (std::atof(ySValue.c_str()));
-            boxParams.Size.z = static_cast<float> (std::atof(zSValue.c_str()));
-
-            //Try to make expecption if any number is not pressent/is a char of some sort
+            getline(ssLine, lineValue, ',');
+            boxParams.Position.x = static_cast<float> (std::atof(lineValue.c_str()));
+            getline(ssLine, lineValue, ',');
+            boxParams.Position.y = static_cast<float> (std::atof(lineValue.c_str()));
+            getline(ssLine, lineValue, ',');
+            boxParams.Position.z = static_cast<float> (std::atof(lineValue.c_str()));
+            getline(ssLine, lineValue, ',');
+            boxParams.Size.x = static_cast<float> (std::atof(lineValue.c_str()));
+            getline(ssLine, lineValue, ',');
+            boxParams.Size.y = static_cast<float> (std::atof(lineValue.c_str()));
+            getline(ssLine, lineValue, ',');
+            boxParams.Size.z = static_cast<float> (std::atof(lineValue.c_str()));
             //try to read up on boost library
-            //DRY
-
             mapData.insert({keyValue, boxParams});
 
         }

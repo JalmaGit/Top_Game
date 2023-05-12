@@ -16,6 +16,8 @@ struct BoxParameters {
     threepp::Vector3 Size;
 };
 
+//File Reader has been taken from exercise 3 and has been modified
+
 class mapFileReader {
 
 public: //Taken some kode from: https://stackoverflow.com/questions/7868936/read-file-line-by-line-using-ifstream-in-c
@@ -26,12 +28,8 @@ public: //Taken some kode from: https://stackoverflow.com/questions/7868936/read
 
 private: //Using this to improve performance
     std::unordered_map<std::string, std::string> cache_;
-    //Key points towards the value.
-    //The key is the path, and the value is what's been saved from the file.
 
-    std::unordered_set<std::string> file_missing_; //I will keep this for future reference
-    //Optimized so that if the file has been searched for at some point, and it didn't exist.
-    //It won't try to search for the same file again.
+    std::unordered_set<std::string> file_missing_;
 
 };
 

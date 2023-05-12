@@ -3,6 +3,7 @@
 
 SpikeVisualizer::SpikeVisualizer(const std::vector <threepp::Vector3> &positions) {
     for (auto &element: positions) {
+        std::cout << element << std::endl;
         spike.emplace_back(createSpike(element));
     }
 }

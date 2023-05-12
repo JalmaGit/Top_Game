@@ -11,7 +11,7 @@
 class Raycasters {
 public:
 
-    explicit Raycasters(int numberOfRayCasters);
+    explicit Raycasters(int numberOfRayCasters = 5, float originBaseSpeed = 100);
 
     void updateRayCasterDirections(threepp::Vector3 origin, threepp::Vector3 direction, float objAngle);
 
@@ -24,7 +24,7 @@ private:
     std::vector<threepp::Raycaster> raycasters_;
     float totalNumberOfRayCasters_;
 
-    static threepp::Raycaster createRayCaster();
+    static threepp::Raycaster createRayCaster(float originBaseSpeed);
 };
 
 #endif //TOP_GAME_RAYCASTERS_HPP

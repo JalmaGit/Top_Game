@@ -1,6 +1,6 @@
 
 #include "game.hpp"
-#include <threepp/lights/AmbientLight.hpp>;
+#include <threepp/lights/AmbientLight.hpp>
 #include <threepp/lights/SpotLight.hpp>
 #include <threepp/lights/LightShadow.hpp>
 
@@ -23,11 +23,13 @@ Game::Game(float aspect) {
     player.setTurnSpeed(2);
 
     cameraAttacher_ = CameraAttacher(player.getPosition(), player.getRotation());
-    cameraAttacher_.setCameraAngle(0);
+    cameraAttacher_.setCameraAngle(threepp::math::PI/10);
     cameraAttacher_.setDistanceFromObj(0);
     cameraAttacher_.setCameraHeight(15);
 
     playerCamera = PlayerCamera(aspect, cameraAttacher_.getCameraAngle(), cameraAttacher_.getPosition());
+
+    raycasters_ = Raycasters(7,player.getBaseSpeed());
 
     scene->add(playerCamera.camera);
     scene->add(worldScene_.layer);
@@ -67,7 +69,7 @@ void Game::running(threepp::Vector3 nextMove, float dt) {
                                           cameraAttacher_.getCameraAngle());
     } else {
         player.setScore(0);
-        player.position = {0, 0, 2};
+        player.resetPosAndRotation();
     }
 }
 

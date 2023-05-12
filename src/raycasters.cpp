@@ -1,10 +1,10 @@
 
 #include "raycasters.hpp"
 
-Raycasters::Raycasters(int numberOfRayCasters) {
+Raycasters::Raycasters(int numberOfRayCasters, float originBaseSpeed) {
     totalNumberOfRayCasters_ = static_cast<float> (numberOfRayCasters);
     for (int i = 0; i < numberOfRayCasters; i++) {
-        raycasters_.emplace_back(createRayCaster());
+        raycasters_.emplace_back(createRayCaster(originBaseSpeed));
     }
 }
 
@@ -71,9 +71,9 @@ bool Raycasters::checkForInteractableStep(threepp::Object3D &scene) {
     return false;
 }
 
-threepp::Raycaster Raycasters::createRayCaster() {
+threepp::Raycaster Raycasters::createRayCaster(float originBaseSpeed) {
     threepp::Raycaster raycaster;
     raycaster.near = 0.1;
-    raycaster.far = 100;
+    raycaster.far = originBaseSpeed*2;
     return raycaster;
 }

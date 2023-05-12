@@ -6,6 +6,7 @@
 #include <threepp/objects/Mesh.hpp>
 #include <threepp/geometries/ConeGeometry.hpp>
 #include <threepp/materials/MeshBasicMaterial.hpp>
+#include <iostream>
 
 class SpikeVisualizer {
 public:

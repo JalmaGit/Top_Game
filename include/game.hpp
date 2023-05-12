@@ -32,7 +32,7 @@ private:
     CoinLayer coinLayer_;
     PlayerVisualizer playerVisualizer_;
     WorldLayer worldScene_;
-    Raycasters raycasters_{7};
+    Raycasters raycasters_;
 
     void setSpotLight();
 };
