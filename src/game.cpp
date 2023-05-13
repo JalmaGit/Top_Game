@@ -25,7 +25,7 @@ Game::Game(float aspect) {
     cameraAttacher_ = CameraAttacher(player.getPosition(), player.getRotation());
     cameraAttacher_.setCameraAngle(threepp::math::PI/8);
     cameraAttacher_.setDistanceFromObj(0);
-    cameraAttacher_.setCameraHeight(200);
+    cameraAttacher_.setCameraHeight(20);
 
     playerCamera = PlayerCamera(aspect, cameraAttacher_.getCameraAngle(), cameraAttacher_.getPosition());
 

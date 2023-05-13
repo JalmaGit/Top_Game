@@ -44,8 +44,8 @@ Box3 WorldGen::createLeftWorldEdge(const BoxGeometry::Params params) {
     return leftHitBox.setFromObject(*leftBox);
 }
 
-WorldGen::WorldGen(float x, float y) : mapSizeX_(x), mapSizeY_(y) {
-    worldFlor = utils::createPlane(x, y);
+WorldGen::WorldGen(float width, float height) : mapSizeX_(width), mapSizeY_(height) {
+    worldFlor = utils::createPlane(width, height);
     boxInWorld = utils::createBox(boxParams_, boxPos_);
 
     worldHitBoxes.emplace_back(createUpperWorldEdge(edgeBox_));

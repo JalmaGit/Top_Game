@@ -1,2 +1,14 @@
-add_executable(boxColorChange boxColorChange.cpp)
-target_link_libraries(boxColorChange PRIVATE gamelib)
+add_compile_definitions(DATA_FOLDER="${PROJECT_SOURCE_DIR}/data")
+
+add_executable(worldVisualizerExample worldVisualizerExample.cpp)
+target_link_libraries(worldVisualizerExample PRIVATE gamelib)
+
+add_executable(playerModelExample playerModelExample.cpp)
+target_link_libraries(playerModelExample PRIVATE gamelib)
+
+add_executable(coinVisualizerExample coinVisualizerExample.cpp)
+target_link_libraries(coinVisualizerExample PRIVATE gamelib)
+
+add_executable(spikeVisualizerExample spikeVisualizerExample.cpp)
+target_link_libraries(spikeVisualizerExample PRIVATE gamelib)
+

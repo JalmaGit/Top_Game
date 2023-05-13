@@ -1,5 +1,5 @@
-#ifndef THREEPP_VCPKG_TEST_WORLD_HPP
-#define THREEPP_VCPKG_TEST_WORLD_HPP
+#ifndef TOP_GAME_WORLD_HPP
+#define TOP_GAME_WORLD_HPP
 
 #include <threepp/threepp.hpp>
 #include "geometryCreationOld.hpp"
@@ -11,7 +11,7 @@ public:
     std::shared_ptr<Mesh> boxInWorld;
     std::vector<Box3> worldHitBoxes;
 
-    WorldGen(float x, float y);
+    WorldGen(float width, float height);
 
 
 private:

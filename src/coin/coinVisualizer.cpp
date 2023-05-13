@@ -18,10 +18,10 @@ std::shared_ptr<threepp::Mesh> CoinVisualizer::createCoin() {
 
     std::shared_ptr<threepp::Mesh> coinMesh = threepp::Mesh::create(geometry, material);
 
-    auto innerGeometry = threepp::CylinderGeometry::create(1, 1, 2);
+    auto innerGeometry = threepp::CylinderGeometry::create(1, 1, 1.5);
     innerGeometry->center();
     auto innerMaterial = threepp::MeshBasicMaterial::create();
-    innerMaterial->color = threepp::Color::yellow;
+    innerMaterial->color = 0xffe400;
 
     auto innerMesh = threepp::Mesh::create(innerGeometry, innerMaterial);
 
