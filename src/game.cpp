@@ -23,9 +23,9 @@ Game::Game(float aspect) {
     player.setTurnSpeed(2);
 
     cameraAttacher_ = CameraAttacher(player.getPosition(), player.getRotation());
-    cameraAttacher_.setCameraAngle(threepp::math::PI/10);
+    cameraAttacher_.setCameraAngle(threepp::math::PI/8);
     cameraAttacher_.setDistanceFromObj(0);
-    cameraAttacher_.setCameraHeight(15);
+    cameraAttacher_.setCameraHeight(200);
 
     playerCamera = PlayerCamera(aspect, cameraAttacher_.getCameraAngle(), cameraAttacher_.getPosition());
 
@@ -47,10 +47,10 @@ void Game::running(threepp::Vector3 nextMove, float dt) {
         }
 
         if (raycasters_.checkForInteractableStep(*spikeLayer_.layer)) {
-            player.takeDamage(spikeLayer_.spikeMath_.dealDamage());
+            player.takeDamage(spikeLayer_.spikeMath.dealDamage());
         }
 
-        if (player.getHealth() < 0) {
+        if (player.getHealth() <= 0) {
             player.setScore(0);
             player.setHealth(1000);
             player.resetPosAndRotation();

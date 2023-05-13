@@ -1,7 +1,7 @@
 #include "player/playerCamera.hpp"
 
 PlayerCamera::PlayerCamera(float aspect, float cameraAngle, threepp::Vector3 position) {
-    camera = threepp::PerspectiveCamera::create(75, aspect, 0.1f, 100);
+    camera = threepp::PerspectiveCamera::create(75, aspect, 0.1f, 1000);
     camera->position = position;
     camera->rotateX(cameraAngle);
 }

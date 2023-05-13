@@ -11,16 +11,7 @@ public:
     std::shared_ptr<Mesh> boxInWorld;
     std::vector<Box3> worldHitBoxes;
 
-    WorldGen(float x, float y) : mapSizeX_(x), mapSizeY_(y) {
-        worldFlor = utils::createPlane(x, y);
-        boxInWorld = utils::createBox(boxParams_, boxPos_);
-
-        worldHitBoxes.emplace_back(createUpperWorldEdge(edgeBox_));
-        worldHitBoxes.emplace_back(createLowerWorldEdge(edgeBox_));
-        worldHitBoxes.emplace_back(createRightWorldEdge(edgeBox_));
-        worldHitBoxes.emplace_back(createLeftWorldEdge(edgeBox_));
-        addHitBox();
-    }
+    WorldGen(float x, float y);
 
 
 private:

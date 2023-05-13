@@ -8,7 +8,7 @@ TEST_CASE("Checking Constructor"){
 
     SpikeMath spikeMath;
 
-    CHECK(spikeMath.dealDamage() == 100);
+    CHECK(spikeMath.dealDamage() == 50);
 }
 
 TEST_CASE("Function Tests"){

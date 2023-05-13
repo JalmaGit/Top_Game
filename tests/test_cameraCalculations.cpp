@@ -44,4 +44,12 @@ TEST_CASE("Simple Movement") {
     REQUIRE_THAT(cameraAttacher.getPosition().x, Catch::Matchers::WithinRel(5.0, 0.01));
     REQUIRE_THAT(cameraAttacher.getPosition().y, Catch::Matchers::WithinRel(5.0, 0.01));
     REQUIRE_THAT(cameraAttacher.getPosition().z, Catch::Matchers::WithinRel(5.0, 0.01));
+
+    objectToAttachPosition = {10,0,0};
+    cameraAttacher.setDistanceFromObj(10);
+    cameraAttacher.updateTrailingCamera(objectToAttachPosition,threepp::math::PI);
+
+    REQUIRE_THAT(cameraAttacher.getPosition().x, Catch::Matchers::WithinRel(10.0, 0.01));
+    REQUIRE_THAT(cameraAttacher.getPosition().y, Catch::Matchers::WithinRel(10.0, 0.01));
+    REQUIRE_THAT(cameraAttacher.getPosition().z, Catch::Matchers::WithinRel(5.0, 0.01));
 }

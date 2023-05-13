@@ -16,10 +16,12 @@ public:
     void addBox(threepp::Vector3 boxPosition, threepp::Vector3 boxSize);
 
 private:
+    float mapSizeX_;
+    float mapSizeY_;
 
     static std::shared_ptr<threepp::Mesh> createPlane(float width, float length);
 
-    static std::shared_ptr<threepp::Mesh> createBox(threepp::Vector3 boxPosition, threepp::Vector3 boxSize);
+    std::shared_ptr<threepp::Mesh> createBox(threepp::Vector3 boxPosition, threepp::Vector3 boxSize) const;
 
 };
 

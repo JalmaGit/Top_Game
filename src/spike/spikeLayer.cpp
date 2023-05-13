@@ -4,16 +4,20 @@
 SpikeLayer::SpikeLayer() {
     layer = threepp::Scene::create();
 
-    mapFileReader file;
-    std::optional<std::string> fileRead = file.read("bin/data/mapSpikeData.txt");
+    MapFileReader file;
+    file.read("data/mapSpikeData.txt");
 
     for (auto &it: file.mapData) {
         spikePositions_.emplace_back(it.second.Position);
     }
 
-    SpikeVisualizer spikeVisualizer_{spikePositions_};
+    SpikeVisualizer spikeVisualizer_;
 
-    for (const auto &element: spikeVisualizer_.spike) {
+    for (auto &element: spikePositions_) {
+        spikeVisualizer_.spikes.emplace_back(SpikeVisualizer::createSpike(element));
+    }
+
+    for (const auto &element: spikeVisualizer_.spikes) {
         layer->add(element);
     }
 }

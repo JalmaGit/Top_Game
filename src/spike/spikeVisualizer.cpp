@@ -1,13 +1,6 @@
 
 #include "spike/spikeVisualizer.hpp"
 
-SpikeVisualizer::SpikeVisualizer(const std::vector <threepp::Vector3> &positions) {
-    for (auto &element: positions) {
-        std::cout << element << std::endl;
-        spike.emplace_back(createSpike(element));
-    }
-}
-
 std::shared_ptr<threepp::Mesh> SpikeVisualizer::createSpike(threepp::Vector3 position) {
     auto geometry = threepp::ConeGeometry::create(1, 4);
     auto material = threepp::MeshBasicMaterial::create();

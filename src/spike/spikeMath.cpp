@@ -2,7 +2,7 @@
 #include "spike/spikeMath.hpp"
 
 SpikeMath::SpikeMath() {
-    damage_ = 100;
+    damage_ = 50;
 }
 
 int SpikeMath::dealDamage() const {

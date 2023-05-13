@@ -18,13 +18,13 @@ struct BoxParameters {
 
 //File Reader has been taken from exercise 3 and has been modified
 
-class mapFileReader {
+class MapFileReader {
 
 public: //Taken some kode from: https://stackoverflow.com/questions/7868936/read-file-line-by-line-using-ifstream-in-c
 
     std::unordered_map<std::string, BoxParameters> mapData;
 
-    std::optional<std::string> read(const std::filesystem::path &path);
+    std::string read(const std::filesystem::path &path);
 
 private: //Using this to improve performance
     std::unordered_map<std::string, std::string> cache_;

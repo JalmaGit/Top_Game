@@ -4,7 +4,6 @@
 #include <threepp/input/KeyListener.hpp>
 #include <threepp/math/Vector3.hpp>
 #include <threepp/Canvas.hpp>
-#include <map>
 
 
 struct MyListener : threepp::KeyListener {

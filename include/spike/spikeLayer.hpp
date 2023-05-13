@@ -11,7 +11,7 @@
 class SpikeLayer {
 public:
     std::shared_ptr<threepp::Scene> layer;
-    SpikeMath spikeMath_;
+    SpikeMath spikeMath;
 
     SpikeLayer();
 

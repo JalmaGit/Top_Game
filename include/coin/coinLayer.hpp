@@ -19,6 +19,8 @@ public:
 
 private:
 
+    MapFileReader file;
+
     std::vector<threepp::Vector3> coinPositions;
 
     CoinVisualizer coinVisualizer_;

@@ -5,8 +5,8 @@ WorldLayer::WorldLayer() {
 
     layer = threepp::Scene::create();
 
-    mapFileReader file;
-    std::optional<std::string> fileRead = file.read("bin/data/mapWallData.txt");
+    MapFileReader file;
+    file.read("data/mapWallData.txt");
 
     WorldVisualizer worldVisualizer{500, 500};
 

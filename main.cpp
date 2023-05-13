@@ -5,13 +5,19 @@
 #include <threepp/math/Vector3.hpp>
 #include "keyInput.hpp"
 #include "game.hpp"
+#include <threepp/core/Clock.hpp>
 
 
 using namespace threepp;
 
 int main() {
 
-    Canvas canvas{Canvas::Parameters().vsync(false).antialiasing(16)};
+    Canvas canvas{Canvas::Parameters()
+    .vsync(false)
+    .antialiasing(16)
+    .title("TOP GAME!!!")
+    .favicon("data/topGameLogo.png")};
+
     GLRenderer renderer{canvas};
     renderer.shadowMap().enabled = true;
     renderer.shadowMap().type = PCFSoftShadowMap;
@@ -22,21 +28,27 @@ int main() {
     keyChecker.setKeyInput(canvas);
 
     renderer.enableTextRendering();
-    auto &textHandler = renderer.textHandle();
+    auto &textHandlerForScore = renderer.textHandle();
+    auto &textHandlerForHealth = renderer.textHandle();
+    textHandlerForHealth.setPosition(0,20);
 
     canvas.onWindowResize([&](WindowSize size) {
         game.playerCamera.camera->aspect = size.getAspect();
         game.playerCamera.camera->updateProjectionMatrix();
         renderer.setSize(size);
-        textHandler.scale = size.getAspect();
+        textHandlerForScore.scale = size.getAspect();
+        textHandlerForHealth.setPosition(0,size.height/20);
+        textHandlerForHealth.scale = size.getAspect();
     });
-
-
-    canvas.animate([&](float dt) -> void {
+    
+    Clock clock;
+    canvas.animate([&]()  {
+        float dt = clock.getDelta();
 
         Vector3 nextMove = keyChecker.getKeyInput();
 
-        textHandler.setText(std::to_string(game.player.getScore()));
+        textHandlerForScore.setText("Score: " + std::to_string(game.player.getScore()));
+        textHandlerForHealth.setText("Health: " + std::to_string(game.player.getHealth()));
 
         game.running(nextMove,dt);
 
