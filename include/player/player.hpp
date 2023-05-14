@@ -1,4 +1,4 @@
-#ifndef TOP_GAME_PLAYEROLD_HPP
+#ifndef TOP_GAME_PLAYER_HPP
 #define TOP_GAME_PLAYER_HPP
 
 #include "moveAble.hpp"
@@ -27,4 +27,4 @@ private:
     int score_;
 };
 
-#endif //TOP_GAME_PLAYEROLD_HPP
+#endif //TOP_GAME_PLAYER_HPP
