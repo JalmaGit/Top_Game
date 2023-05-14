@@ -6,9 +6,9 @@ std::string MapFileReader::read(const std::filesystem::path &path) { //
     std::string pathStr = path.string();
 
     if (file_missing_.find(pathStr) !=
-        file_missing_.end()) { //Checking if the file has been tried opened before, and if didn't exist then it still won't exist now.
+        file_missing_.end()) {
         return "The file still doesn't exist. \n";
-    } else if (cache_.count(pathStr)) {  //Checking if key path exists in cache
+    } else if (cache_.count(pathStr)) {
         return "The file has already been opened before \n";
     }
 
@@ -23,38 +23,36 @@ std::string MapFileReader::read(const std::filesystem::path &path) { //
 
         while (std::getline(myFile, line)) {
             BoxParameters boxParams;
+
             std::stringstream ssLine(line);
             std::string keyValue;
-            std::string lineValue;
 
-            //TODO:DRY Try to shorten this? Make Exeception handeling
+            std::getline(ssLine, keyValue, ',');
 
-            getline(ssLine, keyValue, ',');
+            parseVectorData(boxParams.Position, ssLine);
+            parseVectorData(boxParams.Size, ssLine);
 
-            getline(ssLine, lineValue, ',');
-            boxParams.Position.x = static_cast<float> (std::atof(lineValue.c_str()));
-            getline(ssLine, lineValue, ',');
-            boxParams.Position.y = static_cast<float> (std::atof(lineValue.c_str()));
-            getline(ssLine, lineValue, ',');
-            boxParams.Position.z = static_cast<float> (std::atof(lineValue.c_str()));
-
-            getline(ssLine, lineValue, ',');
-            boxParams.Size.x = static_cast<float> (std::atof(lineValue.c_str()));
-            getline(ssLine, lineValue, ',');
-            boxParams.Size.y = static_cast<float> (std::atof(lineValue.c_str()));
-            getline(ssLine, lineValue, ',');
-            boxParams.Size.z = static_cast<float> (std::atof(lineValue.c_str()));
-            //try to read up on boost library
             mapData.insert({keyValue, boxParams});
-
         }
-
         myFile.close();
 
         return "File has been read \n";
     }
-
     file_missing_.insert(pathStr);
 
-    return  "Does not exist \n";
+    return "Does not exist \n";
+}
+
+void MapFileReader::parseVectorData(threepp::Vector3 &vectorData,
+                                    std::stringstream &ssLine) {
+    std::string lineValue;
+
+    std::getline(ssLine, lineValue, ',');
+    vectorData.x = static_cast<float> (std::atof(lineValue.c_str()));
+
+    std::getline(ssLine, lineValue, ',');
+    vectorData.y = static_cast<float> (std::atof(lineValue.c_str()));
+
+    std::getline(ssLine, lineValue, ',');
+    vectorData.z = static_cast<float> (std::atof(lineValue.c_str()));
 }

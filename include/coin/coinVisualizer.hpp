@@ -16,8 +16,6 @@ public:
 
     static std::shared_ptr<threepp::Mesh> createCoin();
 
-private:
-
 };
 
 

@@ -3,7 +3,6 @@
 
 #include <threepp/scenes/Scene.hpp>
 #include <threepp/math/Vector3.hpp>
-#include <utility>
 #include "mapFileReader.hpp"
 #include "spike/spikeMath.hpp"
 #include "spikeVisualizer.hpp"

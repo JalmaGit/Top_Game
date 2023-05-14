@@ -11,7 +11,7 @@ class SpikeVisualizer {
 public:
     std::vector<std::shared_ptr<threepp::Mesh>> spikes;
 
-    static std::shared_ptr<threepp::Mesh> createSpike(threepp::Vector3 position);
+    static std::shared_ptr<threepp::Mesh> createSpike(threepp::Vector3 &position);
 };
 
 #endif //TOP_GAME_SPIKEVISUALIZER_HPP

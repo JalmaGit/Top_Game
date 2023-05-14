@@ -22,7 +22,7 @@ public:
 
     explicit Game(float aspect);
 
-    void running(threepp::Vector3 nextMove, float dt);
+    void running(threepp::Vector3 &nextMove, float dt);
 
 private:
     std::shared_ptr<threepp::SpotLight> spotLight_;

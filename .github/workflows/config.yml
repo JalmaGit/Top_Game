@@ -1,4 +1,4 @@
-#This config.yml has been taken from Threepp library and modified to fit my needs
+#This config.yml has been taken from Threepp library and modified to fit the needs of the project
 name: Build
 
 on: [push, workflow_dispatch]

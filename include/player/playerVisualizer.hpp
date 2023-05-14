@@ -11,7 +11,7 @@ public:
 
     explicit PlayerVisualizer();
 
-    void setPlayerPosition(threepp::Vector3 position, const threepp::Quaternion &rotation) const;
+    void setPlayerPosition(threepp::Vector3 &position, const threepp::Quaternion &rotation) const;
 
 private:
 

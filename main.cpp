@@ -1,4 +1,3 @@
-#include <iostream>
 #include <string>
 #include <threepp/Canvas.hpp>
 #include <threepp/renderers/GLRenderer.hpp>
@@ -29,8 +28,12 @@ int main() {
 
     renderer.enableTextRendering();
     auto &textHandlerForScore = renderer.textHandle();
+
     auto &textHandlerForHealth = renderer.textHandle();
     textHandlerForHealth.setPosition(0,20);
+
+    auto &textHandlerForInfo = renderer.textHandle(R"(Find the coin. Don't hit the spikes. "WASD-Movement", "R"-Reset)");
+    textHandlerForInfo.setPosition(0,canvas.getSize().height - 50);
 
     canvas.onWindowResize([&](WindowSize size) {
         game.playerCamera.camera->aspect = size.getAspect();
@@ -39,6 +42,8 @@ int main() {
         textHandlerForScore.scale = size.getAspect();
         textHandlerForHealth.setPosition(0,size.height/20);
         textHandlerForHealth.scale = size.getAspect();
+        textHandlerForInfo.setPosition(0,size.height - 50);
+        textHandlerForInfo.scale = size.getAspect();
     });
     
     Clock clock;

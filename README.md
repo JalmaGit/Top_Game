@@ -1,56 +1,92 @@
-# Top_Game
- - This project is named Top_Game and it's a top-down view type of game where the playerCamera looks at the player from above. The player can move around to explore the map. if the player hits the map edge, the player will stopp
- - The project utilises the [Threepp library](https://github.com/markaren/threepp). Currently it's just in a demo stage with no actuall content with focus on getting the game to just work.
- - Used and looked at Example codes from [Threepp library](https://github.com/markaren/threepp) to understand and create a workable project
- 
-## There is two elements to the game
- - The Player
- - WorldGen
+# Top Game 
+![topGameLogo.png](data%2FtopGameLogo.png)![topGameLogo.png](data%2FtopGameLogo.png)![topGameLogo.png](data%2FtopGameLogo.png)![topGameLogo.png](data%2FtopGameLogo.png)![topGameLogo.png](data%2FtopGameLogo.png)![topGameLogo.png](data%2FtopGameLogo.png)![topGameLogo.png](data%2FtopGameLogo.png)![topGameLogo.png](data%2FtopGameLogo.png)![topGameLogo.png](data%2FtopGameLogo.png)![topGameLogo.png](data%2FtopGameLogo.png)![topGameLogo.png](data%2FtopGameLogo.png)![topGameLogo.png](data%2FtopGameLogo.png)![topGameLogo.png](data%2FtopGameLogo.png)![topGameLogo.png](data%2FtopGameLogo.png)![topGameLogo.png](data%2FtopGameLogo.png)![topGameLogo.png](data%2FtopGameLogo.png)![topGameLogo.png](data%2FtopGameLogo.png)![topGameLogo.png](data%2FtopGameLogo.png)
+___
+- **Top Game** a top-down view type of game, where the playerCamera looks at the player from above. 
+- The objective is to find a coin, whilst avoiding obstacles.
+- This project utilizes the [Threepp library](https://github.com/markaren/threepp)
 
-### The Player
- - The Player has some stuff attached to it
- *A playerCamera*
- *A stl-file*
- *A shadowBox*
- *Keylistner*
+### Building Top Game
+- To build this project it is required to install [vcpkg](https://vcpkg.io/en/getting-started.html) and use -DCMAKE_TOOLCHAIN_FILE.
+- Here is an example of a -DCMAKE_TOOLCHAIN_FILE that can be added to the CMake Options: 
+- `-DCMAKE_TOOLCHAIN_FILE=C:\src/vcpkg/scripts/buildsystems/vcpkg.cmake`
+
+### The Objective Of Top Game
+- In **Top Game** the objective is to try and find a coin. When the player collects the coin it will give the player some score and move to a new location.
+- During the search for the coin the player will stumble upon some sharp spikes. These spikes deals damage to the player if it interacts with them.
+- When the players health reaches Zero, the score, health and position of the player resets to the start values.
+
+## Project Design
  
- The player is shown with the help of an stl-modell that has been importeted with the help of the STL-loader example found in threepp.
- From the STL-loader there has been loaded a shadowBox that acts as a collision modell and is used to check for if the player thouches an object on the map.
- The player is set up so that it can move in the **X**- and **Y**-axis. 
- This means that the program uppdates the position of the playerCamera, stl-file and shadowBox when asked to do so.
- The keybindings that has been set up with the Keylistner is:
- 
- #### Move Keybinding
--  *W - Move Uppwards*
--  *S - Move Downwards*
+### There is a few elements to the game
+ - Player
+ - World
+ - Spike
+ - Coin
+ - MapFileReader
+ - Raycasters
+ - KeyInput
+
+#### Player
+ The player consist of five files, each handles a separate part of the player. 
+ Combined they take care of and make sure that the player has:
+ - a Camera
+ - a 3D model
+ - a way for the player to move
+ - a way for the camera to move with the player
+ - a way to keep track and update the status of the player
+
+Here is a [player](examples/playerModelExample.cpp)
+
+![player.png](doc%2Fplayer.png)
+
+#### World
+ The world generates a playing field with a plane and a bunch of boxes. the position and size of these boxes gets parsed from mapWallData.txt. 
+ while the world is generating it check for which quadrant the box are in and colors it accordingly. This to help the user locate their where abouts
+
+Here is a [world visualization example](examples/worldVisualizerExample.cpp)
+
+![world.png](doc%2Fworld.png)
+
+#### Spike
+ The spike deals damage to the player, how many and where to position them are parsed from mapSpikeData.txt.
+
+Here is a [spike visualization example](examples/spikeVisualizerExample.cpp)
+
+![spike.png](doc%2Fspike.png)
+
+#### Coin
+The coin gives the player points when ever it gets interacted with, which locations it can exist on are parsed from mapCoinData.txt.
+
+Here is a [coin visualization example](examples/coinVisualizerExample.cpp)
+
+![coin.png](doc%2Fcoin.png)
+
+#### KeyInput 
+ KeyInput record if some buttons are pressed. 
+ These button presses are used by the game to let the user control the movement of the player and to let the user reset the game. 
+-  *W - Move Forwards*
+-  *S - Move Backwards*
 -  *A - Move Left*
 -  *D - Move Right*
- 
- 
- ### WorldGen
- - Then the world is created. The world consists of:
- *plane*
- *worldBorder*
- *box/Boxes*
+-  *R - Resets Score, Health and Player Position*
 
-The **plane** is used as the floor of the map and has static picture that gives the player visual clues as to where on the map it is.
-The size of the plane is the size of the picture which is 1195x1739 pixels.
-The **worldBorder** is set right outside of the planes dimensions.
-There is also placed a box close to the centre of the map.
-both the box and the border has been given hitboxes so that they can interact with the player
+#### Raycasters
+ The raycasters checks each layer for a collision. For hitdetection with the walls the Raycaster calculatates a new force vector with the help of projection vectors. 
+ For the coin and spike objects the raycaster just checks if the player contains either.
 
-### Top_Game Game
-The game is currently desigend so that the player can move around it and explore. If the shadowbox finds itself in the same cordinates as
-either the box or the worldBorder, its posititon is reset to a previous postition where it was not in the same cordinates as the box/worldBorder.
-The player is only moved after every move and check by the shadowBox and will not move if the shadowBox intersected with the box/worldBorder.
+[Insert Picture of simple Projection Vector]
+
+#### MapFileReader
+ The mapFileReader is used as its name describes, to get the data for objects that gets placed in the scene using comma seperated values, *CSV*
+
+## Some Last Notes:
 
 ### The Code
-Currently most of the code has just been done through the main.cpp file. It was just recenetly that the world has been started programmed by making it an Object called WorldGen. The WorldGen Object currently only contains the worldBorder. Some of the most utilized functions like the Box creation and Plane creation has been moved into their own cpp file, where they get defined with the help of a header file. There is a struct for the keyListner that is used to detect when a key is pressed and returns a boolean value.
+ Generally the code has been writen with the help of [Threepp examples](https://github.com/markaren/threepp/tree/master/examples) and the documentation from [three.js](https://threejs.org/)
+
+### Known Bugs
+ - If a box from the world crosses the center line of the x,y coordinate system but the box position is not either x = 0,0 or y = 0.0, then the box will just have solid color from the closest quadrant
+ - The player can get partly stuck inside the wall, to get out turn very sharply away from the wall.
+ - Spike damage has not been timed with the clock, such that just the mere presence of a Core i9 and RTX 4090, can make a simple touch of the spike devastating, move with caution.
 
 
-### The future:
-- Continue to make the worldGen object so it can be used for the creation of the world, and maybe make it possible to add more box objects with a mouseListner.
-- Make a player Class that takes care of the player and its movement.
-- Move the logic off the main.cpp file.
-- Unit Tests
-- Making sure continues integration works properly

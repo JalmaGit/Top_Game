@@ -1,3 +1,4 @@
+
 #include "player/moveAble.hpp"
 
 MoveAble::MoveAble(threepp::Vector3 startPos, float angle)
@@ -71,9 +72,9 @@ void MoveAble::rotateBy() {
 void MoveAble::moveFor() {
     position += {direction.x,
                  direction.y,
-                 0};
+                 0.0f};
 }
 
-void MoveAble::setResetPosition(threepp::Vector3 newResetPosition) {
+void MoveAble::setResetPosition(threepp::Vector3 &newResetPosition) {
     resetPosition_ = newResetPosition;
 }

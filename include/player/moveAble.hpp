@@ -26,7 +26,7 @@ public:
 
     void setTurnSpeed(float newTurnSpeed);
 
-    void setResetPosition(threepp::Vector3 newResetPosition);
+    void setResetPosition(threepp::Vector3 &newResetPosition);
 
     [[nodiscard]] threepp::Vector3 getPosition() const;
 

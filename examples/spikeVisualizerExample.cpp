@@ -1,3 +1,4 @@
+
 #include <threepp/Canvas.hpp>
 #include <threepp/renderers/GLRenderer.hpp>
 #include <threepp/math/Vector3.hpp>
@@ -15,17 +16,13 @@ int main() {
     std::string filePath = std::string(DATA_FOLDER) + "/topGameLogo.png";
 
     Canvas canvas{Canvas::Parameters()
-                          .vsync(false)
-                          .antialiasing(16)
-                          .title("Top Game Example")
+                          .antialiasing(4)
+                          .title("Top Game Spike Example")
                           .favicon(filePath)};
-
-
     GLRenderer renderer{canvas};
 
     auto scene = Scene::create();
     scene->background = 0x1a6c85;
-
 
     auto light = AmbientLight::create(0xffffff);
     scene->add(light);
@@ -36,8 +33,9 @@ int main() {
 
     OrbitControls orbitControls(camera,canvas);
 
-    auto spike = SpikeVisualizer::createSpike({0.0,0.0,0.0});
-    spike->rotateX(-1.57);
+    auto vector3 = Vector3{0.0,0.0,0.0};
+    auto spike = SpikeVisualizer::createSpike(vector3);
+    spike->rotateX(-1.57); //-PI/2 ~ -1.57
     scene->add(spike);
 
     canvas.onWindowResize([&](WindowSize size) {

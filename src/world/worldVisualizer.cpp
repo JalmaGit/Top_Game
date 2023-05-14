@@ -1,18 +1,18 @@
 
-#include "world/worldVisualizer.hpp"
-#include "threepp/loaders/TextureLoader.hpp"
-#include "threepp/geometries/PlaneGeometry.hpp"
-#include "threepp/materials/MeshBasicMaterial.hpp"
-#include "threepp/materials/MeshPhongMaterial.hpp"
-#include "threepp/geometries/BoxGeometry.hpp"
-#include "threepp/math/MathUtils.hpp"
+#include <world/worldVisualizer.hpp>
+#include <threepp/loaders/TextureLoader.hpp>
+#include <threepp/geometries/PlaneGeometry.hpp>
+#include <threepp/materials/MeshPhongMaterial.hpp>
+#include <threepp/geometries/BoxGeometry.hpp>
+#include <threepp/math/MathUtils.hpp>
 #include <cmath>
 
-WorldVisualizer::WorldVisualizer(float mapSizeX, float mapSizeY) : mapSizeX_(mapSizeX), mapSizeY_(mapSizeY) {
+WorldVisualizer::WorldVisualizer(float mapSizeX, float mapSizeY) :
+        mapSizeX_(mapSizeX), mapSizeY_(mapSizeY) {
     flor = createPlane(mapSizeX, mapSizeY);
 }
 
-void WorldVisualizer::addBox(threepp::Vector3 boxPosition, threepp::Vector3 boxSize) {
+void WorldVisualizer::addBox(threepp::Vector3 &boxPosition, threepp::Vector3 &boxSize) {
 
     //Splits what would have been one box into two if necessary.
     //such that the colors match the correct quadrant within a normal x,y coordinate system
@@ -50,8 +50,8 @@ std::shared_ptr<threepp::Mesh> WorldVisualizer::createPlane(float width, float l
     return plane;
 }
 
-std::shared_ptr<threepp::Mesh>
-WorldVisualizer::createBox(threepp::Vector3 boxPosition, threepp::Vector3 boxSize) const {
+std::shared_ptr<threepp::Mesh>WorldVisualizer::createBox(
+        threepp::Vector3 &boxPosition, threepp::Vector3 &boxSize) const {
 
     auto boxGeometry = threepp::BoxGeometry::create(
             boxSize.x,
@@ -75,12 +75,9 @@ WorldVisualizer::createBox(threepp::Vector3 boxPosition, threepp::Vector3 boxSiz
         boxMaterial->color = 0x545454; //Darker grey
     }
 
-    boxMaterial->emissive = 0x000000;
-
     auto box = threepp::Mesh::create(boxGeometry, boxMaterial);
     box->position = boxPosition;
     box->rotateX(threepp::math::PI / 2);
-
     box->castShadow = true;
 
     return box;

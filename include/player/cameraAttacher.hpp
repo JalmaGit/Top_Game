@@ -15,13 +15,13 @@ public:
 
     void setDistanceFromObj(float newDistanceFrom);
 
-    void setPosition(threepp::Vector3 position);
+    void setPosition(threepp::Vector3 &position);
 
     void setCameraHeight(float newCameraHeight);
 
     void setCameraAngle(float newCameraAngle);
 
-    void updateTrailingCamera(threepp::Vector3 objPosition, float objAngle);
+    void updateTrailingCamera(threepp::Vector3 &objPosition, float objAngle);
 
     threepp::Vector3 getPosition();
 

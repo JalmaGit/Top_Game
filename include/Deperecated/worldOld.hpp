@@ -24,8 +24,6 @@ private:
     BoxGeometry::Params edgeBox_{mapSizeX_, 30, mapSizeY_};
     BoxGeometry::Params boxParams_{boxSize_, boxSize_, boxSize_};
 
-    //Made worldHitBoxes better / ask if it is better
-
     void addHitBox() {
         worldHitBoxes.emplace_back(box3_.setFromObject(*boxInWorld));
     }

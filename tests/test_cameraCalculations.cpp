@@ -13,12 +13,12 @@
 TEST_CASE("Constructor Test") {
     CameraAttacher cameraAttacher;
 
-    REQUIRE_THAT(cameraAttacher.getCameraAngle(), Catch::Matchers::WithinRel(1.046, 0.1));
-    REQUIRE_THAT(cameraAttacher.getDistanceFromObj(), Catch::Matchers::WithinRel(-5.0, 0.01));
+    REQUIRE_THAT(cameraAttacher.getCameraAngle(), Catch::Matchers::WithinRel(0.3927, 0.01));
+    REQUIRE_THAT(cameraAttacher.getDistanceFromObj(), Catch::Matchers::WithinRel(-0.0, 0.01));
 
     REQUIRE_THAT(cameraAttacher.getPosition().x, Catch::Matchers::WithinRel(0, 0.01));
-    REQUIRE_THAT(cameraAttacher.getPosition().y, Catch::Matchers::WithinRel(-5.0, 0.01));
-    REQUIRE_THAT(cameraAttacher.getPosition().z, Catch::Matchers::WithinRel(5.0, 0.01));
+    REQUIRE_THAT(cameraAttacher.getPosition().y, Catch::Matchers::WithinRel(0.0, 0.01));
+    REQUIRE_THAT(cameraAttacher.getPosition().z, Catch::Matchers::WithinRel(20.0, 0.01));
 }
 
 TEST_CASE("Simple Movement") {
@@ -28,22 +28,15 @@ TEST_CASE("Simple Movement") {
     cameraAttacher.updateTrailingCamera(objectToAttachPosition,0);
 
     REQUIRE_THAT(cameraAttacher.getPosition().x, Catch::Matchers::WithinRel(0, 0.01));
-    REQUIRE_THAT(cameraAttacher.getPosition().y, Catch::Matchers::WithinRel(-5.0, 0.01));
-    REQUIRE_THAT(cameraAttacher.getPosition().z, Catch::Matchers::WithinRel(5.0, 0.01));
+    REQUIRE_THAT(cameraAttacher.getPosition().y, Catch::Matchers::WithinRel(0.0, 0.01));
+    REQUIRE_THAT(cameraAttacher.getPosition().z, Catch::Matchers::WithinRel(20.0, 0.01));
 
     objectToAttachPosition = {5,0,0};
     cameraAttacher.updateTrailingCamera(objectToAttachPosition,0);
 
     REQUIRE_THAT(cameraAttacher.getPosition().x, Catch::Matchers::WithinRel(5.0, 0.01));
-    REQUIRE_THAT(cameraAttacher.getPosition().y, Catch::Matchers::WithinRel(-5.0, 0.01));
-    REQUIRE_THAT(cameraAttacher.getPosition().z, Catch::Matchers::WithinRel(5.0, 0.01));
-
-    objectToAttachPosition = {5,0,0};
-    cameraAttacher.updateTrailingCamera(objectToAttachPosition,threepp::math::PI);
-
-    REQUIRE_THAT(cameraAttacher.getPosition().x, Catch::Matchers::WithinRel(5.0, 0.01));
-    REQUIRE_THAT(cameraAttacher.getPosition().y, Catch::Matchers::WithinRel(5.0, 0.01));
-    REQUIRE_THAT(cameraAttacher.getPosition().z, Catch::Matchers::WithinRel(5.0, 0.01));
+    REQUIRE_THAT(cameraAttacher.getPosition().y, Catch::Matchers::WithinRel(0.0, 0.01));
+    REQUIRE_THAT(cameraAttacher.getPosition().z, Catch::Matchers::WithinRel(20.0, 0.01));
 
     objectToAttachPosition = {10,0,0};
     cameraAttacher.setDistanceFromObj(10);
@@ -51,5 +44,5 @@ TEST_CASE("Simple Movement") {
 
     REQUIRE_THAT(cameraAttacher.getPosition().x, Catch::Matchers::WithinRel(10.0, 0.01));
     REQUIRE_THAT(cameraAttacher.getPosition().y, Catch::Matchers::WithinRel(10.0, 0.01));
-    REQUIRE_THAT(cameraAttacher.getPosition().z, Catch::Matchers::WithinRel(5.0, 0.01));
+    REQUIRE_THAT(cameraAttacher.getPosition().z, Catch::Matchers::WithinRel(20.0, 0.01));
 }

@@ -13,7 +13,7 @@ public:
 
     WorldVisualizer(float mapSizeX, float mapSizeY);
 
-    void addBox(threepp::Vector3 boxPosition, threepp::Vector3 boxSize);
+    void addBox(threepp::Vector3 &boxPosition, threepp::Vector3 &boxSize);
 
 private:
     float mapSizeX_;
@@ -21,7 +21,7 @@ private:
 
     static std::shared_ptr<threepp::Mesh> createPlane(float width, float length);
 
-    std::shared_ptr<threepp::Mesh> createBox(threepp::Vector3 boxPosition, threepp::Vector3 boxSize) const;
+    std::shared_ptr<threepp::Mesh> createBox(threepp::Vector3 &boxPosition, threepp::Vector3 &boxSize) const;
 
 };
 

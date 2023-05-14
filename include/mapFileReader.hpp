@@ -8,7 +8,6 @@
 #include <fstream>
 #include <string>
 #include <sstream>
-#include <iostream>
 #include <threepp/math/Vector3.hpp>
 
 struct BoxParameters {
@@ -26,7 +25,10 @@ public: //Taken some kode from: https://stackoverflow.com/questions/7868936/read
 
     std::string read(const std::filesystem::path &path);
 
-private: //Using this to improve performance
+private:
+    static void parseVectorData(threepp::Vector3& vectorData, std::stringstream& ssLine);
+
+    //Using this to improve performance
     std::unordered_map<std::string, std::string> cache_;
 
     std::unordered_set<std::string> file_missing_;

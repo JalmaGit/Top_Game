@@ -1,4 +1,5 @@
 
+#include <threepp/math/MathUtils.hpp>
 #include "raycasters.hpp"
 
 Raycasters::Raycasters(int numberOfRayCasters, float originBaseSpeed) {
@@ -8,16 +9,17 @@ Raycasters::Raycasters(int numberOfRayCasters, float originBaseSpeed) {
     }
 }
 
-void Raycasters::updateRayCasterDirections(threepp::Vector3 origin, threepp::Vector3 direction, float objAngle) {
+void Raycasters::updateRayCasterDirections(threepp::Vector3 &origin,
+                                           threepp::Vector3 &direction,
+                                           float objAngle) {
     float angle = objAngle;
-    angle -= threepp::math::PI / 4;
-    origin.z -= 1;
+    angle -= threepp::math::PI / 4.0f;
     for (auto &element: raycasters_) {
         threepp::Vector3 newDirection{direction.y * std::sin(angle),
                                       direction.y * std::cos(angle),
                                       0};
-        element.set(origin, newDirection);
-        angle += (threepp::math::PI / 2) / (totalNumberOfRayCasters_ - 1);
+        element.set({origin.x,origin.y,origin.z-1.0f}, newDirection);
+        angle += (threepp::math::PI / 2.0f) / (totalNumberOfRayCasters_ - 1.0f);
     }
 }
 
@@ -33,20 +35,21 @@ void Raycasters::checkForCollisionStep(threepp::Object3D &scene, threepp::Vector
         if (!element.empty()) {
             auto &intersect = element.front();
 
-            if (intersect.distance < 3) {
-                float w1 = (direction.x * intersect.face.value().normal.x
-                            + direction.y * intersect.face.value().normal.z) /
-                           (intersect.face.value().normal.x * intersect.face.value().normal.x +
-                            intersect.face.value().normal.z * intersect.face.value().normal.z);
-                threepp::Vector3 W1{intersect.face.value().normal.x * w1,
-                                    intersect.face.value().normal.z * w1,
-                                    0};
+            if (intersect.distance < 3.5f) {  //Calculating Projection Vector
+                float vectorw1 = (direction.x * intersect.face.value().normal.x
+                                  + direction.y * intersect.face.value().normal.z) /
+                                 (intersect.face.value().normal.x * intersect.face.value().normal.x +
+                                  intersect.face.value().normal.z * intersect.face.value().normal.z);
 
-                threepp::Vector3 W2{
-                        direction.x - W1.x, direction.y - W1.y, 0
+                threepp::Vector3 vectorW1{intersect.face.value().normal.x * vectorw1,
+                                          intersect.face.value().normal.z * vectorw1,
+                                          0.0f};
+
+                threepp::Vector3 vectorW2{
+                        direction.x - vectorW1.x, direction.y - vectorW1.y, 0.0f
                 };
-                direction.x = W2.x;
-                direction.y = W2.y;
+                direction.x = vectorW2.x;
+                direction.y = vectorW2.y;
             }
         }
     }
@@ -63,7 +66,7 @@ bool Raycasters::checkForInteractableStep(threepp::Object3D &scene) {
 
         if (!element.empty()) {
             auto &intersect = element.front();
-            if (intersect.distance < 3) {
+            if (intersect.distance < 3.5f) {
                 return true;
             }
         }
@@ -73,7 +76,7 @@ bool Raycasters::checkForInteractableStep(threepp::Object3D &scene) {
 
 threepp::Raycaster Raycasters::createRayCaster(float originBaseSpeed) {
     threepp::Raycaster raycaster;
-    raycaster.near = 0.1;
-    raycaster.far = originBaseSpeed*2;
+    raycaster.near = 0.1f;
+    raycaster.far = originBaseSpeed * 2.0f;
     return raycaster;
 }

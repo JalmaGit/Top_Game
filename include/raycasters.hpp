@@ -4,7 +4,6 @@
 #include <threepp/math/Vector3.hpp>
 #include <threepp/core/Raycaster.hpp>
 #include <threepp/core/Object3D.hpp>
-#include <threepp/math/MathUtils.hpp>
 #include <cmath>
 #include <iostream>
 
@@ -13,7 +12,7 @@ public:
 
     explicit Raycasters(int numberOfRayCasters = 5, float originBaseSpeed = 100);
 
-    void updateRayCasterDirections(threepp::Vector3 origin, threepp::Vector3 direction, float objAngle);
+    void updateRayCasterDirections(threepp::Vector3 &origin, threepp::Vector3 &direction, float objAngle);
 
     void checkForCollisionStep(threepp::Object3D &scene, threepp::Vector3 &direction);
 

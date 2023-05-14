@@ -1,3 +1,4 @@
+
 #include <threepp/Canvas.hpp>
 #include <threepp/renderers/GLRenderer.hpp>
 #include <threepp/math/Vector3.hpp>
@@ -17,7 +18,7 @@ int main() {
     Canvas canvas{Canvas::Parameters()
                           .vsync(false)
                           .antialiasing(16)
-                          .title("Top Game Example")
+                          .title("Top Game Coin Example")
                           .favicon(filePath)};
 
     GLRenderer renderer{canvas};

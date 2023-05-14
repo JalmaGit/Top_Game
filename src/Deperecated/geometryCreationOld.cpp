@@ -1,43 +1,38 @@
-//
-// Created by Jalma on 27.03.2023.
-//
+
 #include "Deperecated/geometryCreationOld.hpp"
-#include <iostream>
 
-using namespace threepp;
+std::shared_ptr<threepp::Mesh> utils::createBox(const threepp::BoxGeometry::Params params, float position) {
 
-std::shared_ptr<Mesh> utils::createBox(const BoxGeometry::Params params, float position) {
-
-    auto boxGeometry = BoxGeometry::create(params);
-    auto boxMaterial = MeshBasicMaterial::create();
-    boxMaterial->color = Color::skyblue;
-    auto box = Mesh::create(boxGeometry, boxMaterial);
-    box->rotateX(math::PI / 2);
+    auto boxGeometry = threepp::BoxGeometry::create(params);
+    auto boxMaterial = threepp::MeshBasicMaterial::create();
+    boxMaterial->color = threepp::Color::skyblue;
+    auto box = threepp::Mesh::create(boxGeometry, boxMaterial);
+    box->rotateX(threepp::math::PI / 2);
     box->position.z = params.height / 2;
     box->position.x = position;
     return box;
 }
 
-std::shared_ptr<Mesh> utils::createPlane(float x, float y) {
-    TextureLoader loader;
+std::shared_ptr<threepp::Mesh> utils::createPlane(float x, float y) {
+    threepp::TextureLoader loader;
 
-    auto planeGeometry = PlaneGeometry::create(x, y);
-    auto planeMaterial = MeshBasicMaterial::create();
+    auto planeGeometry = threepp::PlaneGeometry::create(x, y);
+    auto planeMaterial = threepp::MeshBasicMaterial::create();
     planeMaterial->map = loader.load("bin/data/textures/flor.png");
     planeMaterial->side = DoubleSide;
-    auto plane = Mesh::create(planeGeometry, planeMaterial);
+    auto plane = threepp::Mesh::create(planeGeometry, planeMaterial);
 
     return plane;
 }
 
-std::shared_ptr<Mesh> utils::createStlModel(const std::string &path) {
-    STLLoader stlLoader;
+std::shared_ptr<threepp::Mesh> utils::createStlModel(const std::string &path) {
+    threepp::STLLoader stlLoader;
     auto stlGeometry = stlLoader.load(path);
-    auto stlMaterial = MeshPhongMaterial::create();
+    auto stlMaterial = threepp::MeshPhongMaterial::create();
     stlMaterial->color = Color::grey;
-    auto stlModel = Mesh::create(stlGeometry, stlMaterial);
+    auto stlModel = threepp::Mesh::create(stlGeometry, stlMaterial);
     stlModel->scale *= 0.2;
-    stlModel->rotateX(math::PI / 2);
+    stlModel->rotateX(threepp::math::PI / 2);
 
     return stlModel;
 }

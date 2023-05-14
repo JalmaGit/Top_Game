@@ -1,8 +1,11 @@
+
 #include "player/player.hpp"
 
 Player::Player(int health) : health_(health) {
     setHealth(health);
+
     threepp::Vector3 startPosition{0, 0, 2};
+
     setPosition(startPosition);
     setResetPosition(startPosition);
     score_ = 0;
