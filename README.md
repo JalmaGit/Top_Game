@@ -80,7 +80,7 @@ Here is a [coin visualization example](examples/coinVisualizerExample.cpp)
 ## Some Last Notes:
 
 ### The Code
- Generally the code has been writen with the help of [Threepp examples](https://github.com/markaren/threepp/tree/master/examples) and the documentation from [three.js](https://threejs.org/)
+ Generally the code has been writen with the help off [Threepp examples](https://github.com/markaren/threepp/tree/master/examples) and the documentation from [three.js](https://threejs.org/)
 
 ### Known Bugs
  - If a box from the world crosses the center line of the x,y coordinate system but the box position is not either x = 0,0 or y = 0.0, then the box will just have solid color from the closest quadrant
