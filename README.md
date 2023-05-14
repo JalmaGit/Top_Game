@@ -6,12 +6,12 @@ ___
 - This project utilizes the [Threepp library](https://github.com/markaren/threepp)
 
 ### Building Top Game
-- To build this project it is required to install [vcpkg](https://vcpkg.io/en/getting-started.html) and use -DCMAKE_TOOLCHAIN_FILE.
+- To build this project it is required to have [vcpkg](https://vcpkg.io/en/getting-started.html) installed and to use -DCMAKE_TOOLCHAIN_FILE.
 - Here is an example of a -DCMAKE_TOOLCHAIN_FILE that can be added to the CMake Options: 
 - `-DCMAKE_TOOLCHAIN_FILE=C:\src/vcpkg/scripts/buildsystems/vcpkg.cmake`
 
 ### The Objective Of Top Game
-- In **Top Game** the objective is to try and find a coin. When the player collects the coin it will give the player some score and move to a new location.
+- In **Top Game** the objective is to try and find a coin. When the player collects the coin it will give the player some score and the coin changes to a new location.
 - During the search for the coin the player will stumble upon some sharp spikes. These spikes deals damage to the player if it interacts with them.
 - When the players health reaches Zero, the score, health and position of the player resets to the start values.
 
@@ -74,8 +74,6 @@ Here is a [coin visualization example](examples/coinVisualizerExample.cpp)
  The raycasters checks each layer for a collision. For hitdetection with the walls the Raycaster calculatates a new force vector with the help of projection vectors. 
  For the coin and spike objects the raycaster just checks if the player contains either.
 
-[Insert Picture of simple Projection Vector]
-
 #### MapFileReader
  The mapFileReader is used as its name describes, to get the data for objects that gets placed in the scene using comma seperated values, *CSV*
 
@@ -87,6 +85,6 @@ Here is a [coin visualization example](examples/coinVisualizerExample.cpp)
 ### Known Bugs
  - If a box from the world crosses the center line of the x,y coordinate system but the box position is not either x = 0,0 or y = 0.0, then the box will just have solid color from the closest quadrant
  - The player can get partly stuck inside the wall, to get out turn very sharply away from the wall.
- - Spike damage has not been timed with the clock, such that just the mere presence of a Core i9 and RTX 4090, can make a simple touch of the spike devastating, move with caution.
+ - Spike damage has not been timed with the clock, such that just the mere presence of a Core i9 and RTX 4090, can make what appears as a simple touch to the spike, devastating. Move with caution!
 
 
