@@ -52,9 +52,7 @@ void Game::running(threepp::Vector3 &nextMove, float dt) {
         }
 
         if (player.getHealth() <= 0) {
-            player.setScore(0);
-            player.setHealth(1000);
-            player.resetPosAndRotation();
+            resetPlayer();
             auto material = dynamic_cast<threepp::MeshPhongMaterial*>(playerVisualizer_.playerModel->material());
             material->color = 0x367C2B;
         }
@@ -71,8 +69,7 @@ void Game::running(threepp::Vector3 &nextMove, float dt) {
         playerCamera.updateCameraPosition(cameraAttacher_.getPosition(), player.quaternion,
                                           cameraAttacher_.getCameraAngle());
     } else {
-        player.setScore(0);
-        player.resetPosAndRotation();
+        resetPlayer();
     }
 }
 
@@ -86,4 +83,10 @@ void Game::setSpotLight() {
     spotLight_->distance = 10000;
     spotLight_->position.z = 150.0f;
     spotLight_->shadow->mapSize.set(4096.0f * 2.0f, 4096.0f * 2.0f);
+}
+
+void Game::resetPlayer(){
+    player.setScore(0);
+    player.setHealth(1000);
+    player.resetPosAndRotation();
 }

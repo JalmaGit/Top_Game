@@ -35,6 +35,8 @@ private:
     Raycasters raycasters_;
 
     void setSpotLight();
+
+    void resetPlayer();
 };
 
 
