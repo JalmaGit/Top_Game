@@ -74,8 +74,6 @@ Here is a [coin visualization example](examples/coinVisualizerExample.cpp)
  The raycasters checks each layer for a collision. For hitdetection with the walls the Raycaster calculatates a new force vector with the help of projection vectors. 
  For the coin and spike objects the raycaster just checks if the player contains either.
 
-[Insert Picture of simple Projection Vector]
-
 #### MapFileReader
  The mapFileReader is used as its name describes, to get the data for objects that gets placed in the scene using comma seperated values, *CSV*
 
