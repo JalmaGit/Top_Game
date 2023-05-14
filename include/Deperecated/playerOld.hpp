@@ -2,16 +2,16 @@
 #define TOP_GAME_PLAYEROLD_HPP
 
 #include <threepp/threepp.hpp>
-#include "geometryCreationOld.hpp"
 #include <iostream>
+#include "geometryCreationOld.hpp"
 
-class Player {
+class PlayerOld {
 public:
     std::shared_ptr<Mesh> playerModel;
 
     std::shared_ptr<PerspectiveCamera> playerCamera; //vector3, euler
 
-    explicit Player(const Canvas &canvas1) {
+    explicit PlayerOld(const Canvas &canvas1) {
         playerModel = playerModelCreation();
         playerCamera = getCameraCreation(canvas1);
 

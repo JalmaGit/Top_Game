@@ -27,7 +27,7 @@ void CameraAttacher::setCameraAngle(float newCameraAngle) {
 }
 
 void CameraAttacher::updateTrailingCamera(threepp::Vector3 &objPosition, float objAngle) {
-    quaternion.setFromAxisAngle(upVector_, objAngle);
+    quaternion_.setFromAxisAngle(upVector_, objAngle);
     position_ = {distanceFrom_ * std::sin(objAngle) + objPosition.x,
                  distanceFrom_ * std::cos(objAngle) + objPosition.y, position_.z};
 }

@@ -11,8 +11,8 @@
 #include <threepp/math/Vector3.hpp>
 
 struct BoxParameters {
-    threepp::Vector3 Position;
-    threepp::Vector3 Size;
+    threepp::Vector3 position;
+    threepp::Vector3 size;
 };
 
 //File Reader has been taken from exercise 3 and has been modified

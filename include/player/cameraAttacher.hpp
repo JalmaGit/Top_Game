@@ -8,7 +8,7 @@
 
 class CameraAttacher {
 public:
-    threepp::Quaternion quaternion;
+
 
     explicit CameraAttacher(threepp::Vector3 objPosition = {0, 0, 0},
                             float objAngle = 0);
@@ -30,6 +30,7 @@ public:
     [[nodiscard]] float getCameraAngle() const;
 
 private:
+    threepp::Quaternion quaternion_;
     threepp::Vector3 position_;
     threepp::Vector3 upVector_;
     float distanceFrom_{};

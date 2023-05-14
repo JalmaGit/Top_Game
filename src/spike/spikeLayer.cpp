@@ -8,12 +8,12 @@ SpikeLayer::SpikeLayer() {
     file.read("data/mapSpikeData.txt");
 
     for (auto &it: file.mapData) {
-        spikePositions_.emplace_back(it.second.Position);
+        spikeMath.spikePositions.emplace_back(it.second.position);
     }
 
     SpikeVisualizer spikeVisualizer_;
 
-    for (auto &element: spikePositions_) {
+    for (auto &element: spikeMath.spikePositions) {
         spikeVisualizer_.spikes.emplace_back(SpikeVisualizer::createSpike(element));
     }
 

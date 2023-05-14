@@ -9,7 +9,7 @@
 #include <catch2/catch.hpp>
 
 
-TEST_CASE("Zero Position") {
+TEST_CASE("Zero position") {
 
     MoveAble moveAble;
     threepp::Vector3 ZeroPosition{0, 0, 0};
@@ -186,7 +186,7 @@ TEST_CASE("Moving in Circle") {
     }
 }
 
-TEST_CASE("Circles not from Zero Position") {
+TEST_CASE("Circles not from Zero position") {
 
     MoveAble moveAble{{20, 20, 0}};
     threepp::Vector3 expectedPosition{20, 20, 0};

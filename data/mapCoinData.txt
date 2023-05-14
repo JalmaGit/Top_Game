@@ -1,4 +1,4 @@
-CoinName - Position(x,y,z) - BoxSize(width,height,depth) Needs BoxSize bc of how the fileReader reads the mapWallData
+CoinName - position(x,y,z) - BoxSize(width,height,depth) Needs BoxSize bc of how the fileReader reads the mapWallData
 NE-Coin1,-240.0,120.0,2.0,0.0,0.0,0.0
 NE-Coin2,-110.0,210.0,2.0,0.0,0.0,0.0
 NE-Coin3,-120.0,160.0,2.0,0.0,0.0,0.0

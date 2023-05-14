@@ -10,7 +10,7 @@ class GameLogic {
 public:
     std::shared_ptr<Scene> scene;
 
-    GameLogic(Canvas &canvas, Player &player) {
+    GameLogic(Canvas &canvas, PlayerOld &player) {
         hitBoxDetected = false;
 
         baseSpeed = 50;
@@ -36,7 +36,7 @@ public:
 
     }
 
-    auto gameTic(Player &player, float &dt, Vector2 &direction) {
+    auto gameTic(PlayerOld &player, float &dt, Vector2 &direction) {
 
         shadowBox->geometry()->computeBoundingBox();
         box3Shadow.copy(*shadowBox->geometry()->boundingSphere).applyMatrix4(*shadowBox->matrixWorld);

@@ -9,7 +9,7 @@
 #include <catch2/catch.hpp>
 
 
-TEST_CASE("Zero Position") {
+TEST_CASE("Zero position") {
     Player player;
     threepp::Vector3 ZeroPosition{0, 0, 2};
     float rotation = 0;

@@ -29,8 +29,8 @@ std::string MapFileReader::read(const std::filesystem::path &path) { //
 
             std::getline(ssLine, keyValue, ',');
 
-            parseVectorData(boxParams.Position, ssLine);
-            parseVectorData(boxParams.Size, ssLine);
+            parseVectorData(boxParams.position, ssLine);
+            parseVectorData(boxParams.size, ssLine);
 
             mapData.insert({keyValue, boxParams});
         }

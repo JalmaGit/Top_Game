@@ -11,7 +11,7 @@ WorldLayer::WorldLayer() {
     WorldVisualizer worldVisualizer{500, 500};
 
     for (auto &it: file.mapData) {
-        worldVisualizer.addBox(it.second.Position, it.second.Size);
+        worldVisualizer.addBox(it.second.position, it.second.size);
     }
 
     for (const auto &element: worldVisualizer.boxes) {

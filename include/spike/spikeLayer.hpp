@@ -2,7 +2,6 @@
 #define TOP_GAME_SPIKELAYER_HPP
 
 #include <threepp/scenes/Scene.hpp>
-#include <threepp/math/Vector3.hpp>
 #include "mapFileReader.hpp"
 #include "spike/spikeMath.hpp"
 #include "spikeVisualizer.hpp"
@@ -14,8 +13,6 @@ public:
 
     SpikeLayer();
 
-private:
-    std::vector<threepp::Vector3> spikePositions_;
 };
 
 #endif //TOP_GAME_SPIKELAYER_HPP

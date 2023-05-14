@@ -7,7 +7,7 @@ CoinLayer::CoinLayer() {
     file.read("data/mapCoinData.txt");
 
     for (auto &element: file.mapData) {
-        coinPositions.emplace_back(element.second.Position);
+        coinPositions.emplace_back(element.second.position);
     }
 
     coinMath.setPossiblePositions(coinPositions);

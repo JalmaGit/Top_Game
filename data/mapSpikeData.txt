@@ -1,4 +1,4 @@
-SpikeName - Position(x,y,z) - BoxSize(width,height,depth) Needs BoxSize bc of how the fileReader works
+SpikeName - position(x,y,z) - BoxSize(width,height,depth) Needs BoxSize bc of how the fileReader works
 NE-Spike1,-125.0,165.0,0.0,0.0,0.0,0.0
 NE-Spike2,-120.0,165.0,0.0,0.0,0.0,0.0
 NE-Spike3,-115.0,165.0,0.0,0.0,0.0,0.0
