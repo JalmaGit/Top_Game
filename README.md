@@ -6,7 +6,7 @@ ___
 - This project utilizes the [Threepp library](https://github.com/markaren/threepp)
 
 ### Building Top Game
-- To build this project it is required to install [vcpkg](https://vcpkg.io/en/getting-started.html) and use -DCMAKE_TOOLCHAIN_FILE.
+- To build this project it is required to have [vcpkg](https://vcpkg.io/en/getting-started.html) installed and to use -DCMAKE_TOOLCHAIN_FILE.
 - Here is an example of a -DCMAKE_TOOLCHAIN_FILE that can be added to the CMake Options: 
 - `-DCMAKE_TOOLCHAIN_FILE=C:\src/vcpkg/scripts/buildsystems/vcpkg.cmake`
 
