@@ -11,7 +11,7 @@ ___
 - `-DCMAKE_TOOLCHAIN_FILE=C:\src/vcpkg/scripts/buildsystems/vcpkg.cmake`
 
 ### The Objective Of Top Game
-- In **Top Game** the objective is to try and find a coin. When the player collects the coin it will give the player some score and move to a new location.
+- In **Top Game** the objective is to try and find a coin. When the player collects the coin it will give the player some score and the coin changes to a new location.
 - During the search for the coin the player will stumble upon some sharp spikes. These spikes deals damage to the player if it interacts with them.
 - When the players health reaches Zero, the score, health and position of the player resets to the start values.
 
