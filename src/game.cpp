@@ -82,8 +82,8 @@ void Game::setSpotLight() {
     spotLight_->decay = 1.0f;
     spotLight_->castShadow = true;
     spotLight_->shadow->bias = 0.000001f;
-    spotLight_->angle = threepp::math::PI / 6.0f;
+    spotLight_->angle = threepp::math::PI / 7.0f;
     spotLight_->distance = 10000;
     spotLight_->position.z = 150.0f;
-    spotLight_->shadow->mapSize.set(4096.0f * 4.0f, 4096.0f * 4.0f);
+    spotLight_->shadow->mapSize.set(4096.0f * 2.0f, 4096.0f * 2.0f);
 }
