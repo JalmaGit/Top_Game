@@ -85,6 +85,6 @@ Here is a [coin visualization example](examples/coinVisualizerExample.cpp)
 ### Known Bugs
  - If a box from the world crosses the center line of the x,y coordinate system but the box position is not either x = 0,0 or y = 0.0, then the box will just have solid color from the closest quadrant
  - The player can get partly stuck inside the wall, to get out turn very sharply away from the wall.
- - Spike damage has not been timed with the clock, such that just the mere presence of a Core i9 and RTX 4090, can make what appears as a simple touch to the spike, devastating. Move with caution!.
+ - Spike damage has not been timed with the clock, such that just the mere presence of a Core i9 and RTX 4090, can make what appears as a simple touch to the spike, devastating. Move with caution!
 
 
