@@ -3,6 +3,7 @@
 
 #include <threepp/scenes/Scene.hpp>
 #include <threepp/math/Vector3.hpp>
+
 #include "mapFileReader.hpp"
 #include "coinMath.hpp"
 #include "coinVisualizer.hpp"
@@ -13,7 +14,7 @@ public:
     std::shared_ptr<threepp::Scene> layer;
     CoinMath coinMath;
 
-    CoinLayer();;
+    CoinLayer();
 
     void setRandomCoinPosition();
 
@@ -21,10 +22,9 @@ private:
 
     MapFileReader file;
 
-    std::vector<threepp::Vector3> coinPositions;
+    std::vector<threepp::Vector3> coinPositions_;
 
     CoinVisualizer coinVisualizer_;
 };
-
 
 #endif //TOP_GAME_COINLAYER_HPP

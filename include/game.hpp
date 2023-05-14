@@ -4,6 +4,7 @@
 #include <threepp/scenes/Scene.hpp>
 #include <threepp/lights/SpotLight.hpp>
 #include <threepp/math/Vector3.hpp>
+
 #include "coin/coinLayer.hpp"
 #include "spike/spikeLayer.hpp"
 #include "world/worldLayer.hpp"
@@ -38,6 +39,5 @@ private:
 
     void resetPlayer();
 };
-
 
 #endif //TOP_GAME_GAME_HPP

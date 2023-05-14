@@ -1,5 +1,6 @@
 
 #include <threepp/math/MathUtils.hpp>
+
 #include "coin/coinMath.hpp"
 
 CoinMath::CoinMath() {

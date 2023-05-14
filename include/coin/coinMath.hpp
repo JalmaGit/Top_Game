@@ -21,8 +21,6 @@ private:
 
     std::vector<threepp::Vector3> possiblePositions_;
     int points_;
-
 };
-
 
 #endif //TOP_GAME_COINMATH_HPP

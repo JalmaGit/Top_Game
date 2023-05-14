@@ -32,7 +32,6 @@ private:
     std::unordered_map<std::string, std::string> cache_;
 
     std::unordered_set<std::string> file_missing_;
-
 };
 
 #endif //TOP_GAME_MAPFILEREADER_HPP

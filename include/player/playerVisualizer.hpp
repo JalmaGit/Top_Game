@@ -16,7 +16,6 @@ public:
 private:
 
     static std::shared_ptr<threepp::Mesh> playerModelCreation();
-
 };
 
 #endif //TOP_GAME_PLAYERVISUALIZER_HPP

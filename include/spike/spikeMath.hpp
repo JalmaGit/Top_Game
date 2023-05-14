@@ -16,7 +16,6 @@ public:
 
 private:
     int damage_;
-
 };
 
 #endif //TOP_GAME_SPIKEMATH_HPP

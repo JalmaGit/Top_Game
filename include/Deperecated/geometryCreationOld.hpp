@@ -12,8 +12,6 @@ namespace utils {
     std::shared_ptr<Mesh> createPlane(float x, float y);
 
     std::shared_ptr<Mesh> createStlModel(const std::string &path);
-
 }
-
 
 #endif //Top_Game_GEOMETRY_CREATION_HPP

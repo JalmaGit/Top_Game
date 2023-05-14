@@ -1,5 +1,6 @@
 
 #include <threepp/math/MathUtils.hpp>
+
 #include "raycasters.hpp"
 
 Raycasters::Raycasters(int numberOfRayCasters, float originBaseSpeed) {

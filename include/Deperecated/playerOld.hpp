@@ -3,6 +3,7 @@
 
 #include <threepp/threepp.hpp>
 #include <iostream>
+
 #include "geometryCreationOld.hpp"
 
 class PlayerOld {
@@ -28,7 +29,6 @@ private:
     std::shared_ptr<PerspectiveCamera> getCameraCreation(const Canvas &canvas);
 
     std::shared_ptr<Mesh> playerModelCreation();
-
 };
 
 #endif //TOP_GAME_PLAYEROLD_HPP

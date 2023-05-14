@@ -1,6 +1,6 @@
 
 add_compile_definitions(DATA_FOLDER="${PROJECT_SOURCE_DIR}/data")
-
+#Taken from threepp
 function(add_test_executable name)
     add_executable(${name} ${name}.cpp)
     target_link_libraries(${name} PRIVATE gamelib Catch2::Catch2)

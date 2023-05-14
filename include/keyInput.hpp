@@ -43,8 +43,6 @@ private:
     MyListener keyS;
     MyListener keyD;
     MyListener keyR;
-
 };
-
 
 #endif //TOP_GAME_KEYINPUT_HPP

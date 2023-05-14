@@ -17,6 +17,4 @@ public:
                               float cameraAngle) const;
 };
 
-
-
 #endif //TOP_GAME_CAMERAHANDLER_HPP

@@ -2,6 +2,7 @@
 #define TOP_GAME_WORLD_HPP
 
 #include <threepp/threepp.hpp>
+
 #include "geometryCreationOld.hpp"
 #include "iostream"
 
@@ -35,8 +36,6 @@ private:
     static Box3 createRightWorldEdge(BoxGeometry::Params params_);
 
     static Box3 createLeftWorldEdge(BoxGeometry::Params params_);
-
 };
-
 
 #endif //TOP_GAME_WORLD_HPP

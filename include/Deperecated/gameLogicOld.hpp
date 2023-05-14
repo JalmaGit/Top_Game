@@ -2,9 +2,11 @@
 #define TOP_GAME_GAMELOGIC_HPP
 
 #include <threepp/threepp.hpp>
+#include <cmath>
+
 #include "playerOld.hpp"
 #include "worldOld.hpp"
-#include <cmath>
+
 
 class GameLogic {
 public:
@@ -103,8 +105,6 @@ private:
     WorldGen worldGen{1000, 500};
 
     bool hitBoxDetected;
-
 };
-
 
 #endif //TOP_GAME_GAMELOGIC_HPP

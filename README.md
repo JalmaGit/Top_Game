@@ -7,7 +7,7 @@ ___
 
 ### Building Top Game
 - To build this project it is required to have [vcpkg](https://vcpkg.io/en/getting-started.html) installed and to use -DCMAKE_TOOLCHAIN_FILE.
-- Here is an example of a -DCMAKE_TOOLCHAIN_FILE that can be added to the CMake Options: 
+- Here is an example of a -DCMAKE_TOOLCHAIN_FILE that can be added to the CMake Options when using the Visual Studio toolchain: 
 - `-DCMAKE_TOOLCHAIN_FILE=C:\src/vcpkg/scripts/buildsystems/vcpkg.cmake`
 
 ### The Objective Of Top Game
@@ -88,3 +88,5 @@ Here is a [coin visualization example](examples/coinVisualizerExample.cpp)
  - Spike damage has not been timed with the clock, such that just the mere presence of a Core i9 and RTX 4090, can make what appears as a simple touch to the spike, devastating. Move with caution!
 
 
+### Disclaimer
+The user of this project are soley responsible for their own sanity and the creator of this project is not responsible for any damages

@@ -3,6 +3,7 @@
 #include <threepp/lights/SpotLight.hpp>
 #include <threepp/lights/LightShadow.hpp>
 #include <threepp/materials/MeshPhongMaterial.hpp>
+
 #include "game.hpp"
 
 Game::Game(float aspect) {

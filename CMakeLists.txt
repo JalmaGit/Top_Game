@@ -15,7 +15,7 @@ add_executable(Top_Game main.cpp)
 target_link_libraries(Top_Game PUBLIC gamelib imgui::imgui)
 
 file(COPY "${CMAKE_SOURCE_DIR}/data" DESTINATION "${CMAKE_BINARY_DIR}/bin")
-
+#adding Catch2 and enabling testing copied from threepp
 include(FetchContent)
 
 FetchContent_Declare(

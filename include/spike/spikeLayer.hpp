@@ -2,6 +2,7 @@
 #define TOP_GAME_SPIKELAYER_HPP
 
 #include <threepp/scenes/Scene.hpp>
+
 #include "mapFileReader.hpp"
 #include "spike/spikeMath.hpp"
 #include "spikeVisualizer.hpp"
@@ -12,7 +13,6 @@ public:
     SpikeMath spikeMath;
 
     SpikeLayer();
-
 };
 
 #endif //TOP_GAME_SPIKELAYER_HPP

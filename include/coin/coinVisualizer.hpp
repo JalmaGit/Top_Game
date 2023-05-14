@@ -15,8 +15,6 @@ public:
     void updateCoinPosition(threepp::Vector3 newPosition) const;
 
     static std::shared_ptr<threepp::Mesh> createCoin();
-
 };
-
 
 #endif //TOP_GAME_COINVISUALIZER_HPP
